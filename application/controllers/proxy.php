@@ -10,8 +10,7 @@ class Proxy extends CI_Controller {
 	}
 
 	function Who() {
-
-		// New Session {{{
+		// New Session - WHO {{{
 		if (!isset($_SESSION['who_session'])) {
 			$session_content = $this->Curl->Fetch('http://apps.who.int/trialsearch/Default.aspx');
 			$_SESSION['who_session'] = array();
@@ -19,6 +18,10 @@ class Proxy extends CI_Controller {
 			foreach ($matches as $match)
 				$_SESSION['who_session'][$match[1]] = $match[2];
 		}
+		// }}}
+		// New Session - Basket {{{
+		if (!isset($_SESSION['basket']))
+			$_SESSION['basket'] = array();
 		// }}}
 		$papers = array();
 		// Send search data {{{
@@ -30,7 +33,13 @@ class Proxy extends CI_Controller {
 		$content = $this->Curl->Fetch('http://apps.who.int/trialsearch/Default.aspx', $post);
 		preg_match_all('!<a id=".*?" href="Trial\.aspx\?TrialID=(.*?)" target="_blank">(.*?)</a>!s', $content, $matches, PREG_SET_ORDER);
 		foreach ($matches as $match)
-			$papers[$match[1]] = $match[2];
+			$papers[$match[1]] = array(
+				'paperid' => $match[1],
+				'source' => 'WHO',
+				'url' => "/proxy/who-paper/{$match[1]}",
+				'name' => $match[2],
+				'in-basket' => isset($_SESSION['basket'][$match[1]]),
+			);
 		// }}}
 
 		$this->site->Header('WHO search proxy');

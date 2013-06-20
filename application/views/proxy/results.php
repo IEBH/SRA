@@ -6,15 +6,19 @@
 <? } else { ?>
 <table class="table table-bordered table-stripped">
 	<tr>
+		<th width="50px">&nbsp;</th>
 		<th>Ref</th>
 		<th>Name</th>
-		<th width="50px">&nbsp;</th>
 	</tr>
-	<? foreach ($papers as $paperid => $paper) { ?>
+	<? foreach ($papers as $paper) { ?>
 	<tr>
-		<td><?=$paperid?></td>
-		<td><?=$paper?></td>
-		<td><a href="#" class="btn"><i class="icon-empty"></i></td>
+		<? if ($paper['in-basket']) { ?>
+		<td><a href="#" class="btn btn-success"><i class="icon-check"></i></td>
+		<? } else { ?>
+		<td><a href="#" class="btn"><i class="icon-check-empty"></i></td>
+		<? } ?>
+		<td><a href="<?=$paper['url']?>"><?=$paper['paperid']?></a></td>
+		<td><a href="<?=$paper['url']?>"><?=$paper['name']?></a></td>
 	</tr>
 	<? } ?>
 </table>
