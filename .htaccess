@@ -1,0 +1,13 @@
+Options -Indexes
+
+# Rewrite fun
+RewriteEngine on
+RewriteBase /
+
+# If the file exists
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)$		- [L]
+
+# Throw everything else at Codeigniter
+RewriteCond $1 !^(index\.php|images|robots\.txt)
+RewriteRule ^(.*)$ index.php/$1 [L]

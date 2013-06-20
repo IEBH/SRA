@@ -1,0 +1,50 @@
+/* Style fixes {{{ */
+.masthead input[type=text] {
+	padding: 18px 24px;
+	font-size: 14pt;
+	width: 500px;
+}
+
+.navbar {
+	font-family: georgia, serif;
+}
+.navbar .brand {
+	text-shadow: none !important;
+}
+.navbar a {
+	text-shadow: none !important;
+}
+.brand .first {
+	font-style: italic;
+	color: #ccc;
+}
+.brand .second {
+	color: #fff;
+	font-weight: bold;
+}
+
+footer {
+	text-align: center;
+}
+
+.sidebar-nav .nav-header .btn {
+	float: right;
+	margin-top: 8px;
+}
+
+.sidebar-nav .nav-header .btn i {
+	margin-right: 0;
+}
+
+.navbar .nav > li > a {
+	color: #ccc !important;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+	background: #444 !important;
+}
+
+.span12 > p {
+	padding: 10px;
+}
+/* }}} */
