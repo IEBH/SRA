@@ -14,7 +14,7 @@
 	<tr>
 		<td><?=$paperid?></td>
 		<td><?=$paper?></td>
-		<td><a href="#" class="btn"><i class="icon-circle"></i></td>
+		<td><a href="#" class="btn"><i class="icon-empty"></i></td>
 	</tr>
 	<? } ?>
 </table>

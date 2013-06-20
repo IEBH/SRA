@@ -1,14 +1,13 @@
 -- Headers {{{
 SET storage_engine=MYISAM;
 -- }}}
--- Abstracts {{{
-DROP TABLE IF EXISTS abstracts;
-CREATE TABLE abstracts(
-	id char(8) primary key,
-	email varchar(255),
-	status enum('hidden', 'listed', 'deleted') DEFAULT 'hidden',
-	json text
+-- CacheResults {{{
+DROP TABLE IF EXISTS wwwcache;
+CREATE TABLE wwwcache(
+	id int primary key auto_increment,
+	hash char(32),
+	age int,
+	content text
 );
-CREATE INDEX abstracts_email ON abstracts(email);
-CREATE INDEX abstracts_status ON abstracts(status);
+CREATE INDEX wwwcache_hash ON wwwcache(hash);
 -- }}}
