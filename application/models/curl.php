@@ -1,7 +1,7 @@
 <?
 class Curl extends CI_Model {
 	function GetCached($url, $data = null) {
-		$hash = md5($url . http_build_query($data));
+		$hash = md5($url . ($data ? http_build_query($data) : null));
 		$this->db->select('content');
 		$this->db->from('wwwcache');
 		$this->db->where('hash', $hash);
@@ -10,7 +10,7 @@ class Curl extends CI_Model {
 	}
 
 	function SaveCached($url, $data = null, $content = null) {
-		$hash = md5($url . http_build_query($data));
+		$hash = md5($url . ($data ? http_build_query($data) : null));
 		$this->db->where('hash', $hash);
 		$this->db->delete('wwwcache');
 
