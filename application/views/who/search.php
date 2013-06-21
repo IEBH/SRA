@@ -12,7 +12,7 @@
 	</tr>
 	<? foreach ($papers as $paper) { ?>
 	<tr>
-		<? if ($paper['in-basket']) { ?>
+		<? if ($this->Basket->Has('who-' . $paper['paperid'])) { ?>
 		<td><a href="#" class="btn btn-success"><i class="icon-check"></i></td>
 		<? } else { ?>
 		<td><a href="#" class="btn"><i class="icon-check-empty"></i></td>

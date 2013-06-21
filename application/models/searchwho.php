@@ -1,15 +1,8 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Proxy extends CI_Controller {
+<?
+class Searchwho extends CI_Model {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('Curl');
-	}
-
-	function Index() {
-		$this->site->redirect('/');
-	}
-
-	function _EstablishSession() {
 		// New Session - WHO {{{
 		if (!isset($_SESSION['who_session'])) {
 			$session_content = $this->Curl->Fetch('http://apps.who.int/trialsearch/Default.aspx');
@@ -19,46 +12,29 @@ class Proxy extends CI_Controller {
 				$_SESSION['who_session'][$match[1]] = $match[2];
 		}
 		// }}}
-		// New Session - Basket {{{
-		if (!isset($_SESSION['basket']))
-			$_SESSION['basket'] = array();
-		// }}}
 	}
 
-	function Who() {
-		$papers = array();
-		$this->_EstablishSession();
-		// Send search data {{{
+	function GetAll($terms) {
 		$post = $_SESSION['who_session'];
 		$post['Button1'] = 'Search';
-		if (isset($_REQUEST['q']))
-			$post['TextBox1'] = $_REQUEST['q'];
+		$post['TextBox1'] = $terms;
 
 		$content = $this->Curl->Fetch('http://apps.who.int/trialsearch/Default.aspx', $post);
 		preg_match_all('!<a id=".*?" href="Trial\.aspx\?TrialID=(.*?)" target="_blank">(.*?)</a>!s', $content, $matches, PREG_SET_ORDER);
+
+		$papers = array();
 		foreach ($matches as $match)
 			$papers[$match[1]] = array(
 				'paperid' => $match[1],
 				'source' => 'WHO',
-				'url' => "/proxy/whopaper/{$match[1]}",
+				'url' => "/who/paper/{$match[1]}",
 				'name' => $match[2],
 				'in-basket' => isset($_SESSION['basket'][$match[1]]),
 			);
-		// }}}
-
-		$this->site->Header('WHO search proxy');
-		$this->site->view('proxy/results', array(
-			'content' => $content,
-			'papers' => $papers,
-		));
-		$this->site->Footer();
+		return $papers;
 	}
 
-	function WhoPaper($ref = null) {
-		if (!$ref)
-			$this->site->redirect('/');
-
-		// Retrieve paper {{{
+	function Get($ref) {
 		$content = $this->Curl->Fetch("http://apps.who.int/trialsearch/Trial.aspx?TrialID=$ref");
 		$paper = array(
 			'ref' => $ref,
@@ -87,42 +63,6 @@ class Proxy extends CI_Controller {
 		$paper['url-real'] = $matches[1];
 		preg_match('!Study type.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['study-type'] = $matches[1];
-		// }}}
-		// Waveform config {{{
-		$this->load->spark('waveform/1.0.0');
-
-		$this->waveform->Define('title-public')
-			->Title('Public Title');
-		$this->waveform->Define('title-scientific')
-			->Title('Scientific Title');
-		$this->waveform->Define('url-who')
-			->Title('URL (WHO site)');
-		$this->waveform->Define('url-real')
-			->Title('URL');
-		$this->waveform->Define('register');
-		$this->waveform->Define('date-refresh')
-			->Title('Last refreshed on');
-		$this->waveform->Define('date-reg')
-			->Title('Date of registration');
-		$this->waveform->Define('date-enrolment')
-			->Title('Date of first enrolment');
-		$this->waveform->Define('sponsor')
-			->Title('Primary Sponsor');
-		$this->waveform->Define('target-size')
-			->Title('Target sample size');
-		$this->waveform->Define('recruitment-status')
-			->Title('Recruitment status');
-		$this->waveform->Define('study-type')
-			->Title('Study type');
-
-		$this->waveform->Set($paper);
-		$this->waveform->Apply('readonly', array_keys($this->waveform->Fields));
-		// }}}
-
-		$this->site->Header("WHO paper | $ref");
-		$this->site->view('proxy/paper', array(
-			'paper' => $paper,
-		));
-		$this->site->Footer();
+		return $paper;
 	}
 }
