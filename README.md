@@ -1,3 +1,4 @@
 CREBP-Search
 ============
-Aggregated search tool for Bond CREBP.
+Project for Bond CREBP.
+Search proxy to easily extract bibliographic information from multiple sources.
