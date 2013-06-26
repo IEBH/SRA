@@ -459,10 +459,6 @@ footer hr {
   background-color: #aaaa55;
   *background-color: #aaaa55;
 }
-.navbar .dropdown-menu a:hover {
-  background: none;
-  color: #000;
-}
 .well {
   background-color: #fff;
   border: 1px solid #ccc;

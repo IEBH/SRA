@@ -1,3 +1,10 @@
+/* Reference menu {{{ */
+.navbar .nav .dropdown a {
+	text-overflow: ellipsis;
+	max-width: 400px;
+	overflow: hidden;
+}
+/* }}} */
 /* Style fixes {{{ */
 body {
 	overflow-x: hidden;

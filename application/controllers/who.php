@@ -63,4 +63,18 @@ class Who extends CI_Controller {
 		));
 		$this->site->Footer();
 	}
+
+	function Add($ref = null) {
+		if (!$ref)
+			$this->site->redirect('/');
+		if (!$paper = $this->Searchwho->Get($ref))
+			$this->Site->Error("Cannot find paper with reference $ref");
+		$this->Basket->Add("who-$ref", $paper);
+		$this->site->RedirectBack('/references');
+	}
+
+	function Remove($ref = null) {
+		$this->Basket->Remove($ref);
+		$this->site->RedirectBack('/references');
+	}
 }

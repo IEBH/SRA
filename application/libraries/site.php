@@ -178,6 +178,16 @@ class Site {
 	}
 
 	/**
+	* Redirect backwards to the previous page
+	* If the previous page is not available use the provided URL instead
+	* This is really just a convenience function for Redirect()
+	* @param string $url The URL to redirect to if the referer URL is not available
+	*/
+	function RedirectBack($url = '/') {
+		$this->Redirect(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $url);
+	}
+
+	/**
 	* Checks that the user is not posting the same thing twice
 	* If URL is specified, a fatal call to ->Redirect is made if the post is not unique
 	* If URL is not specified this function returns FALSE, otherwise TRUE

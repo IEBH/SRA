@@ -52,7 +52,7 @@ class Searchwho extends CI_Model {
 		preg_match('!Primary sponsor.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['sponsor'] = $matches[1];
 		preg_match('!Public title.*?<span.*?>(.*?)</span>!sm', $content, $matches);
-		$paper['title-public'] = $matches[1];
+		$paper['title'] = $paper['title-public'] = $matches[1];
 		preg_match('!Scientific title.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['title-scientific'] = $matches[1];
 		preg_match('!Target sample size.*?<span.*?>(.*?)</span>!sm', $content, $matches);
@@ -63,6 +63,7 @@ class Searchwho extends CI_Model {
 		$paper['url-real'] = $matches[1];
 		preg_match('!Study type.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['study-type'] = $matches[1];
+		$paper['url'] = "/who/paper/$ref";
 		return $paper;
 	}
 }
