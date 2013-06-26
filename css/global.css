@@ -1,14 +1,8 @@
-/* FIXES: Waveform {{{ */
-.waveform-readonly {
-	padding-top: 5px;
-	display: block;
+/* Style fixes {{{ */
+body {
+	overflow-x: hidden;
 }
 
-.waveform-span {
-	padding: 5px 20px;
-}
-/* }}} */
-/* Style fixes {{{ */
 .masthead input[type=text] {
 	padding: 18px 24px;
 	font-size: 14pt;
@@ -56,5 +50,15 @@ footer {
 
 .span12 > p {
 	padding: 10px;
+}
+/* }}} */
+/* FIXES: Waveform {{{ */
+.waveform-readonly {
+	padding-top: 5px;
+	display: block;
+}
+
+.waveform-span {
+	padding: 5px 20px;
 }
 /* }}} */
