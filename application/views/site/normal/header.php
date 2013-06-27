@@ -7,7 +7,7 @@
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				<a class="brand" href="<?=SITE_ROOT?>"><span class="first">CREBP</span> <span class="second">Search</span></a>
-				<? if ($references = $this->Basket->GetAll()) { ?>
+				<? if (isset($this->Basket) && $references = $this->Basket->GetAll()) { ?>
 				<ul class="nav pull-right">
 					<li id="fat-menu" class="dropdown">
 						<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
