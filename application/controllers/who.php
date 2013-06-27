@@ -38,6 +38,10 @@ class Who extends CI_Controller {
 			->Title('URL (WHO site)');
 		$this->waveform->Define('url-real')
 			->Title('URL');
+		$this->waveform->Define('contact-name')
+			->Title('Contact Name');
+		$this->waveform->Define('contact-email')
+			->Title('Contact Email');
 		$this->waveform->Define('register');
 		$this->waveform->Define('date-refresh')
 			->Title('Last refreshed on');
@@ -53,6 +57,10 @@ class Who extends CI_Controller {
 			->Title('Recruitment status');
 		$this->waveform->Define('study-type')
 			->Title('Study type');
+		$this->waveform->Define('study-design')
+			->Title('Study design');
+		$this->waveform->Define('primary-outcomes')
+			->Title('Primary Outcomes');
 
 		$this->waveform->Set($paper);
 		$this->waveform->Apply('readonly');

@@ -65,6 +65,27 @@ class Searchwho extends CI_Model {
 		$paper['url-real'] = $matches[1];
 		preg_match('!Study type.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['study-type'] = $matches[1];
+		preg_match('!Study design.*?<td.*?>(.*?)</td>!sm', $content, $matches);
+		$paper['study-design'] = $this->Clean(strtr($matches[1], array('</span>' => ', ', '<br>' => ', ', '<br/>' => ', ')));
+		$paper['study-design'] = trim(trim($paper['study-design'], ','));
+
+		preg_match('!Name:.*?<td.*?>(.*?)</td>!sm', $content, $matches);
+		$paper['contact-name'] = $this->Clean($matches[1]);
+		preg_match('!Email:.*?<td.*?>(.*?)</td>!sm', $content, $matches);
+		$paper['contact-email'] = $this->Clean($matches[1]);
+
+		preg_match('!Primary Outcome\(s\).*?<tr.*?>(.*?)</table>!sm', $content, $matches);
+		$paper['primary-outcomes'] = $this->Clean(strtr($matches[1], array('</td>' => ', ')));
+		$paper['primary-outcomes'] = trim(trim($paper['primary-outcomes'], ','));
+
 		return $paper;
+	}
+
+	function Clean($string) {
+		$string = strip_tags($string);
+		$string = trim(strtr($string, array('&nbsp;' => ' ')));
+		$string = preg_replace('/\s+/', ' ', $string);
+		$string = preg_replace('/\s+,/', ',', $string);
+		return $string;
 	}
 }
