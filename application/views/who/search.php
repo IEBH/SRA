@@ -13,9 +13,9 @@
 	<? foreach ($papers as $paper) { ?>
 	<tr>
 		<? if ($this->Basket->Has('who-' . $paper['paperid'])) { ?>
-		<td><a href="/who/remove/<?=$paper['paperid']?>" class="btn btn-success"><i class="icon-check"></i></td>
+		<td><a href="<?=SITE_ROOT?>who/remove/<?=$paper['paperid']?>" class="btn btn-success"><i class="icon-check"></i></td>
 		<? } else { ?>
-		<td><a href="/who/add/<?=$paper['paperid']?>" class="btn"><i class="icon-check-empty"></i></td>
+		<td><a href="<?=SITE_ROOT?>who/add/<?=$paper['paperid']?>" class="btn"><i class="icon-check-empty"></i></td>
 		<? } ?>
 		<td><a href="<?=$paper['url']?>"><?=$paper['paperid']?></a></td>
 		<td><a href="<?=$paper['url']?>"><?=$paper['name']?></a></td>

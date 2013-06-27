@@ -4,7 +4,7 @@
 		<h1><?=SITE_TITLE?></h1>
 		<p><a href="http://www.crebp.net.au/">Centre for Research in Evidence-Based Practice</a></p>
 		<p>
-			<form action="/who/search" method="get" class="form-horizontal">
+			<form action="<?=SITE_ROOT?>who/search" method="get" class="form-horizontal">
 				<div class="input-append">
 					<input type="text" name="q" class="input-xlarge btn-large">
 					<button action="submit" class="btn btn-primary btn-large"><i class="icon-search"></i></button>

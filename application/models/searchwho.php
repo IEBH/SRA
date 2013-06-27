@@ -27,7 +27,7 @@ class Searchwho extends CI_Model {
 			$papers[$match[1]] = array(
 				'paperid' => $match[1],
 				'source' => 'WHO',
-				'url' => "/who/paper/{$match[1]}",
+				'url' => SITE_ROOT . "who/paper/{$match[1]}",
 				'name' => $match[2],
 				'in-basket' => isset($_SESSION['basket'][$match[1]]),
 			);
@@ -39,7 +39,7 @@ class Searchwho extends CI_Model {
 		$paper = array(
 			'ref' => $ref,
 			'url-who' => "http://apps.who.int/trialsearch/trial.aspx?trialid=$ref",
-			'url' => "/who/paper/$ref",
+			'url' => SITE_ROOT . "who/paper/$ref",
 			'source' => 'who',
 		);
 
