@@ -19,7 +19,6 @@
 							<? } ?>
 							<li class="divider"></li>
 							<li><a href="/references/clear"><i class="icon-trash"></i> Clear all</a></li>
-							<li class="divider"></li>
 							<li><a href="/references/export"><i class="icon-share-alt"></i> Export all</a></li>
 						</ul>
 					</li>
