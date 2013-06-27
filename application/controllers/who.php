@@ -54,7 +54,8 @@ class Who extends CI_Controller {
 			->Title('Study type');
 
 		$this->waveform->Set($paper);
-		$this->waveform->Apply('readonly', array_keys($this->waveform->Fields));
+		$this->waveform->Apply('readonly');
+		$this->waveform->Apply('link', 'url-who, url-real');
 		// }}}
 
 		$this->site->Header("WHO Paper | $ref");
