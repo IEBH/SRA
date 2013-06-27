@@ -2,11 +2,11 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-if (preg_match('/\.mfdc\.biz$/', $_SERVER['SERVER_NAME'])) {
+if (preg_match('/crebp\.net\.au/', $_SERVER['SERVER_NAME'])) {
 	$db['default']['hostname'] = 'localhost';
-	$db['default']['database'] = '';
-	$db['default']['username'] = '';
-	$db['default']['password'] = '';
+	$db['default']['database'] = 'cre21534_searchtool';
+	$db['default']['username'] = 'cre21534_searcht';
+	$db['default']['password'] = 'J8xGfzmPRP37';
 } else {
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['database'] = 'crebpsearch';
