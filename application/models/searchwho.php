@@ -39,6 +39,8 @@ class Searchwho extends CI_Model {
 		$paper = array(
 			'ref' => $ref,
 			'url-who' => "http://apps.who.int/trialsearch/trial.aspx?trialid=$ref",
+			'url' => "/who/paper/$ref",
+			'source' => 'who',
 		);
 
 		preg_match('!Register.*?<span.*?>(.*?)</span>!sm', $content, $matches);
@@ -59,11 +61,10 @@ class Searchwho extends CI_Model {
 		$paper['target-sample-size'] = $matches[1];
 		preg_match('!Recruitment status.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['recruitment-status'] = $matches[1];
-		preg_match('!URL.*?<a.*?>(.*?)</a>!sm', $content, $matches);
+		preg_match('!URL:.*?<a id=".*?" href="(.*?)"!sm', $content, $matches);
 		$paper['url-real'] = $matches[1];
 		preg_match('!Study type.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['study-type'] = $matches[1];
-		$paper['url'] = "/who/paper/$ref";
 		return $paper;
 	}
 }
