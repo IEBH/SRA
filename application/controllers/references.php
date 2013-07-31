@@ -33,7 +33,7 @@ class References extends CI_Controller {
 			echo '<ref-type name="Journal Article">17</ref-type>';
 
 			echo '<contributors><authors><author><style face="normal" font="default" size="100%">' . $ref['ref'] . '</style></author></authors></contributors>';
-			echo '<auth-address><style face="normal" font="default" size="100%">FIXME: CONTACT_NAME + CONTACT_EMAIL</style></auth-address>';
+			echo '<auth-address><style face="normal" font="default" size="100%">' . $ref['contact-name'] . ($ref['contact-email'] ? ' - ' . $ref['contact-email'] : '') . '</style></auth-address>';
 			echo '<titles>';
 				echo '<title><style face="normal" font="default" size="100%">' . $ref['title'] . '</style></title>';
 				echo '<secondary-title><style face="normal" font="default" size="100%">' . '</style></secondary-title>';
@@ -45,13 +45,13 @@ class References extends CI_Controller {
 			echo '<volume><style face="normal" font="default" size="100%">' . '</style></volume>';
 			echo '<number><style face="normal" font="default" size="100%">' . '</style></number>';
 			echo '<section><style face="normal" font="default" size="100%">' . '</style></section>';
-			echo '<dates>'
+			echo '<dates>';
 				echo '<year><style face="normal" font="default" size="100%">' . '</style></year>';
 				echo '<pub-dates><date><style face="normal" font="default" size="100%">' . $ref['date-ref'] . '</style></date></pub-dates>';
 			echo '</dates>';
-			echo '<abstract><style face="normal" font="default" size="100%">FIXME: PRIMARY_OUTCOMES</style></abstract>';
+			echo '<abstract><style face="normal" font="default" size="100%">' . $ref['primary-outcomes'] . '</style></abstract>';
 			echo '<urls><related-urls><url><style face="normal" font="default" size="100%">' . $ref['url-real'] . '</style></url></related-urls></urls>';
-			echo '<research-notes><style face="normal" font="default" size="100%">FIXME: STUDY_TYPE + STUDY_DESIGN</style></research-notes>';
+			echo '<research-notes><style face="normal" font="default" size="100%">STUDY TYPE' . "\n" . $ref['study-type'] . "\n\nSTUDY DESIGN\n" . $ref['study-design'] . '</style></research-notes>';
 
 			echo '</record>';
 		}
