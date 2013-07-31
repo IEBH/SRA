@@ -22,7 +22,8 @@ class Who extends CI_Controller {
 	}
 
 	function Paper($ref = null) {
-		$ref = implode('/', func_get_args());
+		$args = func_get_args();
+		$ref = implode('/', $args);
 		if (!$ref)
 			$this->site->redirect('/');
 		if (!$paper = $this->Searchwho->Get($ref))
@@ -75,7 +76,8 @@ class Who extends CI_Controller {
 	}
 
 	function Add($ref = null) {
-		$ref = implode('/', func_get_args());
+		$args = func_get_args();
+		$ref = implode('/', $args);
 		if (!$ref)
 			$this->site->redirect('/');
 		if (!$paper = $this->Searchwho->Get($ref))
@@ -85,7 +87,8 @@ class Who extends CI_Controller {
 	}
 
 	function Remove($ref = null) {
-		$ref = implode('/', func_get_args());
+		$args = func_get_args();
+		$ref = implode('/', $args);
 		$this->Basket->Remove($ref);
 		$this->site->RedirectBack('/references');
 	}
