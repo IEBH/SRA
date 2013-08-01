@@ -38,6 +38,12 @@ class Curl extends CI_Model {
 
 			if(!$content = curl_exec($curl))
 				$this->site->Error('CURL Error: ' . curl_error($curl));
+
+			if (!mysql_ping()) { // If the MySQL connection dropped (WHO connections can take AGES) reestablish
+				$this->db->close();
+				$this->db->initialize();
+			}
+
 			$this->SaveCached($url, $data, $content);
 			return $content;
 		}
