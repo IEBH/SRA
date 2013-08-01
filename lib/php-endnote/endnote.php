@@ -32,6 +32,24 @@ class PHPEndNote {
 	var $refs;
 
 	/**
+	* Add a reference to the $refs array
+	* This function also expands simple strings into arrays (suported: author => authors, url => urls)
+	* @param $ref array The array to add to the stack
+	*/
+	function Add($ref) {
+		// Expand singular -> plurals
+		foreach (array(
+			'author' => 'authors',
+			'url' => 'urls',
+		) as $single => $plural)
+			if (isset($ref[$single])) {
+				$ref[$plural] = array($ref[$single]);
+				unset($ref[$single]);
+			}
+		$this->refs[] = $ref;
+	}
+
+	/**
 	* Return the raw XML of the $refs array
 	* @see $refs
 	*/
@@ -76,16 +94,20 @@ class PHPEndNote {
 				$out .= '<pub-dates><date><style face="normal" font="default" size="100%">' . (isset($ref['year']) && $ref['year'] ? $ref['year'] : '') . '</style></date></pub-dates>';
 			$out .= '</dates>';
 
-			$out .= '<urls><related-urls>';
-				foreach ($urls as $url)
-					$out .= '<url><style face="normal" font="default" size="100%">' . $url . '</style></url>';
-			$out .= '</related-urls></urls>';
+			if (isset($ref['urls']) && $ref['urls']) {
+				$out .= '<urls><related-urls>';
+					foreach ($ref['urls'] as $url)
+						$out .= '<url><style face="normal" font="default" size="100%">' . $url . '</style></url>';
+				$out .= '</related-urls></urls>';
+			}
+
 			$out .= '<research-notes><style face="normal" font="default" size="100%">' . (isset($ref['notes']) && $ref['notes'] ? $ref['notes'] : '') . '</style></research-notes>';
 
 			$out .= '</record>';
 			$number++;
 		}
-		echo '</records></xml>';
+		$out .= '</records></xml>';
+		return $out;
 	}
 
 	/**
