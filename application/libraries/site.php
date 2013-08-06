@@ -158,6 +158,17 @@ class Site {
 	}
 
 	/**
+	* Trigger a 404 error
+	* This function is always fatal
+	*/
+	function Error404() {
+		header('HTTP/1.0 404 Not Found');
+		echo "<h1>404 Not Found</h1>";
+		echo "The page that you have requested could not be found.";
+		exit();
+	}
+
+	/**
 	* Fatal redirect to another address
 	* If $text is set this function will do a soft redirect
 	*
