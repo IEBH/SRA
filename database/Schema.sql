@@ -42,11 +42,11 @@ CREATE TABLE libraries (
 	edited int
 );
 CREATE INDEX libraries_userid ON libraries(userid);
-INSERT INTO libraries(null, 1, 'Sample library', 'active', null, null);
+INSERT INTO libraries VALUES (null, 1, 'Sample library', 'active', null, null);
 -- }}}
 -- References {{{
-DROP TABLE IF EXISTS references;
-CREATE TABLE references (
+DROP TABLE IF EXISTS `references`;
+CREATE TABLE `references` (
 	referenceid int primary key auto_increment, 
 	libraryid int,
 	status enum ('active', 'deleted') default 'active', 
@@ -56,5 +56,5 @@ CREATE TABLE references (
 	authors text,
 	data text
 );
-CREATE INDEX references_libraryid ON references(libraryid);
+CREATE INDEX references_libraryid ON `references`(libraryid);
 -- }}}
