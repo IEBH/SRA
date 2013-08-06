@@ -36,7 +36,6 @@ class References extends CI_Controller {
 				'notes' => 'STUDY TYPE' . "\n" . $ref['study-type'] . "\n\nSTUDY DESIGN\n" . $ref['study-design'],
 			));
 		}
-		//$this->endnote->OutputXML();
 		echo $this->endnote->GetXML();
 	}
 }
