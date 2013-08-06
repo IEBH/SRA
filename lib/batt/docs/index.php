@@ -20,7 +20,7 @@
 
 			if (/string|int|array|boolean/.exec(text)) {
 				me.addClass('badge-success');
-			} else if (/function|object/.exec(text)) {
+			} else if (/function|object|callback|method/.exec(text)) {
 				me.addClass('badge-important');
 			} else if (/optional/.exec(text)) {
 				me.addClass('badge-info');
@@ -34,7 +34,7 @@
 			var ptable = $('table[data-properties="' + from + '"]');
 			while (1) {
 				var inheritedRows = ptable.find('tr:not(:first)').clone();
-				inheritedRows.find('td:eq(1)').append(' <span class="badge badge-inverse">Inherited from ' + from + '</span>');
+				inheritedRows.find('td:eq(1)').append(' <a href="#' + from + '" class="badge badge-inverse" title="Inherited from ' + from + '"><i class="icon-share icon-white"></i>' + from + '</a>');
 				me.find('tbody').append(inheritedRows);
 				if (ptable.data('properties-inherit')) { // Parent table in turn inherits
 					from = ptable.data('properties-inherit');
@@ -345,6 +345,57 @@ $('#example').batt([
 		]
 	}
 ]);
+</pre>
+
+	<h2>Initalizing Batt</h2>
+	<p>There are several methods to initalize a Batt form on your webpage.</p>
+
+	<h3>As an inline Script block</h3>
+	<p>This is probably the easiest method of incoprating Batt within your project as it involves no prior JavaScript knowledge or integration.</p>
+	<p>Batt can load any <code>&lt;script&gt;</code> block provided that the attribute <code>type="batt"</code> is set to seperate it from normal JavaScript code.</p>
+<pre>
+&lt;script type="batt"&gt;
+[
+	{
+		type: 'heading',
+		text: 'Hello World'
+	}
+]
+&lt;/script&gt;
+</pre>
+	<p>Batt also supports remote loading of scripts via the <code>src</code> attribute, just like normal JavaScript.</p>
+<pre>
+&lt;script type="batt" src="/my/batt/forms/hello_world.batt"&gt;&lt;/script&gt;
+</pre>
+	<p><span class="label label-info">TIP</span> When any <code>&lt;script src="something"&gt;</code> tags are present on the page Batt will wait until all resources are loaded in and process remote resources <em>before</em> local tags. This is useful for loading in pre-requisite scripts such as schema files which can contain <code>batt_db_table</code> objects.</p>
+<pre>
+&lt;script type="batt" src="/schema.batt"&gt;&lt;/script&gt;
+&lt;script type="batt"&gt;
+[
+	{
+		uses: 'table_from_schema',
+		id: 'widgets',
+		type: 'number'
+	}
+]
+&lt;/script&gt;
+</pre>
+
+
+	<h3>As a jQuery function</h3>
+	<p>Simply call <code>batt(json)</code> on the object of your choice:</p>
+<pre>
+$('#selector-id').batt([ {type: 'heading', text: 'Hello World'} ]);
+</pre>
+
+	<h3>Via the '$.batt' global</h3>
+	<p>This method is usually used to define global Batt objects such as the <code>batt_db_table</code> object type as it does not require a specific HTML element to operate on.</p>
+<pre>
+$.batt([ {type: 'db_table', // DB TABLE SPEC HERE // } ]);
+</pre>
+	<p>However you can also set an element during the batt specification:</p>
+<pre>
+$.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE // } ]);
 </pre>
 
 	<h2>Object Reference</h2>
@@ -974,6 +1025,12 @@ $('#example').batt([
 			<th>Description</th>
 		</tr>
 	</table>
+
+	<h2>Gotchas!</h2>
+	<p>There are a few things in mind when coding up Batt forms. Some of these our out of our control (e.g. browser specific issues) that we have had to work around in one way or another.</p>
+	<ul>
+		<li><code>class</code> is not a supported property in Internet Explorer - Since IE compiles scripts using 'class' as a programming language construct using it to define object classes is discouraged. Use <code>classes</code> instead.</li>
+	</ul>
 
 	<!-- Page closing {{{ --!>
 			</div>

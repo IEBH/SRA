@@ -1,33 +1,62 @@
-	<link href="/lib/bootstrap-combined.min.css" rel="stylesheet">
-	<link href="/lib/bootstrap-responsive.min.css" rel="stylesheet">
-	<script src="/lib/jquery-1.9.1.min.js"></script>
-	<script src="/lib/bootstrap.min.js"></script>
-	<script src="/lib/script.min.js"></script>
-	<script src="/lib/mustache.js"></script>
+<?
+/**
+* Enable Batt debug mode by correctly working out where the hell we are and including the right JS files
+* @param $batt_load array An array of the different modules to load in (booleans). See below for values
+*/
+if (!isset($batt_load)) // Nothing specified - assume...
+	$batt_load = array(
+		'bootstrap' => true,
+		'jquery' => true,
+		'script' => true,
+		'mustache' => true,
+	);
 
-	<script type="text/javascript" src="/src/batt_object"></script>
-	<script type="text/javascript" src="/src/batt_date"></script>
-	<script type="text/javascript" src="/src/batt_choice"></script>
-	<script type="text/javascript" src="/src/batt_choice_radio"></script>
+$mydir = explode('/', dirname(__FILE__));
+$cwd = explode('/', getcwd());
 
-	<script type="text/javascript" src="/src/batt_container"></script>
-	<script type="text/javascript" src="/src/batt_db_table"></script>
-	<script type="text/javascript" src="/src/batt_dropdown"></script>
-	<script type="text/javascript" src="/src/batt_form"></script>
-	<script type="text/javascript" src="/src/batt_table"></script>
-	<script type="text/javascript" src="/src/batt_tabs"></script>
+// Where are we relative to the cwd()
+$batt_path = implode('/', array_slice($mydir, count(array_intersect($mydir, $cwd)), -1));
+if ($batt_path) // Prefix with '/' if it is actually something other than root
+	$batt_path = "/$batt_path";
+?>
+	<? if ($batt_load['jquery']) { ?>
+	<script src="<?=$batt_path?>/lib/jquery-1.9.1.min.js"></script>
+	<? } ?>
+	<? if ($batt_load['bootstrap']) { ?>
+	<link href="<?=$batt_path?>/lib/bootstrap-combined.min.css" rel="stylesheet">
+	<link href="<?=$batt_path?>/lib/bootstrap-responsive.min.css" rel="stylesheet">
+	<script src="<?=$batt_path?>/lib/bootstrap.min.js"></script>
+	<? } ?>
+	<? if ($batt_load['script']) { ?>
+	<script src="<?=$batt_path?>/lib/script.min.js"></script>
+	<? } ?>
+	<? if ($batt_load['mustache']) { ?>
+	<script src="<?=$batt_path?>/lib/mustache.js"></script>
+	<? } ?>
 
-	<script type="text/javascript" src="/src/batt_input"></script>
-	<script type="text/javascript" src="/src/batt_string"></script>
-	<script type="text/javascript" src="/src/batt_number"></script>
-	<script type="text/javascript" src="/src/batt_text"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_object.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_date.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_choice.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_choice_radio.js"></script>
 
-	<script type="text/javascript" src="/src/batt_heading"></script>
-	<script type="text/javascript" src="/src/batt_html"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_container.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_db_table.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_dropdown.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_form.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_table.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_tabs.js"></script>
 
-	<script type="text/javascript" src="/src/batt_link"></script>
-	<script type="text/javascript" src="/src/batt_button"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_input.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_string.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_number.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_text.js"></script>
 
-	<script type="text/javascript" src="/src/batt_unknown"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_heading.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_html.js"></script>
 
-	<script type="text/javascript" src="/src/batt.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_link.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_button.js"></script>
+
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_unknown.js"></script>
+
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt.js"></script>

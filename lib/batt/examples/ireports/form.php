@@ -69,14 +69,14 @@ $('#batt').batt([
 			{
 				type: 'button',
 				action: 'save',
-				class: 'btn btn-success',
+				classes: 'btn btn-success',
 				text: '<i class="icon-ok"></i> Save'
 			}
 		]
 	},
 	{
 		type: 'container',
-		class: 'box',
+		classes: 'box',
 		children: [
 			{
 				type: 'table',

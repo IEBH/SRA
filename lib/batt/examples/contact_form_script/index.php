@@ -5,10 +5,11 @@
 	<title>Batt test form</title>
 
 	<? include('../../src/batt_debug.php') ?>
-<script>
-$(function() {
+</head>
+<body>
 
-$('#batt').batt([
+<script type="batt">
+[
 	{
 		type: 'heading',
 		title: 'Contact us'
@@ -34,14 +35,8 @@ $('#batt').batt([
 		text: '<i class="icon-envelope"></i> Send email',
 		classes: 'btn btn-success'
 	}
-]);
-
-
-});
+]
 </script>
 
-</head>
-<body>
-	<div id="batt"></script>	
 </body>
 </html>
