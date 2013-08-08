@@ -6,10 +6,10 @@
 		title: 'Import an EndNode file'
 	},
 	{
-		id: 'name',
+		id: 'title',
 		type: 'string',
 		title: 'Name of library',
-		xdefault: 'My Imported Library'
+		default: 'My Imported Library'
 	},
 	{
 		id: 'file',	

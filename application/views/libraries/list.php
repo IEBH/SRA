@@ -18,11 +18,11 @@
 				children: [
 					{
 						title: 'Edit',
-						action: '/libraries/edit/{{data.id}}'
+						action: '/libraries/edit/{{data._id}}'
 					},
 					{
 						title: 'Delete',
-						action: '/libraries/delete/{{data.id}}'
+						action: '/libraries/delete/{{data._id}}'
 					},
 				]
 			},
@@ -30,7 +30,7 @@
 				type: 'link',
 				title: 'Title',
 				text: "{{data.title}}",
-				action: '/libraries/edit/{{data.id}}'
+				action: '/libraries/edit/{{data._id}}'
 			}
 		]
 	},
