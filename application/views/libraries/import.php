@@ -2,39 +2,25 @@
 <script type="batt">
 [
 	{
-		uses: 'libraries',
-		type: 'table',
-		dataSource: {
-			table: 'libraries',
-			filter: {},
-		},
-		columns: [
-			{
-				type: 'dropdown',
-				children: [
-					{
-						title: 'Edit',
-						action: 'form.php#{{data.id}}'
-					},
-					{
-						title: 'Delete',
-						action: 'FIXME#{{data.id}}'
-					},
-				]
-			},
-			{
-				type: 'link',
-				title: 'Title',
-				text: "{{data.title}}",
-				action: 'form.php#{{data.id}}'
-			}
-		]
+		type: 'heading',
+		title: 'Import an EndNode file'
+	},
+	{
+		id: 'name',
+		type: 'string',
+		title: 'Name of library',
+		xdefault: 'My Imported Library'
+	},
+	{
+		id: 'file',	
+		type: 'file',
+		title: 'EndNote XML file'
 	},
 	{
 		type: 'button',
-		action: 'FIXME#',
-		text: '<i class="icon-plus"></i> Create new Inpection Report',
-		class: 'btn btn-success'
+		action: 'submit',
+		text: '<i class="icon-plus"></i> Import library',
+		classes: 'btn btn-success'
 	}
 ]
 </script>
