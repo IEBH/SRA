@@ -420,6 +420,7 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 				<li><code>batt_number</code></li>
 				<li><code>batt_text</code></li>
 			</ul></li>
+			<li><code>batt_file</code></li>
 			<li><code>batt_heading</code></li>
 			<li><code>batt_html</code>
 			<li><code>batt_link</code>
@@ -680,6 +681,53 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<td><em>Built-in</em></td>
 			<td>The function run when the form is submitted</td>
 		</tr>
+		<tr>
+			<td>method</td>
+			<td><span>String</span></td>
+			<td><em>html</em></td>
+			<td>The method of submitting the form.
+				<ul>
+					<li><code>POST</code> - Submit a regular HTML form via HTTP/POST</li>
+					<li><code>BATT</code> - Submit a Batt AJAX request to a Batt server</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+
+	<h3>batt_file</h3>
+	<p>A single file upload button.</p>
+
+	<table class="properties" data-properties="batt_file" data-properties-inherit="batt_object">
+		<tr>
+			<th>Property</th>
+			<th>Attributes</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>text</td>
+			<td><span>String</span></td>
+			<td><code>&lt;i class="icon-file"&gt;&lt;/i&gt; Select file...</code></td>
+			<td>The text on the button when no file is selected</td>
+		</tr>
+		<tr>
+			<td>textUploading</td>
+			<td><span>String</span></td>
+			<td><code>&lt;i class="icon-file-alt"&gt;&lt;/i&gt; {{file}}</code></td>
+			<td>The text on the button when a file is being uploaded</td>
+		</tr>
+		<tr>
+			<td>classes</td>
+			<td><span>String</span></td>
+			<td><code>btn</code></td>
+			<td>CSS classes for the upload button to use</td>
+		</tr>
+		<tr>
+			<td>classesUploading</td>
+			<td><span>String</span></td>
+			<td><code>btn btn-success</code></td>
+			<td>CSS classes for the upload button to use when a file is being uploaded</td>
+		</tr>
 	</table>
 
 	<h3>batt_heading</h3>
@@ -711,7 +759,7 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<th>Description</th>
 		</tr>
 		<tr>
-			<td>class</td>
+			<td>classes</td>
 			<td><span>String</span></td>
 			<td><em>Null</em></td>
 			<td>Optional number of classes for the HTML to inherit</td>

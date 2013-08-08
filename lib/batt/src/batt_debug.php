@@ -51,6 +51,7 @@ if ($batt_path) // Prefix with '/' if it is actually something other than root
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_number.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_text.js"></script>
 
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_file.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_heading.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_html.js"></script>
 

@@ -4,7 +4,7 @@
 	},
 	"payload": [
 		{
-			"_id_": 1,
+			"_id": 1,
 			"id": 1,
 			"creator": 1,
 			"classification": "civil",
@@ -18,7 +18,7 @@
 			"status": "active"
 		},
 		{
-			"_id_": 2,
+			"_id": 2,
 			"id": 2,
 			"creator": 1,
 			"classification": "structural",
@@ -32,7 +32,7 @@
 			"status": "active"
 		},
 		{
-			"_id_": 3,
+			"_id": 3,
 			"id": 3,
 			"creator": 1,
 			"classification": "civil",
@@ -46,7 +46,7 @@
 			"status": "active"
 		},
 		{
-			"_id_": 4,
+			"_id": 4,
 			"id": 4,
 			"creator": 1,
 			"classification": "traffic",
@@ -60,7 +60,7 @@
 			"status": "active"
 		},
 		{
-			"_id_": 5,
+			"_id": 5,
 			"id": 5,
 			"creator": 1,
 			"classification": "structural",
@@ -74,7 +74,7 @@
 			"status": "active"
 		},
 		{
-			"_id_": 6,
+			"_id": 6,
 			"id": 6,
 			"creator": 1,
 			"classification": "structural",

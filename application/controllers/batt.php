@@ -70,7 +70,7 @@ class Batt extends CI_Controller {
 			$row = array();
 			if (!isset($data[$_REQUEST['key']])) // If primary key is not present - panic
 				$this->site->JSONError('Primary key not returned in data feed');
-			$row['_id_'] = $data[$_REQUEST['key']];
+			$row['_id'] = $data[$_REQUEST['key']];
 			foreach ($_REQUEST['fields'] as $col)
 				$row[$col] = isset($col) ? $data[$col] : null;
 			$json['payload'][] = $row;
