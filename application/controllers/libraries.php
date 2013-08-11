@@ -16,6 +16,16 @@ class Libraries extends CI_Controller {
 		$this->site->footer();
 	}
 
+	function View($libraryid = null) {
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+
+		$this->site->header($library['title']);
+		$this->load->view('lib/batt');
+		$this->load->view('libraries/view');
+		$this->site->footer();
+	}
+
 	function Edit($libraryid = null) {
 		$this->site->header('Manage your libraries');
 		$this->load->view('lib/batt');
@@ -34,9 +44,7 @@ class Libraries extends CI_Controller {
 			require('lib/php-endnote/endnote.php');
 			$this->endnote = new PHPEndNote();
 			$this->endnote->SetXMLFile($_FILES['file']['tmp_name']);
-			echo "<pre>";
 			foreach ($this->endnote->refs as $ref) {
-				print_r($ref);
 				$this->Reference->Create(array(
 					'libraryid' => $libraryid,
 					'title' => $ref['title'],
@@ -44,6 +52,7 @@ class Libraries extends CI_Controller {
 					'data' => json_encode($ref),
 				));
 			}
+			$this->site->Redirect("/libraries/view/$libraryid");
 		} else { 
 			$this->site->Header('Import References');
 			$this->load->view('lib/batt');

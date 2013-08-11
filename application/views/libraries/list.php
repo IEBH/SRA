@@ -17,8 +17,16 @@
 				type: 'dropdown',
 				children: [
 					{
+						title: 'View',
+						action: '/libraries/view/{{data._id}}'
+					},
+					{
 						title: 'Edit',
 						action: '/libraries/edit/{{data._id}}'
+					},
+					{
+						title: 'Detect duplicates',
+						action: '/libraries/dupes/{{data._id}}'
 					},
 					{
 						title: 'Delete',
@@ -30,7 +38,7 @@
 				type: 'link',
 				title: 'Title',
 				text: "{{data.title}}",
-				action: '/libraries/edit/{{data._id}}'
+				action: '/libraries/view/{{data._id}}'
 			}
 		]
 	},

@@ -1,5 +1,12 @@
 <?
 class Library extends CI_Model {
+	function Get($libraryid) {
+		$this->db->from('libraries');
+		$this->db->where('libraryid', $libraryid);
+		$this->db->limit(1);
+		return $this->db->get()->row_array();
+	}
+
 	function Create($data) {
 		$fields = array();
 		foreach (qw('title') as $field)

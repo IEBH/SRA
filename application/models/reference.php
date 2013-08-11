@@ -12,4 +12,19 @@ class Reference extends CI_Model {
 			return $this->db->insert_id();
 		}
 	}
+
+	function GetAll($where = null, $orderby = 'referenceid', $limit = null, $offset = null) {
+		$this->db->from('references');
+		if ($where)
+			$this->db->where($where);
+		if ($orderby)
+			$this->db->order_by($orderby);
+		if ($limit || $offset)
+			$this->db->limit($limit,$offset);
+		return $this->db->get()->result_array();
+	}
+
+	function Compare($a, $b) {
+		return TRUE;
+	}
 }
