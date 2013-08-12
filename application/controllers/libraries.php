@@ -44,12 +44,17 @@ class Libraries extends CI_Controller {
 			require('lib/php-endnote/endnote.php');
 			$this->endnote = new PHPEndNote();
 			$this->endnote->SetXMLFile($_FILES['file']['tmp_name']);
+
+			$json = json_encode($ref);
+			unset($json['authors']); // Scrap fields are are storing elsewhere anyway
+			unset($json['title']);
+
 			foreach ($this->endnote->refs as $ref) {
 				$this->Reference->Create(array(
 					'libraryid' => $libraryid,
 					'title' => $ref['title'],
 					'authors' => implode(' AND ', $ref['authors']),
-					'data' => json_encode($ref),
+					'data' => $json,
 				));
 			}
 			$this->site->Redirect("/libraries/view/$libraryid");

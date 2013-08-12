@@ -13,6 +13,44 @@ class Reference extends CI_Model {
 		}
 	}
 
+	/**
+	* Save a reference
+	* NOTE: If $data['data'] is an array it will be converted back into JSON before saving - making it safe to pass complex arrays
+	* NOTE: If any unknown field is passed as a key for $data it will be saved inside $data['data'] (as JSON)
+	* @param int $referenceid The referenceID to save
+	* @param array $data The data to save back to the object
+	*/
+	function Save($referenceid, $data) {
+		$fields = array();
+		foreach (qw('libraryid title authors data altdata') as $field)
+			if (isset($data[$field])) {
+				$fields[$field] = $data[$field];
+				unset($data[$field]);
+			}
+
+		if ($data) { // Still have unknown fields to save
+			if (isset($fields['data'])) { // Incomming (possible) JSON
+				if (is_string($fields['data'])) // Not already an array - convert
+					$fields['data'] = json_decode($fields['data'], true);
+			} else { // Dont have any JSON to work with - fetch it
+				$record = $this->Get($referenceid);
+				$fields['data'] = $record['data'];
+			}
+
+			foreach ($data as $key => $value) // Save unknown fields
+				$fields['data'][$key] = $value;
+		}
+
+		if ($fields) {
+			$fields['edited'] = time();
+			if (isset($fields['data']) && is_array($fields['data'])) // Convert data back into JSON if its an array
+				$fields['data'] = json_encode($fields['data']);
+			$this->db->where('referenceid', $referenceid);
+			$this->db->update('references', $fields);
+			return true;
+		}
+	}
+
 	function GetAll($where = null, $orderby = 'referenceid', $limit = null, $offset = null) {
 		$this->db->from('references');
 		if ($where)
@@ -38,7 +76,8 @@ class Reference extends CI_Model {
 	*/
 	function Compare($a, $b) {
 		$isdupe = 0;
-		$alts = array();
+		$alts = array(); // Alternate values we found
+		$save = array(); // Data we should just save to A
 
 		// Simple field comparison
 		foreach (qw('title authors') as $f) {
@@ -50,8 +89,31 @@ class Reference extends CI_Model {
 			}
 		}
 
+		// We've determined the data is a duplicate - now decide what to merge before we delete $b
 		if ($isdupe) {
+			$adata = json_decode($a['data'], true);
+			$bdata = json_decode($b['data'], true);
+			foreach (array_merge(array_keys($adata), array_keys($bdata)) as $key) {
+				if (is_array($adata[$key]))
+					$adata[$key] = implode(' AND ', $adata[$key]);
+				if (is_array($bdata[$key]))
+					$bdata[$key] = implode(' AND ', $bdata[$key]);
+
+				if (!isset($adata[$key])) { // B has data that A does not -- Assign to A
+					$save[$key] = $bdata[$key];
+				} elseif (!isset($bdata[$key])) { // A has data that B does not
+					// Do nothing - we dont care about B as its going to be deleted anyway
+				} elseif ($adata[$key] == $bdata[$key]) { // Direct match A==B
+					// Do nothing - we dont care about exact duplicates
+				} else { // Not an exact match - store it as an alternate
+					$alts[$key] = $bdata[$key];
+				}
+			}
+
+
 			echo "DUPE {$a['referenceid']} == {$b['referenceid']}<br/>";
+			$save['altdata'] = json_encode($alts);
+			$this->Save($a['referenceid'], $save);
 			print_r($alts);
 			die();
 			$this->SetStatus($b['referenceid'], 'deleted');
