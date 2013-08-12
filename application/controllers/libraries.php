@@ -36,7 +36,7 @@ class Libraries extends CI_Controller {
 	function Import() {
 		$this->load->model('Reference');
 
-		if ($_FILES && isset($_FILES['file']['tmp_name'])) {
+		if ($_FILES && isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name']) {
 			$libraryid = $this->Library->Create(array(
 				'title' => $_POST['title']
 			));
