@@ -41,5 +41,9 @@ define('VERSION', '0.1.0');
 
 define('SITE_ROOT', preg_match('/^local/', $_SERVER['SERVER_NAME']) ? '/' : '/searchtool/');
 define('SITE_TITLE', 'CREBP Search');
-/* End of file constants.php */
-/* Location: ./application/config/constants.php */
+
+// De-duplication options
+define('DEDUPE_ORDERBY', 'referenceid'); // What to order references by
+define('DEDUPE_MAX_TIME', 15); // Maximum  amount of time (seconds) to let the process run
+define('DEDUPE_SCOOP_REFERENCES', 10); // Number of references to read into memory at once to analyze (i.e. ref A)
+define('DEDUPE_SCOOP_REFERENCES2', 100); // Number of secondary references to read into memory at once to analyze (i.e. ref A <=> B)

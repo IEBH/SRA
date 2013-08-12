@@ -37,12 +37,14 @@ CREATE TABLE libraries (
 	libraryid int primary key auto_increment, 
 	userid int,
 	title varchar(200),
-	status enum ('active', 'deleted') default 'active', 
+	status enum ('active', 'dedupe', 'deleted') default 'active', 
+	dedupe_refid INT,
+	dedupe_refid2 INT,
 	created int,
 	edited int
 );
 CREATE INDEX libraries_userid ON libraries(userid);
-INSERT INTO libraries VALUES (null, 1, 'Sample library', 'active', null, null);
+INSERT INTO libraries VALUES (null, 1, 'Sample library', 'active', null, null, null, null);
 -- }}}
 -- References {{{
 DROP TABLE IF EXISTS `references`;
@@ -52,9 +54,19 @@ CREATE TABLE `references` (
 	status enum ('active', 'deleted') default 'active', 
 	created int,
 	edited int,
-	title varchar(255),
+	title varchar(200),
 	authors text,
 	data text
 );
 CREATE INDEX references_libraryid ON `references`(libraryid);
+-- }}}
+-- ReferenceDupes {{{
+DROP TABLE IF EXISTS referencedupes;
+CREATE TABLE referencedupes (
+	referenceid1 int,
+	referenceid2 int,
+	PRIMARY KEY (referenceid1, referenceid2)
+);
+CREATE INDEX referencedupes_referenceid1 ON referencedupes(referenceid1);
+CREATE INDEX referencedupes_referenceid2 ON referencedupes(referenceid2);
 -- }}}
