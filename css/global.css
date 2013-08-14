@@ -1,3 +1,17 @@
+/* Fonts {{{ */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Open Sans Light'), local('OpenSans-Light'), url(/fonts/open-sans-300.woff) format('woff');
+}
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Open Sans'), local('OpenSans'), url(/fonts/open-sans-400.woff) format('woff');
+}
+/* }}} */
 /* Reference menu {{{ */
 .navbar .nav .dropdown a {
 	text-overflow: ellipsis;
