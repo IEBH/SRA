@@ -1,38 +1,306 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <? include('application/views/site/head.php') ?>
 
 <body>
-	<div class="navbar" id="navbar">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="brand" href="<?=SITE_ROOT?>"><span class="first">CREBP</span> <span class="second">Search</span></a>
-				<? if (isset($this->Basket) && $references = $this->Basket->GetAll()) { ?>
-				<ul class="nav pull-right">
-					<li id="fat-menu" class="dropdown">
-						<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="icon-list"></i> References
-						</a>
-						<ul class="dropdown-menu">
-							<? foreach ($references as $reference) { ?>
-							<li><a href="<?=$reference['url']?>"><i class="icon-paper-clip"></i> <?=$reference['title']?></a></li>
-							<? } ?>
-							<li class="divider"></li>
-							<li><a href="<?=SITE_ROOT?>references/clear"><i class="icon-trash"></i> Clear all</a></li>
-							<li><a href="<?=SITE_ROOT?>references/export"><i class="icon-share-alt"></i> Export all</a></li>
-						</ul>
-					</li>
-				</ul>
-				<? } ?>
-			</div>
-		</div>
-		<div class="pull-right">
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<a href="/" class="brand">
+				<small><i class="icon-leaf"></i> <?=SITE_TITLE?></small>
+			</a><!--/.brand-->
 
-		</div>
-	</div>
-	<? if (!isset($span) || $span) { ?>
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span12">
-			<? include('application/views/site/messages.php') ?>
-	<? } ?>
+			<ul class="nav ace-nav pull-right">
+				<li class="grey">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="icon-tasks"></i>
+						<span class="badge badge-grey">4</span>
+					</a>
+
+					<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
+						<li class="nav-header">
+							<i class="icon-ok"></i>
+							4 Tasks to complete
+						</li>
+
+						<li>
+							<a href="#">
+								<div class="clearfix">
+									<span class="pull-left">Software Update</span>
+									<span class="pull-right">65%</span>
+								</div>
+
+								<div class="progress progress-mini ">
+									<div style="width:65%" class="bar"></div>
+								</div>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<div class="clearfix">
+									<span class="pull-left">Hardware Upgrade</span>
+									<span class="pull-right">35%</span>
+								</div>
+
+								<div class="progress progress-mini progress-danger">
+									<div style="width:35%" class="bar"></div>
+								</div>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<div class="clearfix">
+									<span class="pull-left">Unit Testing</span>
+									<span class="pull-right">15%</span>
+								</div>
+
+								<div class="progress progress-mini progress-warning">
+									<div style="width:15%" class="bar"></div>
+								</div>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<div class="clearfix">
+									<span class="pull-left">Bug Fixes</span>
+									<span class="pull-right">90%</span>
+								</div>
+
+								<div class="progress progress-mini progress-success progress-striped active">
+									<div style="width:90%" class="bar"></div>
+								</div>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								See tasks with details
+								<i class="icon-arrow-right"></i>
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="purple">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="icon-bell-alt icon-animated-bell"></i>
+						<span class="badge badge-important">8</span>
+					</a>
+
+					<ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-closer">
+						<li class="nav-header">
+							<i class="icon-warning-sign"></i>
+							8 Notifications
+						</li>
+
+						<li>
+							<a href="#">
+								<div class="clearfix">
+									<span class="pull-left">
+										<i class="btn btn-mini no-hover btn-pink icon-comment"></i>
+										New Comments
+									</span>
+									<span class="pull-right badge badge-info">+12</span>
+								</div>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<i class="btn btn-mini btn-primary icon-user"></i>
+								Bob just signed up as an editor ...
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<div class="clearfix">
+									<span class="pull-left">
+										<i class="btn btn-mini no-hover btn-success icon-shopping-cart"></i>
+										New Orders
+									</span>
+									<span class="pull-right badge badge-success">+8</span>
+								</div>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<div class="clearfix">
+									<span class="pull-left">
+										<i class="btn btn-mini no-hover btn-info icon-twitter"></i>
+										Followers
+									</span>
+									<span class="pull-right badge badge-info">+11</span>
+								</div>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								See all notifications
+								<i class="icon-arrow-right"></i>
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="green">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="icon-envelope icon-animated-vertical"></i>
+						<span class="badge badge-success">5</span>
+					</a>
+
+					<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
+						<li class="nav-header">
+							<i class="icon-envelope-alt"></i>
+							5 Messages
+						</li>
+
+						<li>
+							<a href="#">
+								<img src="assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+								<span class="msg-body">
+									<span class="msg-title">
+										<span class="blue">Alex:</span>
+										Ciao sociis natoque penatibus et auctor ...
+									</span>
+
+									<span class="msg-time">
+										<i class="icon-time"></i>
+										<span>a moment ago</span>
+									</span>
+								</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<img src="assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+								<span class="msg-body">
+									<span class="msg-title">
+										<span class="blue">Susan:</span>
+										Vestibulum id ligula porta felis euismod ...
+									</span>
+
+									<span class="msg-time">
+										<i class="icon-time"></i>
+										<span>20 minutes ago</span>
+									</span>
+								</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<img src="assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+								<span class="msg-body">
+									<span class="msg-title">
+										<span class="blue">Bob:</span>
+										Nullam quis risus eget urna mollis ornare ...
+									</span>
+
+									<span class="msg-time">
+										<i class="icon-time"></i>
+										<span>3:15 pm</span>
+									</span>
+								</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								See all messages
+								<i class="icon-arrow-right"></i>
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="light-blue">
+					<? if (isset($this->User) && $this->User->GetActive()) { ?>
+					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+						<span class="user-info">
+							<small>Welcome,</small> <?=$this->User->GetName()?>
+						</span>
+						<i class="icon-caret-down"></i>
+					</a>
+					<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+						<li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
+					</ul>
+					<? } else { ?>
+					<a href="/login"><i class="icon-user"></i> Login</a>
+					<? } ?>
+				</li>
+			</ul><!--/.ace-nav-->
+		</div><!--/.container-fluid-->
+	</div><!--/.navbar-inner-->
+</div>
+
+<div class="main-container container-fluid">
+	<a class="menu-toggler" id="menu-toggler" href="#">
+		<span class="menu-text"></span>
+	</a>
+
+	<div class="sidebar" id="sidebar">
+		<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+			<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+				<button class="btn btn-small btn-success">
+					<i class="icon-signal"></i>
+				</button>
+
+				<button class="btn btn-small btn-info">
+					<i class="icon-pencil"></i>
+				</button>
+
+				<button class="btn btn-small btn-warning">
+					<i class="icon-group"></i>
+				</button>
+
+				<button class="btn btn-small btn-danger">
+					<i class="icon-cogs"></i>
+				</button>
+			</div>
+
+			<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+				<span class="btn btn-success"></span>
+
+				<span class="btn btn-info"></span>
+
+				<span class="btn btn-warning"></span>
+
+				<span class="btn btn-danger"></span>
+			</div>
+		</div><!--#sidebar-shortcuts-->
+
+		<? include('application/views/site/sidebar.php') ?>
+
+		<div class="main-content">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="icon-home home-icon"></i>
+						<a href="#">Home</a>
+
+						<span class="divider">
+							<i class="icon-angle-right arrow-icon"></i>
+						</span>
+					</li>
+					<li class="active">Dashboard</li>
+				</ul><!--.breadcrumb-->
+
+				<div class="nav-search" id="nav-search">
+					<form class="form-search">
+						<span class="input-icon">
+							<input type="text" placeholder="Search ..." class="input-small nav-search-input" id="nav-search-input" autocomplete="off" />
+							<i class="icon-search nav-search-icon"></i>
+						</span>
+					</form>
+				</div><!--#nav-search-->
+			</div>
+
+			<div class="page-content">
+				<div class="page-header position-relative">

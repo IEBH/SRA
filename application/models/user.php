@@ -74,7 +74,6 @@ class User extends CI_Model {
 
 		//Grab and attach the user's company information for authentication in controllers elsewhere
 		$user = $_SESSION['user']; 
-		$user['company'] = $this->getCompany($user['userid']);
 		return $user;
 	}
 

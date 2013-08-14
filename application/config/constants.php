@@ -40,7 +40,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('VERSION', '0.1.0');
 
 define('SITE_ROOT', preg_match('/^local/', $_SERVER['SERVER_NAME']) ? '/' : '/searchtool/');
-define('SITE_TITLE', 'CREBP Search');
+define('SITE_TITLE', 'CREBP Systematic Review Creator');
 
 // De-duplication options
 define('DEDUPE_ORDERBY', 'referenceid'); // What to order references by
