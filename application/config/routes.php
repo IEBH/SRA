@@ -4,6 +4,12 @@ $route['404_override'] = '';
 
 $route['designer'] = 'pages/designer';
 
+$route['how-to'] = 'pages/howto';
+$route['how-to/(:any)'] = 'pages/howto/$1';
+
+// Simple page aliases
+
+// Batt
 $route['batt/api/(:any)'] = 'batt/JSON$1';
 $route['batt/(:any)'] = 'batt/show/$1';
 

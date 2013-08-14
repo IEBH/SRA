@@ -284,12 +284,15 @@
 					<li>
 						<i class="icon-home home-icon"></i>
 						<a href="#">Home</a>
-
-						<span class="divider">
-							<i class="icon-angle-right arrow-icon"></i>
-						</span>
+						<span class="divider"><i class="icon-angle-right arrow-icon"></i></span>
 					</li>
-					<li class="active">Dashboard</li>
+					<? if (isset($breadcrumbs) && $breadcrumbs) { ?>
+					<? foreach ($breadcrumbs as $link => $crumb) { ?>
+					<a href="<?=$link?>"><?=$crumb?></a>
+					<span class="divider"><i class="icon-angle-right arrow-icon"></i></span>
+					<? } ?>
+					<? } ?>
+					<li class="active"><?=$title?></li>
 				</ul><!--.breadcrumb-->
 
 				<div class="nav-search" id="nav-search">

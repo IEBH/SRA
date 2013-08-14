@@ -12,11 +12,15 @@
 			<b class="arrow icon-angle-down"></b>
 		</a>
 		<ul class="submenu">
+			<? if (isset($this->Page)) { ?>
+			<? foreach ($this->Page->GetSteps() as $i => $name) { ?>
 			<li>
-				<a href="/how-to/1">
-					<i class="icon-double-angle-right"></i> 1. Foo
+				<a href="/how-to/<?=$i+1?>">
+					<i class="icon-double-angle-right"></i> <?=($i+1) . ". $name"?>
 				</a>
 			</li>
+			<? } ?>
+			<? } ?>
 		</ul>
 	</li>
 </ul>
