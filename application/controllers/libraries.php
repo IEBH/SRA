@@ -21,7 +21,9 @@ class Libraries extends CI_Controller {
 			$this->site->Error('Invalid library');
 
 		$this->site->header($library['title'], array(
-			'breadcrumbs' => array('/libraries' => 'My References'),
+			'breadcrumbs' => array(
+				'/libraries' => 'My References'
+			),
 		));
 		$this->load->view('lib/batt');
 		$this->load->view('libraries/view', array(
@@ -101,7 +103,7 @@ class Libraries extends CI_Controller {
 		$this->site->header("De-duplicate", array(
 			'breadcrumbs' => array(
 				'/libraries' => 'My References',
-				"/libraries/$libraryid" => $library['title'],
+				"/libraries/view/$libraryid" => $library['title'],
 			),
 		));
 

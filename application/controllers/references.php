@@ -34,7 +34,7 @@ class References extends CI_Controller {
 		$this->site->Header("Reference #$referenceid", array(
 			'breadcrumbs' => array(
 				'/libraries' => 'My References',
-				"/libraries/{$library['libraryid']}" => $library['title'],
+				"/libraries/view/{$library['libraryid']}" => $library['title'],
 			),
 		));
 		$this->site->view('lib/batt');
