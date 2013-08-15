@@ -127,10 +127,9 @@ class Reference extends CI_Model {
 				$isdupe = 1;
 			} elseif ($this->StringCompare($a[$f], $b[$f])) {
 				$isdupe = 1;
-				if (!isset($alts[$f])) {
-					$alts[$f] = array($b[$f]);
-				} else 
-					$alts[$f][] = $b[$f];
+				if (!isset($alts[$f]))
+					$alts[$f] = array();
+				$alts[$f][$b['referenceid']] = $b[$f];
 			}
 		}
 
@@ -151,15 +150,14 @@ class Reference extends CI_Model {
 				} elseif ($adata[$key] == $bdata[$key]) { // Direct match A==B
 					// Do nothing - we dont care about exact duplicates
 				} else { // Not an exact match - store it as an alternate
-					if (!isset($alts[$key])) { // Alt key not set - create an array of possibilities
-						$alts[$key] = array($bdata[$key]);
-					} else // Append to existing choices
-						$alts[$key][] = $bdata[$key];
+					if (!isset($alts[$key])) // Alt key not set
+						$alts[$key] = array();
+					$alts[$key][$b['referenceid']] = $bdata[$key];
 				}
 			}
 
-			foreach($alts as $key => $vals) // Compress alt array
-				$alts[$key] = array_unique($vals);
+			//foreach($alts as $key => $vals) // Compress alt array
+			//	$alts[$key] = array_unique($vals);
 
 			$save['altdata'] = json_encode($alts);
 			$this->Save($a['referenceid'], $save);
