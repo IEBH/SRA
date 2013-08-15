@@ -1,5 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class References extends CI_Controller {
+	function __construct() {
+		parent::__construct();
+		$this->load->model('Reference');
+	}
+
 	function Index() {
 		$this->All();
 	}
@@ -15,6 +20,33 @@ class References extends CI_Controller {
 	function Clear() {
 		$this->Basket->Clear();
 		$this->site->RedirectBack();
+	}
+
+	function Edit($referenceid = null) {
+		$this->load->model('Library');
+
+		if (!$reference = $this->Reference->Get($referenceid))
+			$this->Site->Error('Invalid reference');
+		if (!$library = $this->Library->Get($reference['libraryid']))
+			$this->Site->Error('Invalid parent library');
+		$reference = $this->Reference->Explode($reference);
+
+		$this->site->Header("Reference #$referenceid", array(
+			'breadcrumbs' => array(
+				'/libraries' => 'My References',
+				"/libraries/{$library['libraryid']}" => $library['title'],
+			),
+		));
+		$this->site->view('lib/batt');
+		$this->site->view('references/edit', array(
+			'library' => $library,
+			'reference' => $reference,
+		));
+		$this->site->Footer();
+	}
+
+	function Delete($referenceid = null) {
+		// Stub
 	}
 
 	function Export() {
