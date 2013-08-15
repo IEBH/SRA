@@ -27,6 +27,12 @@ body {
 .hero-unit h1 {
 	margin: 0px !important;
 }
+
+/* Icons in dropdowns are too small */
+.dropdown > .btn > i {
+	font-size: 15pt;
+	line-height: 8px;
+}
 /* }}} */
 /* FIXES: Waveform {{{ */
 .waveform-readonly {
