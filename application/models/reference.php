@@ -137,6 +137,19 @@ class Reference extends CI_Model {
 		if ($isdupe) {
 			$adata = json_decode($a['data'], true);
 			$bdata = json_decode($b['data'], true);
+
+			// Basic sanity checks
+			if (isset($adata['year'], $bdata['year']) && $adata['year'] != $bdata['year'])
+				return false;
+			if (isset($adata['pages'], $bdata['pages']) && $adata['pages'] != $bdata['pages'])
+				return false;
+			if (isset($adata['volume'], $bdata['volume']) && $adata['volume'] != $bdata['volume'])
+				return false;
+			if (isset($adata['isbn'], $bdata['isbn']) && $adata['isbn'] != $bdata['isbn'])
+				return false;
+			if (isset($adata['number'], $bdata['number']) && $adata['number'] != $bdata['number'])
+				return false;
+
 			foreach (array_merge(array_keys($adata), array_keys($bdata)) as $key) {
 				if (isset($adata[$key]) && is_array($adata[$key]))
 					$adata[$key] = implode(' AND ', $adata[$key]);
