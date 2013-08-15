@@ -13,6 +13,18 @@
 	</div>
 </legend>
 
+<? if ($library['status'] == 'deduped') { ?>
+<div class="alert alert-info alert-block">
+	<a href="#" data-dismiss="alert" class="close"><i class="icon-remove-sign"></i></a>
+	<h3><i class="icon-bell-alt icon-animated-bell"></i> De-duplication in progress</h3>
+	<p>This library is still marked as having duplicate references.</p>
+	<div class="pull-center pad-top">
+		<a class="btn" href="/libraries/dedupe/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Examine duplicates</a>
+		<a class="btn" href="#" data-dismiss="alert"><i class="icon-remove-sign"></i> Not right now</a>
+	</div>
+</div>
+<? } ?>
+
 <script type="batt" src="/batt/schema"></script>
 <script type="batt">
 [
