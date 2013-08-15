@@ -93,12 +93,17 @@ class Libraries extends CI_Controller {
 		// Stub
 	}
 
-	function Dupes($libraryid = null) {
+	function Dedupe($libraryid = null) {
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
 		
-		$this->site->header("{$library['title']} | De-duplicate");
-		$this->load->view('libraries/dupes');
+		$this->site->header("De-duplicate", array(
+			'breadcrumbs' => array(
+				'/libraries' => 'My References',
+				"/libraries/$libraryid" => $library['title'],
+			),
+		));
+		$this->load->view('libraries/dedupe');
 		$this->site->footer();
 	}
 
