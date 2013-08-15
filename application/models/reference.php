@@ -50,7 +50,7 @@ class Reference extends CI_Model {
 					$fields['data'] = json_decode($fields['data'], TRUE);
 			} else { // Dont have any JSON to work with - fetch it
 				$record = $this->Get($referenceid);
-				$fields['data'] = $record['data'];
+				$fields['data'] = json_decode($record['data'], TRUE);
 			}
 
 			foreach ($data as $key => $value) // Save unknown fields
