@@ -15,6 +15,7 @@
 		columns: [
 			{
 				type: 'dropdown',
+				text: '<i class="icon-tag"></i>',
 				children: [
 					{
 						title: 'Edit',

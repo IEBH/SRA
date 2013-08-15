@@ -7,6 +7,15 @@ class Library extends CI_Model {
 		return $this->db->get()->row_array();
 	}
 
+	function GetAll($where = null, $orderby = 'title') {
+		$this->db->from('libraries');
+		if ($where)
+			$this->db->where($where);
+		if ($orderby)
+			$this->db->order_by($orderby);
+		return $this->db->get()->result_array();
+	}
+
 	function Create($data) {
 		$fields = array();
 		foreach (qw('title') as $field)

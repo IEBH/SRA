@@ -292,7 +292,7 @@
 					<span class="divider"><i class="icon-angle-right arrow-icon"></i></span>
 					<? } ?>
 					<? } ?>
-					<li class="active"><?=$title?></li>
+					<li><?=$title?></li>
 				</ul><!--.breadcrumb-->
 
 				<div class="nav-search" id="nav-search">

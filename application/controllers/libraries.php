@@ -20,7 +20,9 @@ class Libraries extends CI_Controller {
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
 
-		$this->site->header($library['title']);
+		$this->site->header($library['title'], array(
+			'breadcrumbs' => array('/libraries' => 'My References'),
+		));
 		$this->load->view('lib/batt');
 		$this->load->view('libraries/view');
 		$this->site->footer();
