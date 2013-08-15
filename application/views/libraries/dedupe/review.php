@@ -19,7 +19,6 @@ $(function() {
 		</a>
 		<ul class="dropdown-menu">
 			<li><a href="/libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
-			<li class="divider"></li>
 		</ul>
 	</div>
 </legend>
