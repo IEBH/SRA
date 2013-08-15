@@ -33,6 +33,11 @@ body {
 	font-size: 15pt;
 	line-height: 8px;
 }
+
+/* Icons in dropdown-menus are too cramped with text */
+.dropdown-menu > li > a > i {
+	margin-right: 6px;
+}
 /* }}} */
 /* FIXES: Waveform {{{ */
 .waveform-readonly {

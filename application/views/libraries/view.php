@@ -1,10 +1,21 @@
+<legend>
+	Manage your references
+	<div class="btn-group pull-right">
+		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+			<i class="icon-cog"></i> Tools <span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="/libraries/import/<?=$library['libraryid']?>"><i class="icon-cloud-upload"></i> Import references</a></li>
+			<li><a href="/libraries/export/<?=$library['libraryid']?>"><i class="icon-cloud-download"></i> Export references</a></li>
+			<li class="divider"></li>
+			<li><a href="/libraries/dedupe/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Eliminate Duplicates</a></li>
+		</ul>
+	</div>
+</legend>
+
 <script type="batt" src="/batt/schema"></script>
 <script type="batt">
 [
-	{
-		type: 'heading',
-		title: 'Manage your references'
-	},
 	{
 		uses: 'references',
 		type: 'table',
@@ -18,11 +29,14 @@
 				text: '<i class="icon-tag"></i>',
 				children: [
 					{
-						title: 'Edit',
+						title: '<i class="icon-pencil"></i> Edit',
 						action: '/reference/edit/{{data._id}}'
 					},
 					{
-						title: 'Delete',
+						title: '-',
+					},
+					{
+						title: '<i class="icon-trash"></i> Delete',
 						action: '/reference/delete/{{data._id}}'
 					}
 				]

@@ -70,6 +70,17 @@ class Reference extends CI_Model {
 	}
 
 	/**
+	* Expands the $reference['data'] JSON blob, deletes it and returns the expanded array
+	* @param array $reference The compacted reference to expand
+	* @returns array The reference with its data JSON blob expanded
+	*/
+	function Explode($reference) {
+		$json = json_decode($reference['data'], TRUE);
+		unset($reference['data']);
+		return array_merge($reference, $json);
+	}
+
+	/**
 	* Compare two reference objects and return a boolean if they are similar
 	* @param array $a The primary reference to compare
 	* @param array $b The secondary (slave) reference to compare

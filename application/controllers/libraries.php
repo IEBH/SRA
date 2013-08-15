@@ -24,18 +24,24 @@ class Libraries extends CI_Controller {
 			'breadcrumbs' => array('/libraries' => 'My References'),
 		));
 		$this->load->view('lib/batt');
-		$this->load->view('libraries/view');
+		$this->load->view('libraries/view', array(
+			'library' => $library,
+		));
 		$this->site->footer();
 	}
 
 	function Edit($libraryid = null) {
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
 		$this->site->header('Manage your libraries');
 		$this->load->view('lib/batt');
-		$this->load->view('libraries/edit');
+		$this->load->view('libraries/edit', array(
+			'library' => $library,
+		));
 		$this->site->footer();
 	}
 
-	function Import() {
+	function Import($libraryid = null) {
 		$this->load->model('Reference');
 
 		if ($_FILES && isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name']) {
@@ -66,6 +72,21 @@ class Libraries extends CI_Controller {
 			$this->site->view('libraries/import');
 			$this->site->Footer();
 		}
+	}
+
+	function Export($libraryid = null) {
+		$this->load->model('Reference');
+
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+
+		require('lib/php-endnote/endnote.php');
+		$this->endnote = new PHPEndNote();
+		$this->endnote->name = $library['title'] . '.enl';
+		foreach ($this->Reference->GetAll(array('libraryid' => $libraryid, 'status' => 'active')) as $ref)
+			$this->endnote->Add($this->Reference->Explode($ref));
+
+		$this->endnote->OutputXML($library['title'] . '.xml');	
 	}
 
 	function Delete($libraryid = null) {
