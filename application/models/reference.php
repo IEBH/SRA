@@ -105,9 +105,9 @@ class Reference extends CI_Model {
 			$adata = json_decode($a['data'], true);
 			$bdata = json_decode($b['data'], true);
 			foreach (array_merge(array_keys($adata), array_keys($bdata)) as $key) {
-				if (is_array($adata[$key]))
+				if (isset($adata[$key]) && is_array($adata[$key]))
 					$adata[$key] = implode(' AND ', $adata[$key]);
-				if (is_array($bdata[$key]))
+				if (isset($bdata[$key]) && is_array($bdata[$key]))
 					$bdata[$key] = implode(' AND ', $bdata[$key]);
 
 				if (!isset($adata[$key])) { // B has data that A does not -- Assign to A

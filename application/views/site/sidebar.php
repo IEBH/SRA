@@ -40,7 +40,7 @@
 					<li><a href="/libraries/import">Import New</a></li>
 				</ul>
 			</li>
-			<? if ($this->Library) { ?>
+			<? if (isset($this->Library)) { ?>
 			<? foreach ($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'))) as $library) { ?>
 			<li>
 				<a href="/libraries/view/<?=$library['libraryid']?>">

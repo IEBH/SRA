@@ -53,16 +53,15 @@ class Libraries extends CI_Controller {
 			$this->endnote = new PHPEndNote();
 			$this->endnote->SetXMLFile($_FILES['file']['tmp_name']);
 
-			$json = json_encode($ref);
-			unset($json['authors']); // Scrap fields are are storing elsewhere anyway
-			unset($json['title']);
-
 			foreach ($this->endnote->refs as $ref) {
+				$json_obj = $ref;
+				unset($json_obj['authors'], $json_obj['title']); // Scrap fields are are storing elsewhere anyway
+
 				$this->Reference->Create(array(
 					'libraryid' => $libraryid,
 					'title' => $ref['title'],
 					'authors' => implode(' AND ', $ref['authors']),
-					'data' => $json,
+					'data' => json_encode($json_obj),
 				));
 			}
 			$this->site->Redirect("/libraries/view/$libraryid");
@@ -117,7 +116,7 @@ class Libraries extends CI_Controller {
 
 		foreach (qw('libraryid') as $key)
 			if (!isset($_REQUEST[$key]))
-				$this->site->JSONError("Missing parameter: $key");
+				die($this->site->JSONError("Missing parameter: $key"));
 
 		if (!$library = $this->Library->Get($_REQUEST['libraryid']))
 			die($this->site->JSONError('Invalid library'));
