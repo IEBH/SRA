@@ -408,6 +408,7 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<li><code>batt_choice_radio</code></li>
 			<li><code>batt_container</code>
 			<ul>
+				<li><code>batt_container_splitter</code></li>
 				<li><code>batt_db_table</code></li>
 				<li><code>batt_dropdown</code></li>
 				<li><code>batt_form</code></li>
@@ -426,6 +427,7 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<li><code>batt_link</code>
 			<ul>
 				<li><code>batt_button</code></li>
+				<li><code>batt_tag</code></li>
 			</ul></li>
 			<li><code>batt_unknown</code></li>
 		</ul></li>
@@ -440,12 +442,6 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<th>Attributes</th>
 			<th>Default</th>
 			<th>Description</th>
-		</tr>
-		<tr>
-			<td>action</td>
-			<td><span>String</span> <span>Optional</span> <span>FIXME</span></td>
-			<td><code>nothing</code></td>
-			<td>The action to take when the button is pressed.</td>
 		</tr>
 		<tr>
 			<td>text</td>
@@ -603,6 +599,44 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 		</tr>
 	</table>
 
+	<h3>batt_container_splitter</h3>
+	<p>Takes a computed string and repeats all children based on given split criteria.</p>
+	<p>This widget can be seen as a very simple <a href="https://en.wikipedia.org/wiki/Comma_seperated_values">CSV</a> processor where each child widget is repeated based on compound data.</p>
+	<p>Its recommended usage is with the <code>batt_tag</code> widget as this allows for storage of multiple tags in one flat field.</p>
+
+	<table class="properties" data-properties="batt_container_splitter" data-properties-inherit="batt_container">
+		<tr>
+			<th>Property</th>
+			<th>Attributes</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>target</td>
+			<td><span>String</span></td>
+			<td><em>null</em></td>
+			<td>The data to operate on. This is typically a computed field such as <code>{{data.authors}}</code>.</td>
+		</tr>
+		<tr>
+			<td>splitOn</td>
+			<td><span>String</span></td>
+			<td><code>,</code></td>
+			<td>The split parameter to operate on <code>target</code> with. The default is a single comma in the style of CSVs.</td>
+		</tr>
+		<tr>
+			<td>splitInto</td>
+			<td><span>String</span></td>
+			<td><code>value</code></td>
+			<td>The field inside <code>data</code> to set the extracted string.</td>
+		</tr>
+		<tr>
+			<td>splitBetween</td>
+			<td><span>String</span></td>
+			<td><em>null</em></td>
+			<td>HTML to insert between child elements during repetition. This is typically used to pad out child elements which would otherwise be appended next to one another.</td>
+		</tr>
+	</table>
+
 	<h3>batt_date</h3>
 	<p>Field which allows the display and selection of date and time.</p>
 
@@ -658,7 +692,7 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<th>Description</th>
 		</tr>
 		<tr>
-			<td>title</td>
+			<td>text</td>
 			<td><span>String</span></td>
 			<td><code>&gt;i class="icon-align-justify"&lt;&gt;/i&lt;</code></td>
 			<td>The text to display on the dropdown</td>
@@ -1040,6 +1074,30 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<td><span>Int</span></td>
 			<td><code>0</code></td>
 			<td>The offset of the tab to select by default</td>
+		</tr>
+	</table>
+
+	<h3>batt_tag</h3>
+	<p>Draws a simple tag element. This is best teamed up with something like <code>batt_container</code> to provide multiple tag support.</p>
+
+	<table class="properties" data-properties="batt_tag" data-properties-inherit="batt_link">
+		<tr>
+			<th>Property</th>
+			<th>Attributes</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>text</td>
+			<td><span>String</span></td>
+			<td><code>A button</em></td>
+			<td>The text to draw on the tag</td>
+		</tr>
+		<tr>
+			<td>class</td>
+			<td><span>String</span></td>
+			<td><code>badge</code></td>
+			<td>The style information for the tag</td>
 		</tr>
 	</table>
 

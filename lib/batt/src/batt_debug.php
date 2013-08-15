@@ -40,6 +40,7 @@ if ($batt_path) // Prefix with '/' if it is actually something other than root
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_choice_radio.js"></script>
 
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_container.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_container_splitter.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_db_table.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_dropdown.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_form.js"></script>
@@ -57,6 +58,7 @@ if ($batt_path) // Prefix with '/' if it is actually something other than root
 
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_link.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_button.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_tag.js"></script>
 
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_unknown.js"></script>
 
