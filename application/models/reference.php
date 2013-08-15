@@ -1,5 +1,21 @@
 <?
 class Reference extends CI_Model {
+	function Get($referenceid) {
+		$this->db->from('references');
+		$this->db->where('referenceid', $referenceid);
+		$this->db->limit(1);
+		return $this->db->get()->row_array();
+	}
+
+	function Count($where = null) {
+		$this->db->select('COUNT(*) AS count');
+		$this->db->from('references');
+		if ($where)
+			$this->db->where($where);
+		$row = $this->db->get()->row_array();
+		return $row['count'];
+	}
+
 	function Create($data) {
 		$fields = array();
 		foreach (qw('libraryid title authors data') as $field)
@@ -31,7 +47,7 @@ class Reference extends CI_Model {
 		if ($data) { // Still have unknown fields to save
 			if (isset($fields['data'])) { // Incomming (possible) JSON
 				if (is_string($fields['data'])) // Not already an array - convert
-					$fields['data'] = json_decode($fields['data'], true);
+					$fields['data'] = json_decode($fields['data'], TRUE);
 			} else { // Dont have any JSON to work with - fetch it
 				$record = $this->Get($referenceid);
 				$fields['data'] = $record['data'];
@@ -122,11 +138,8 @@ class Reference extends CI_Model {
 			}
 
 
-			echo "DUPE {$a['referenceid']} == {$b['referenceid']}<br/>";
 			$save['altdata'] = json_encode($alts);
 			$this->Save($a['referenceid'], $save);
-			print_r($alts);
-			die();
 			$this->SetStatus($b['referenceid'], 'deleted');
 		}
 

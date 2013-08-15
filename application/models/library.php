@@ -16,6 +16,15 @@ class Library extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 
+	function Count($where = null) {
+		$this->db->select('COUNT(*) AS count');
+		$this->db->from('libraries');
+		if ($where)
+			$this->db->where($where);
+		$row = $this->db->get()->row_array();
+		return $row['count'];
+	}
+
 	function Create($data) {
 		$fields = array();
 		foreach (qw('title') as $field)

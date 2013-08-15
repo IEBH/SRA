@@ -93,16 +93,42 @@ class Libraries extends CI_Controller {
 	}
 
 	function Dedupe($libraryid = null) {
+		$this->load->model('Reference');
+
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
-		
+
 		$this->site->header("De-duplicate", array(
 			'breadcrumbs' => array(
 				'/libraries' => 'My References',
 				"/libraries/$libraryid" => $library['title'],
 			),
 		));
-		$this->load->view('libraries/dedupe');
+
+		switch ($library['status']) {
+			case 'active': // Start the dedupe
+				$this->Library->SetStatus($library['libraryid'], 'dedupe');
+				$library['dedupe_refid'] = 0;
+				$library['dedupe_refid2'] = 0;
+				$this->load->view('libraries/dedupe/processing', array(
+					'library' => $library,
+				));
+				break;
+			case 'dedupe': // During / continuing a dedupe
+				$this->load->view('libraries/dedupe/processing', array(
+					'library' => $library,
+				));
+				break;
+			case 'deduped': // Post dedupe - review
+				$this->load->view('libraries/dedupe/review', array(
+					'library' => $library,
+					'dupes' => $this->Reference->GetAll(array('altdata !=' => '')),
+				));
+				break;
+			default:
+				$this->site->Error("Unable to process duplications when library is in the state '{$library['state']}'");
+		}
+		
 		$this->site->footer();
 	}
 
@@ -120,32 +146,24 @@ class Libraries extends CI_Controller {
 
 		if (!$library = $this->Library->Get($_REQUEST['libraryid']))
 			die($this->site->JSONError('Invalid library'));
-
-		if ($library['status'] != 'dedupe') { // Not been de-duped before
-			$this->Library->SetStatus($library['libraryid'], 'dedupe');
-			$library['dedupe_refid'] = 0;
-			$library['dedupe_refid2'] = 0;
-		}
+		if ($library['status'] != 'dedupe')
+			die($this->site->JSONError('Not in De-dupe mode'));
 
 		$end = time() + DEDUPE_MAX_TIME;
 		set_time_limit(DEDUPE_MAX_TIME*2); // Bias PHPs own time limit by a good margin (time to respond with the JSON)
 
 		$refoffset = $refoffset2 = 0;
-		while ($refs = $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'referenceid >' => $library['dedupe_refid'], 'status' => 'active'), DEDUPE_ORDERBY, DEDUPE_SCOOP_REFERENCES)) {
-			echo "BEGIN LOOP 1 > {$library['dedupe_refid']}<br/>";
+		while ($refs = $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'referenceid >' => max(0, $library['dedupe_refid']), 'status' => 'active'), DEDUPE_ORDERBY, DEDUPE_SCOOP_REFERENCES)) {
 			foreach ($refs as $ref) {
-				echo "SCAN 1 {$ref['referenceid']}<br/>";
-				while ($refs2 = $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'referenceid >' => max($ref['referenceid'], $library['dedupe_refid2']), 'status' => 'active'), DEDUPE_ORDERBY, DEDUPE_SCOOP_REFERENCES2)) {
-					echo "BEGIN LOOP 2<br/>";
+				while ($refs2 = $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'referenceid >' => max(0, $ref['referenceid'], $library['dedupe_refid2']), 'status' => 'active'), DEDUPE_ORDERBY, DEDUPE_SCOOP_REFERENCES2)) {
 					foreach ($refs2 as $ref2) {
-						echo "SCAN {$ref['referenceid']} == {$ref2['referenceid']}<br/>";
+						// echo "SCAN {$ref['referenceid']} == {$ref2['referenceid']}<br/>";
 						$this->Reference->Compare($ref, $ref2);
 					}
 					$library['dedupe_refid2'] = $ref2['referenceid'];
 					$this->Library->SaveDupeStatus($library['libraryid'], $library['dedupe_refid'], $library['dedupe_refid2']);
 					if (time() >= $end)
 						break 2;
-					echo "LOOP 2<br/>";
 				}
 				$library['dedupe_refid'] = $ref['referenceid'];
 				$library['dedupe_refid2'] = 0;
@@ -153,16 +171,21 @@ class Libraries extends CI_Controller {
 			$this->Library->SaveDupeStatus($library['libraryid'], $library['dedupe_refid'], $library['dedupe_refid2']);
 			if (time() >= $end)
 				break;
-			echo "LOOP 1<br/>";
 		}
 
-		$json = array(
+		$done = $library['dedupe_refid'] ? $this->Reference->Count(array('referenceid <=' => $library['dedupe_refid'])) + 1 : 0;
+		$total = $this->Reference->Count(array('libraryid' => $library['libraryid']));
+		if ($done >= $total)
+			$this->Library->SetStatus($library['libraryid'], 'deduped');
+
+		$this->site->JSON(array(
 			'header' => array(
 				'status' => 'ok',
 			),
-			'payload' => array(),
-		);
-		foreach ($this->Reference->GetDupes() as $dupe)
-			$json['payload'][] = $dupe;
+			'payload' => array(
+				'done' => $done,
+				'total' => $total,
+			),
+		));
 	}
 }
