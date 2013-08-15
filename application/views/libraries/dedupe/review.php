@@ -29,6 +29,12 @@ $(function() {
 	if ($ref['data'])
 		$ref = array_merge($ref, json_decode($ref['data'], TRUE));
 	$alts = json_decode($ref['altdata'], TRUE);
+
+	// Figure out the maximum number of alternate posibilites we have
+	$max_alts = 1;
+	foreach($alts as $key => $vals) 
+		if (count($vals) > $max_alts)
+			$max_alts = count($vals);
 ?>
 <legend>
 	<?=$ref['title']?>
@@ -47,14 +53,27 @@ $(function() {
 	<table class="table table-bordered table-striped table-hover table-dupes">
 		<thead>
 			<th>Field</th>
-			<th width="50%">Reference A</th>
-			<th>Reference B</th>
+			<th>Reference</th>
+			<?
+			$letter = 'B';
+			for ($i = 0; $i < $max_alts; $i++) {
+				echo "<th>Reference " . $letter++ . "</th>";
+			}
+			?>
 		</thead>
 		<? foreach ($alts as $field => $val) { ?>
 		<tr>
 			<th><?=$field?></th>
 			<td><div><?=$this->Reference->Flatten($ref[$field], "<br/>")?></div></td>
-			<td><div><?=$this->Reference->Flatten($alts[$field], "<br/>")?></div></td>
+			<?
+			$letter = 'B';
+			for ($i = 0; $i < $max_alts; $i++) {
+				if (isset($alts[$field][$i])) {
+					echo "<td><div>" . $this->Reference->Flatten($alts[$field][$i]) . "</div></td>";
+				} else
+					echo "<td>&nbsp;</td>";
+			}
+			?>
 		</tr>
 		<? } ?>
 	</table>

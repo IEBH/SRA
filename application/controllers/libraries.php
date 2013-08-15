@@ -114,8 +114,7 @@ class Libraries extends CI_Controller {
 
 		switch ($force=='force' ? 'active' : $library['status']) {
 			case 'active': // Start the dedupe
-				$this->Library->SaveDupeStatus($library['libraryid'], 0, 0);
-				$this->Library->SetStatus($library['libraryid'], 'dedupe');
+				$this->Library->ResetDupeStatus($library['libraryid']);
 				$this->load->view('libraries/dedupe/processing', array(
 					'library' => $library,
 				));

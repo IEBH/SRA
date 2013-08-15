@@ -61,6 +61,18 @@ class Library extends CI_Model {
 		));
 	}
 
+	function ResetDupeStatus($libraryid) {
+		$this->Library->SaveDupeStatus($libraryid, 0, 0);
+		$this->Library->SetStatus($libraryid, 'dedupe');
+
+		// Reset child references
+		$this->db->where('libraryid', $libraryid);
+		$this->db->update('references', array(
+			'status' => 'active', // Restore deleted
+			'altdata' => '', // Wipe alternative data
+		));
+	}
+
 	/**
 	* Set the libraries.status value of a specific library
 	* @param int $libraryid The libraryID to change
