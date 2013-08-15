@@ -248,21 +248,21 @@
 	<div class="sidebar" id="sidebar">
 		<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 			<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-				<button class="btn btn-small btn-success">
-					<i class="icon-signal"></i>
-				</button>
+				<a href="/how-to" class="btn btn-small btn-success" data-tip-placement="right" data-tip="How to create a systematic review">
+					<i class="icon-book"></i>
+				</a>
 
-				<button class="btn btn-small btn-info">
-					<i class="icon-pencil"></i>
-				</button>
+				<a href="/libraries" class="btn btn-small btn-info" data-tip-placement="right" data-tip="View your reference libraries">
+					<i class="icon-tag"></i>
+				</a>
 
-				<button class="btn btn-small btn-warning">
+				<a class="btn btn-small btn-warning">
 					<i class="icon-group"></i>
-				</button>
+				</a>
 
-				<button class="btn btn-small btn-danger">
+				<a class="btn btn-small btn-danger">
 					<i class="icon-cogs"></i>
-				</button>
+				</a>
 			</div>
 
 			<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">

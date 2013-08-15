@@ -38,6 +38,11 @@ body {
 .dropdown-menu > li > a > i {
 	margin-right: 6px;
 }
+
+/* Tooltip multi-line is too spaced out */
+.tooltip {
+	line-height: 150%;
+}
 /* }}} */
 /* FIXES: Waveform {{{ */
 .waveform-readonly {
