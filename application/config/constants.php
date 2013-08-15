@@ -44,6 +44,6 @@ define('SITE_TITLE', 'CREBP Systematic Review Creator');
 
 // De-duplication options
 define('DEDUPE_ORDERBY', 'referenceid'); // What to order references by
-define('DEDUPE_MAX_TIME', 5); // Maximum  amount of time (seconds) to let the process run
+define('DEDUPE_MAX_TIME', 4); // Maximum  amount of time (seconds) to let the process run
 define('DEDUPE_SCOOP_REFERENCES', 10); // Number of references to read into memory at once to analyze (i.e. ref A)
 define('DEDUPE_SCOOP_REFERENCES2', 50); // Number of secondary references to read into memory at once to analyze (i.e. ref A <=> B)
