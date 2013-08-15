@@ -94,7 +94,12 @@ class Libraries extends CI_Controller {
 		// Stub
 	}
 
-	function Dedupe($libraryid = null) {
+	/**
+	* Start or continue the de-duplication process
+	* @param int $libraryid The library to apply the process to
+	* @param string $force If the value is 'force' and the library.status='deduped' the process will be force-restarted again
+	*/
+	function Dedupe($libraryid = null, $force = null) {
 		$this->load->model('Reference');
 
 		if (!$library = $this->Library->Get($libraryid))
@@ -107,11 +112,10 @@ class Libraries extends CI_Controller {
 			),
 		));
 
-		switch ($library['status']) {
+		switch ($force=='force' ? 'active' : $library['status']) {
 			case 'active': // Start the dedupe
+				$this->Library->SaveDupeStatus($library['libraryid'], 0, 0);
 				$this->Library->SetStatus($library['libraryid'], 'dedupe');
-				$library['dedupe_refid'] = 0;
-				$library['dedupe_refid2'] = 0;
 				$this->load->view('libraries/dedupe/processing', array(
 					'library' => $library,
 				));

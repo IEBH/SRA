@@ -3,6 +3,27 @@ var libraryid = <?=$library['libraryid']?>;
 $(function() {
 });
 </script>
+<style>
+.table-dupes {
+	width: 100%;
+}
+.table-dupes td > div {
+	word-break: break-all;
+}
+</style>
+<legend>
+	De-duplication review
+	<div class="btn-group pull-right">
+		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+			<i class="icon-cog"></i> <span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="/libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
+			<li class="divider"></li>
+		</ul>
+	</div>
+</legend>
+
 <div id="dupes-outer"><div id="dupes-inner">
 <? foreach ($dupes as $ref) {
 	if ($ref['data'])
@@ -23,16 +44,17 @@ $(function() {
 	</div>
 </legend>
 <div class="row-fluid pad-top">
-	<table class="table table-bordered table-striped table-hover">
+	<table class="table table-bordered table-striped table-hover table-dupes">
 		<thead>
 			<th>Field</th>
-			<th>Reference A</th>
+			<th width="50%">Reference A</th>
 			<th>Reference B</th>
 		</thead>
 		<? foreach ($alts as $field => $val) { ?>
 		<tr>
 			<th><?=$field?></th>
-			<td><?=$ref[$field]?></td>
+			<td><div><?=$this->Reference->Flatten($ref[$field], "<br/>")?></div></td>
+			<td><div><?=$this->Reference->Flatten($alts[$field], "<br/>")?></div></td>
 		</tr>
 		<? } ?>
 	</table>

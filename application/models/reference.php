@@ -97,6 +97,21 @@ class Reference extends CI_Model {
 	}
 
 	/**
+	* Flattens arrays or returns already flattened string values
+	* @param array|string $string Possible array or string to flatten
+	* @return string The delimetered array or the $string unedited
+	*/
+	function Flatten($string, $delimeter = ' AND ') {
+		if (is_string($string) || is_int($string)) {
+			return $string;
+		} elseif (is_array($string)) {
+			return implode($delimeter, $string);
+		} else {
+			trigger_error("Dont know how to flatten string: $string");
+		}
+	}
+
+	/**
 	* Compare two reference objects and return a boolean if they are similar
 	* @param array $a The primary reference to compare
 	* @param array $b The secondary (slave) reference to compare

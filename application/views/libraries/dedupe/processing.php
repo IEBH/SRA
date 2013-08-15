@@ -10,7 +10,7 @@ $(function() {
 			dataType: 'json',
 			success: function(json) {
 				if (!json.payload || json.payload.done >= json.payload.total) { // Finished
-					document.location = document.location;
+					document.location = '/libraries/dedupe/' + libraryid;
 				} else {
 					var now = new Date();
 					$('#progress .bar').css('width', parseInt((json.payload.done / json.payload.total) * 100) + '%');
