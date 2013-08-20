@@ -1475,11 +1475,13 @@ class WaveformField {
 	*/
 	function Password($twice = TRUE) {
 		$this->type = WAVEFORM_TYPE_PASSWORD;
-		$this->parent->Define($cloned = $this->field . '_again')
-			->Title($this->title . ' again')
-			->Type('password')
-			->_style = $this->_style;
-		$this->SameAs($cloned, 'Passwords must match');
+		if ($twice) {
+			$this->parent->Define($cloned = $this->field . '_again')
+				->Title($this->title . ' again')
+				->Type('password')
+				->_style = $this->_style;
+			$this->SameAs($cloned, 'Passwords must match');
+		}
 		return $this;
 	}
 

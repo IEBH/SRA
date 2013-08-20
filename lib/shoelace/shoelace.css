@@ -5,7 +5,11 @@
 	text-align: center;
 }
 
-.pull-vcenter, table.pull-vcenter td {
+.pull-reset {
+	text-align: left;
+}
+
+.pull-vcenter, table.pull-vcenter td, .pull-vcenter i {
 	vertical-align: middle;
 }
 
@@ -42,3 +46,5 @@
 .font-medium {font-size: 14pt;}
 .font-large {font-size: 16pt;}
 .font-huge {font-size: 20pt;}
+
+.input-stretch {width: 100%;}
