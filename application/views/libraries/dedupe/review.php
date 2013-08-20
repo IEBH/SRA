@@ -42,7 +42,45 @@ $(function() {
 	</div>
 </legend>
 
-<div id="dupes-outer"><div id="dupes-inner">
+<div id="dupes-outer" data-url="/libraries/dedupe/<?=$library['libraryid']?>"><div id="dupes-inner">
+
+<div class="infobox-container">
+	<div class="infobox infobox-green infobox-small infobox-dark">
+		<div class="infobox-icon">
+			<i class="icon-tag"></i>
+		</div>
+
+		<div class="infobox-data">
+			<div class="infobox-content">References</div>
+			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'])))?></div>
+		</div>
+	</div>
+
+	<div class="infobox infobox-blue infobox-small infobox-dark">
+		<div class="infobox-icon">
+			<i class="icon-resize-small"></i>
+		</div>
+
+		<div class="infobox-data">
+			<div class="infobox-content">Duplicates</div>
+			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'status' => 'dupe')))?></div>
+		</div>
+	</div>
+
+	<div class="infobox infobox-grey infobox-small infobox-dark">
+		<div class="infobox-icon">
+			<i class="icon-trash"></i>
+		</div>
+
+		<div class="infobox-data">
+			<div class="infobox-content">Deleted</div>
+			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'status' => 'deleted')))?></div>
+		</div>
+	</div>
+</div>
+
+<hr/>
+
 <? foreach ($dupes as $ref) {
 	if ($ref['data'])
 		$ref = array_merge($ref, json_decode($ref['data'], TRUE));
