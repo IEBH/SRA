@@ -1,6 +1,6 @@
 <?
 $title = '404';
-require('application/views/site/normal/header.php');
+require('application/views/site/minimal/header.php');
 ?>
 <div class="pad">
 	<div class="hero-unit">
