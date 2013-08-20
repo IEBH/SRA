@@ -174,7 +174,7 @@ class Reference extends CI_Model {
 
 			$save['altdata'] = json_encode($alts);
 			$this->Save($a['referenceid'], $save);
-			$this->SetStatus($b['referenceid'], 'deleted');
+			$this->SetStatus($b['referenceid'], 'dupe');
 		}
 
 		return $isdupe;

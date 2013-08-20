@@ -190,6 +190,7 @@ class Libraries extends CI_Controller {
 			'payload' => array(
 				'done' => $done,
 				'total' => $total,
+				'dupes' => $this->Reference->Count(array('libraryid' => $library['libraryid'], 'status' => 'dupe')),
 			),
 		));
 	}

@@ -14,7 +14,7 @@ $(function() {
 				} else {
 					var now = new Date();
 					$('#progress .bar').css('width', parseInt((json.payload.done / json.payload.total) * 100) + '%');
-					$('#progress-text').text('Processed: ' + json.payload.done + ' / ' + json.payload.total);
+					$('#progress-text').text('Processed: ' + json.payload.done + ' / ' + json.payload.total + ' (' + json.payload.dupes + ' duplicates)');
 					$('#progress-updated').text('Last updated: ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds());
 					setTimeout($.requestUpdate, updateDelay);
 				}
