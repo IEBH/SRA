@@ -61,3 +61,12 @@ CREATE TABLE `references` (
 );
 CREATE INDEX references_libraryid ON `references`(libraryid);
 -- }}}
+-- Logs {{{
+DROP TABLE IF EXISTS logs;
+CREATE TABLE logs(
+	userid int,
+	icon varchar(50),
+	text text,
+	created int
+);
+-- }}}

@@ -51,20 +51,8 @@ class User extends CI_Model {
 	* @param bool $real Force the use of 'realrole' instead of the cached one.
 	*/
 	function GetActive($property = null, $real = FALSE) {
-		if (!isset($_SESSION['user'])) {
-			$_SESSION['user'] = array( // FIXME: Fake user data until we make user logins available
-				'userid' => 1,
-				'username' => 'mc',
-				'fname' => 'Matt',
-				'lname' => 'Carter',
-				'email' => 'matt_carter@bond.edu.au',
-				'passhash' => '',
-				'passhash2' => '',
-				'status' => 'active',
-				'role' => 'root',
-			);
-			// return FALSE;
-		}
+		if (!isset($_SESSION['user']))
+			return FALSE;
 
 		if ($real && $property == 'role')
 			return isset($_SESSION['user']['realrole']) ? $_SESSION['user']['realrole'] : FALSE;
@@ -82,27 +70,35 @@ class User extends CI_Model {
 	* Fast access function to simply return a user name
 	* This function uses caching and ONLY returns one item of data
 	* @param array|int $userid Either the UserID to retrieve, or the array object of the user to use or if null the current user is used
-	* @param bool $link Include a link to the users profile (only if admin)
+	* @param bool $short Try and return a friendly short name
 	* @return string The user name of the requested user
 	*/
-	function GetName($userid = null, $link = FALSE) {
+	function GetName($userid = null, $short = FALSE) {
 		if (!$userid && !$userid = $this->GetActive('userid')) // Try to use logged in user, otherwise fail
 			return FALSE;
 		if (!isset($this->cachednames[$userid])) {
 			if (!is_array($userid)) { 
-				$this->db->select('username');
+				$this->db->select('fname, lname, email');
 				$this->db->from('users');
 				$this->db->where('userid', $userid);
 				$this->db->limit(1);
 				$record = $this->db->get()->row_array();
 			} else
 				$record = $userid;
-			$this->cachednames[$userid] = $record['username'];
+			if (!isset($record['fname'])) {
+				$this->cachednames[$userid] = 'ERROR';
+			} elseif ($record['fname'] && $short) {
+				$this->cachednames[$userid] = ucfirst($record['fname']);
+			} elseif ($record['fname'] && $record['lname']) {
+				$this->cachednames[$userid] = ucfirst($record['fname']) . ' ' . ucfirst($record['lname']);
+			} elseif ($record['fname']) {
+				$this->cachednames[$userid] = ucfirst($record['fname']);
+			} elseif ($record['lname']) {
+				$this->cachednames[$userid] = ucfirst($record['lname']);
+			} else
+				$this->cachednames[$userid] = $record['email'];
 		}
-		if ($link && $this->IsAdmin()) {
-			return "<a class=\"btn\" href=\"/users/edit/$userid\"><i class=\"icon-user\"></i> {$this->cachednames[$userid]}</a>";
-		} else
-			return $this->cachednames[$userid];
+		return $this->cachednames[$userid];
 	}
 
 	/**

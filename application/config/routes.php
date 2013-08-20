@@ -4,6 +4,12 @@ $route['404_override'] = '';
 
 $route['designer'] = 'pages/designer';
 
+$route['login'] = 'users/login';
+$route['logout'] = 'users/logout';
+$route['signup'] = 'users/signup';
+$route['recover'] = 'users/recover';
+$route['recover/(:any)'] = 'users/recover';
+
 $route['how-to'] = 'pages/howto';
 $route['how-to/(:any)'] = 'pages/howto/$1';
 

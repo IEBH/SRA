@@ -224,7 +224,7 @@
 					<? if (isset($this->User) && $this->User->GetActive()) { ?>
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 						<span class="user-info">
-							<small>Welcome,</small> <?=$this->User->GetName()?>
+							<small>Welcome,</small> <?=$this->User->GetName(NULL, TRUE)?>
 						</span>
 						<i class="icon-caret-down"></i>
 					</a>
