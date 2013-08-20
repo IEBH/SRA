@@ -20,7 +20,9 @@ $(function() {
 				}
 			},
 			error: function(e, err) {
-				alert('Error while getting de-duplication update: ' + err);
+				$('#progress').addClass('progress-danger');
+				$('#progress-text').text('Error while getting de-duplication update: ' + err);
+				$('#progress-updated').text('Last updated: ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds());
 			}
 		});
 	};
