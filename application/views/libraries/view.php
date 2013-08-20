@@ -13,7 +13,7 @@
 	</div>
 </legend>
 
-<? if ($library['status'] == 'deduped') { ?>
+<? if (in_array($library['status'], qw('dedupe deduped'))) { ?>
 <div class="alert alert-info alert-block">
 	<a href="#" data-dismiss="alert" class="close"><i class="icon-remove-sign"></i></a>
 	<h3><i class="icon-bell-alt icon-animated-bell"></i> De-duplication in progress</h3>
