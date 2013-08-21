@@ -45,7 +45,7 @@ class Batt extends CI_Controller {
 	* @param string $_REQUEST['table'] The table to pull data from
 	* @param string $_REQUEST['fields'] The fields to retrieve as a CSV
 	* @param string $_REQUEST['key'] The field to use as the primary key
-	* @param string $_REQUEST['order'] OPTIONAL order by condition
+	* @param array $_REQUEST['order'] OPTIONAL array of filters to apply as a WHERE condition (CI compatible)
 	*/
 	function JSONFeed() {
 		$json = array(
@@ -63,9 +63,19 @@ class Batt extends CI_Controller {
 
 		$this->db->from($_REQUEST['table']);
 		$this->db->where('status', 'active'); // FIXME: This shouldn't be implied
+
+		// FIXME: $_REQUEST['filter'] should be merged with the contents of the server side schema files filters
+		if (isset($_REQUEST['filter']) && $_REQUEST['filter']) {
+			if (!is_array($_REQUEST['filter']))
+				die($this->site->JSONError('Filter must be an array'));
+			$json['header']['filters'] = $_REQUEST['filter'];
+			$this->db->where($_REQUEST['filter']);
+		}
+
 		if (isset($_REQUEST['order']) && $_REQUEST['order'])
 			$this->db->order_by($_REQUEST['order']);
 
+		$json['header']['sql'] = $this->db->_compile_select();
 		foreach ($this->db->get()->result_array() as $data) {
 			$row = array();
 			if (!isset($data[$_REQUEST['key']])) // If primary key is not present - panic
