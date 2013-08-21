@@ -33,7 +33,9 @@
 		type: 'table',
 		dataSource: {
 			table: 'references',
-			filter: {},
+			filter: {
+				libraryid: '{{#url}}/libraries/view/!{{/url}}'
+			}
 		},
 		columns: [
 			{
