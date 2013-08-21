@@ -184,7 +184,7 @@ $(function() {
 </div>
 <? } ?>
 </div></div>
-<div class="alert">
+<div class="alert alert-info">
 	<h3><i class="icon-smile"></i> End of duplicate list</h3>
 	<p>There are now more duplicates to review - yey!.</p>
 </div>
