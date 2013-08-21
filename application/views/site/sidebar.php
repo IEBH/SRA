@@ -26,7 +26,7 @@
 
 	<li>
 		<a href="/libraries" class="dropdown-toggle">
-			<i class="icon-tag"></i>
+			<i class="icon-tags"></i>
 			<span class="menu-text"> My references </span>
 			<b class="arrow icon-angle-down"></b>
 		</a>

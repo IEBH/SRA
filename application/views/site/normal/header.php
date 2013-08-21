@@ -253,7 +253,7 @@
 				</a>
 
 				<a href="/libraries" class="btn btn-small btn-info" data-tip-placement="right" data-tip="View your reference libraries">
-					<i class="icon-tag"></i>
+					<i class="icon-tags"></i>
 				</a>
 
 				<a class="btn btn-small btn-warning">
