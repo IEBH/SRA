@@ -186,5 +186,7 @@ $(function() {
 </div></div>
 <div class="alert alert-info">
 	<h3><i class="icon-smile"></i> End of duplicate list</h3>
-	<p>There are now more duplicates to review - yey!.</p>
+	<p>There are now more duplicates to review - yey!</p>
+	<div class="pull-center">
+		<a href="/libraries/view/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
 </div>
