@@ -8,13 +8,54 @@ $(function() {
 		})
 		.on('click', '.duplicate [data-action=dupe-save]', function(event) {
 			event.preventDefault();
-			var refid = $(this).closest('.duplicate').data('referenceid');
+			var dupe = $(this).closest('.duplicate');
+			$.actionDupe({action: 'save', left: dupe.data('referenceid'), right: dupe.data('referenceid2')});
+			dupe.slideUp('slow', function() {
+				dupe.remove();
+			});
 		})
 		.on('click', '.duplicate [data-action=dupe-delete]', function(event) {
 			event.preventDefault();
-			var refid = $(this).closest('.duplicate').data('referenceid');
-			var refid2 = $(this).closest('.duplicate').data('referenceid2');
+			var dupe = $(this).closest('.duplicate');
+			$.actionDupe({action: 'delete', left: dupe.data('referenceid'), right: dupe.data('referenceid2')});
+			dupe.slideUp('slow', function() {
+				dupe.remove();
+			});
+		})
+		.on('click', '.duplicate [data-action=dupe-break]', function(event) {
+			event.preventDefault();
+			var dupe = $(this).closest('.duplicate');
+			$.actionDupe({action: 'break', left: dupe.data('referenceid'), right: dupe.data('referenceid2')});
+			dupe.slideUp('slow', function() {
+				dupe.remove();
+			});
 		});
+
+	/**
+	* Send a command to the de-duplicator
+	* @param hash data The hash to send via POST
+	* @param bool refresh Whether to redraw the form on success
+	*/
+	$.actionDupe = function(data, refresh) {
+		$.ajax({
+			url: '/api/libraries/dupeaction',
+			data: data,
+			type: 'POST',
+			dataType: 'json',
+			success: function(json) {
+				if (json.header.status == 'ok') {
+					if (refresh)
+						$('#dupes-outer').load($('#dupes-outer').data('url') + ' #dupes-inner');
+				} else if (json.header.error) {
+					alert(json.header.error);
+				} else
+					alert('An unknown error occured');
+			},
+			error: function(e, err) {
+				alert('An error occured: ' + err);
+			}
+		});
+	};
 });
 </script>
 <style>
@@ -140,6 +181,10 @@ $(function() {
 			</div>
 		</div>
 	</div>
-	<? } ?>
 </div>
+<? } ?>
 </div></div>
+<div class="alert">
+	<h3><i class="icon-smile"></i> End of duplicate list</h3>
+	<p>There are now more duplicates to review - yey!.</p>
+</div>

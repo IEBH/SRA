@@ -138,6 +138,61 @@ class Libraries extends CI_Controller {
 	}
 
 	/**
+	* Perform an action on the left/right side duplication
+	* @param string $_REQUEST['action'] The action to perform
+	* @param string $_REQUEST['left'] The left side reference ID to operate on
+	*/
+	function JSONDupeAction() {
+		$this->load->model('Reference');
+
+		foreach (qw('action left') as $key)
+			if (!isset($_REQUEST[$key]))
+				die($this->site->JSONError("Missing parameter: $key"));
+
+		switch ($_REQUEST['action']) {
+			case 'save': // Accept left, delete right, merge
+				die($this->site->JSONError("Not yet supported"));
+				break;
+			case 'delete': // Delete both left/right sides
+				if (!isset($_REQUEST['right']))
+					die($this->site->JSONError("Missing parameter: right"));
+				if (!$left = $this->Reference->Get($_REQUEST['left']))
+					die($this->site->JSONError("Invalid left reference"));
+				if (!$right = $this->Reference->Get($_REQUEST['right']))
+					die($this->site->JSONError("Invalid right reference"));
+
+				// Set both as active
+				$this->Reference->SetStatus($left['referenceid'], 'deleted');
+				$this->Reference->SetStatus($right['referenceid'], 'deleted');
+				break;
+			case 'break': // left/right is not a dupe
+				if (!isset($_REQUEST['right']))
+					die($this->site->JSONError("Missing parameter: right"));
+				if (!$left = $this->Reference->Get($_REQUEST['left']))
+					die($this->site->JSONError("Invalid left reference"));
+				if (!$right = $this->Reference->Get($_REQUEST['right']))
+					die($this->site->JSONError("Invalid right reference"));
+
+				// Set both as active
+				$this->Reference->SetStatus($left['referenceid'], 'active');
+				$this->Reference->SetStatus($right['referenceid'], 'active');
+
+				// Remove alternative data
+				$this->Reference->Save($left['referenceid'], array('altdata' => ''));
+
+				break;
+			default:
+				die($this->site->JSONError("Invalid action: {$_REQUEST['action']}"));
+		}
+
+		$this->site->JSON(array(
+			'header' => array(
+				'status' => 'ok',
+			),
+		));
+	}
+
+	/**
 	* API worker for Dupes()
 	* @param int $_REQUEST['libraryid'] The library ID to work on
 	* @see Dupes()
