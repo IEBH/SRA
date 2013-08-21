@@ -8,7 +8,7 @@
 	<li>
 		<a href="/how-to" class="dropdown-toggle">
 			<i class="icon-book"></i>
-			<span class="menu-text"> How to create a review </span>
+			<span class="menu-text"> How to create a review</span>
 			<b class="arrow icon-angle-down"></b>
 		</a>
 		<ul class="submenu">
@@ -24,10 +24,11 @@
 		</ul>
 	</li>
 
+	<? if (isset($this->Library, $this->User) && $this->User->GetActive()) { ?>
 	<li>
 		<a href="/libraries" class="dropdown-toggle">
 			<i class="icon-tags"></i>
-			<span class="menu-text"> My references </span>
+			<span class="menu-text"> My references</span>
 			<b class="arrow icon-angle-down"></b>
 		</a>
 		<ul class="submenu">
@@ -40,7 +41,6 @@
 					<li><a href="/libraries/import">Import New</a></li>
 				</ul>
 			</li>
-			<? if (isset($this->Library)) { ?>
 			<? foreach ($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'))) as $library) { ?>
 			<li>
 				<a href="/libraries/view/<?=$library['libraryid']?>">
@@ -48,9 +48,18 @@
 				</a>
 			</li>
 			<? } ?>
-			<? } ?>
 		</ul>
 	</li>
+	<? } ?>
+
+	<? if (isset($this->User) && !$this->User->GetActive()) { ?>
+	<li>
+		<a href="/login">
+			<i class="icon-user"></i>
+			<span class="menu-text"> Login</span>
+		</a>
+	</li>
+	<? } ?>
 </ul>
 
 <div class="sidebar-collapse" id="sidebar-collapse">
