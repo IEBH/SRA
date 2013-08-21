@@ -1,5 +1,5 @@
-<ul class="nav nav-list">
-	<li class="active">
+<ul class="nav nav-list" data-selectbyurl="li" data-selectbyurl-parent="li">
+	<li>
 		<a href="/">
 			<i class="icon-dashboard"></i> <span class="menu-text">Dashboard</span>
 		</a>

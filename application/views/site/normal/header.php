@@ -2,8 +2,8 @@
 <html lang="en">
 <? include('application/views/site/head.php') ?>
 
-<body>
-<div class="navbar">
+<body class="navbar-fixed">
+<div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container-fluid">
 			<a href="/" class="brand">
@@ -245,7 +245,7 @@
 		<span class="menu-text"></span>
 	</a>
 
-	<div class="sidebar" id="sidebar">
+	<div class="sidebar fixed" id="sidebar">
 		<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 			<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
 				<a href="/how-to" class="btn btn-small btn-success" data-tip-placement="right" data-tip="How to create a systematic review">

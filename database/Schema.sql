@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `references`;
 CREATE TABLE `references` (
 	referenceid int primary key auto_increment, 
 	libraryid int,
-	status enum ('active', 'deleted') default 'active', 
+	status enum ('active', 'dupe', 'deleted') default 'active', 
 	created int,
 	edited int,
 	title varchar(200),
