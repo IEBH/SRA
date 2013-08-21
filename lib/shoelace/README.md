@@ -180,6 +180,8 @@ To select an item based on the page URL you can attach the `data-selectbyurl` at
 
 In the above scenario the parent `li` item will be selected if the page URL is `/`, `/foo', `/bar` and so on.
 
+You can also specify `data-selectbyurl-parents="li"` to select all parents up the tree. This is useful if your theme requires all branches to be marked as 'active'.
+
 TODO list & ideas
 =================
 * Confirm buttons (possibly `<a href="/somewhere" data-confirm="Are you sure">`) will popup a small tooltip with Yes/No buttons when clicking a link - useful for delete buttons and other things that require two-factor checks
