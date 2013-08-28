@@ -41,13 +41,17 @@ if ($batt_path) // Prefix with '/' if it is actually something other than root
 
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_container.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_container_splitter.js"></script>
-	<script type="text/javascript" src="<?=$batt_path?>/src/batt_db_table.js"></script>
+
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_feed.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_feed_batt.js"></script>
+
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_dropdown.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_form.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_table.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_tabs.js"></script>
 
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_input.js"></script>
+	<script type="text/javascript" src="<?=$batt_path?>/src/batt_label.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_string.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_number.js"></script>
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_text.js"></script>

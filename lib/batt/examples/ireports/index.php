@@ -5,11 +5,11 @@
 	<title>Batt test form</title>
 
 	<? include('../../src/batt_debug.php') ?>
+</head>
+<body>
 
-<script>
-$(function() {
-
-$('#batt').batt([
+<script type="batt">
+[
 	{
 		uses: 'ireports',
 		type: 'table',
@@ -19,7 +19,9 @@ $('#batt').batt([
 		},
 		columns: [
 			{
+				columnWidth: 50,
 				type: 'dropdown',
+				text: '<i class="icon-eye-open"></i><span class="caret"></span>',
 				children: [
 					{
 						title: 'Edit',
@@ -63,13 +65,8 @@ $('#batt').batt([
 		text: '<i class="icon-plus"></i> Create new Inpection Report',
 		class: 'btn btn-success'
 	}
-]);
-
-});
+]
 </script>
 
-</head>
-<body>
-	<div id="batt"></script>	
 </body>
 </html>

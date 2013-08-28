@@ -44,6 +44,7 @@ $('#batt').batt([
 		default: 'baz'
 	},
 	{
+		id: 'choice_radio',
 		type: 'choice_radio',
 		title: 'Choice Radio',
 		choices: {
@@ -52,6 +53,12 @@ $('#batt').batt([
 			'baz': 'Baz'
 		},
 		default: 'bar'
+	},
+	{
+		type: 'html',
+		classes: 'alert alert-success',
+		text: 'I only show if choice_radio==baz',
+		showIf: { choice_radio: 'baz' }
 	},
 	{
 		type: 'date',

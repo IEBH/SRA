@@ -6,10 +6,11 @@
 
 	<? include('../../src/batt_debug.php') ?>
 
-<script>
-$(function() {
+</head>
+<body>
 
-$('#batt').batt([
+<script type="batt">
+[
 	{
 		uses: 'ireports',
 		dataSource: {
@@ -145,13 +146,7 @@ $('#batt').batt([
 			}
 		]
 	}
-]);
-
-});
+]
 </script>
-
-</head>
-<body>
-	<div id="batt"></script>	
 </body>
 </html>

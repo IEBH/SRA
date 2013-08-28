@@ -2,11 +2,9 @@
 [
 	{
 		id: 'libraries',
-		type: 'db-table',
+		type: 'feed-batt',
 		key: 'libraryid',
 		order: 'title',
-		// interface: '/batt/examples/libraries.json',
-		interface: '/batt/api/feed',
 		children: [
 			{
 				id: 'libraryid',
@@ -46,11 +44,9 @@
 	},
 	{
 		id: 'references',
-		type: 'db-table',
+		type: 'feed-batt',
 		key: 'referenceid',
 		order: 'title',
-		// interface: '/batt/examples/libraries.json',
-		interface: '/batt/api/feed',
 		children: [
 			{
 				id: 'referenceid',

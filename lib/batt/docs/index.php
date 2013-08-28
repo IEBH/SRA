@@ -367,7 +367,7 @@ $('#example').batt([
 <pre>
 &lt;script type="batt" src="/my/batt/forms/hello_world.batt"&gt;&lt;/script&gt;
 </pre>
-	<p><span class="label label-info">TIP</span> When any <code>&lt;script src="something"&gt;</code> tags are present on the page Batt will wait until all resources are loaded in and process remote resources <em>before</em> local tags. This is useful for loading in pre-requisite scripts such as schema files which can contain <code>batt_db_table</code> objects.</p>
+	<p><span class="label label-info">TIP</span> When any <code>&lt;script src="something"&gt;</code> tags are present on the page Batt will wait until all resources are loaded in and process remote resources <em>before</em> local tags. This is useful for loading in pre-requisite scripts such as schema files which can contain <code>batt_feed</code> objects.</p>
 <pre>
 &lt;script type="batt" src="/schema.batt"&gt;&lt;/script&gt;
 &lt;script type="batt"&gt;
@@ -389,13 +389,13 @@ $('#selector-id').batt([ {type: 'heading', text: 'Hello World'} ]);
 </pre>
 
 	<h3>Via the '$.batt' global</h3>
-	<p>This method is usually used to define global Batt objects such as the <code>batt_db_table</code> object type as it does not require a specific HTML element to operate on.</p>
+	<p>This method is usually used to define global Batt objects such as the <code>batt_feed</code> object type as it does not require a specific HTML element to operate on.</p>
 <pre>
-$.batt([ {type: 'db_table', // DB TABLE SPEC HERE // } ]);
+$.batt([ {type: 'feed_batt', // DB TABLE SPEC HERE // } ]);
 </pre>
 	<p>However you can also set an element during the batt specification:</p>
 <pre>
-$.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE // } ]);
+$.batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // } ]);
 </pre>
 
 	<h2>Object Reference</h2>
@@ -409,7 +409,8 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<li><code>batt_container</code>
 			<ul>
 				<li><code>batt_container_splitter</code></li>
-				<li><code>batt_db_table</code></li>
+				<li><code>batt_feed</code></li>
+				<li><code>batt_feed_batt</code></li>
 				<li><code>batt_dropdown</code></li>
 				<li><code>batt_form</code></li>
 				<li><code>batt_table</code></li>
@@ -424,6 +425,7 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<li><code>batt_file</code></li>
 			<li><code>batt_heading</code></li>
 			<li><code>batt_html</code>
+			<li><code>batt_label</code></li>
 			<li><code>batt_link</code>
 			<ul>
 				<li><code>batt_button</code></li>
@@ -538,6 +540,18 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			</td>
 		</tr>
 		<tr>
+			<td>addChild(object, where, where_id)</td>
+			<td><span>Method</span></td>
+			<td><code>N/A</code></td>
+			<td>
+				Add a new child object inside this container.<br/>
+				Where can be one of the following options:</ul>
+					<li><code>last</code> - The default value. Indicates that the child should be added after all other children</li>
+					<li><code>after</code> - Indicates that the child should be added after the existing child id <code>where_id</code></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
 			<td>eachChild(callback, options)</td>
 			<td><span>Method</span></td>
 			<td><code>N/A</code></td>
@@ -584,6 +598,12 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<td><span>Method</span></td>
 			<td><code>N/A</code></td>
 			<td>Used internally as a callback when data is being retrieved. </td>
+		</tr>
+		<tr>
+			<td>removeChild(id)</td>
+			<td><span>Method</span></td>
+			<td><code>N/A</code></td>
+			<td>Remove the child object indicated by the id.</td>
 		</tr>
 		<tr>
 			<td>renderRow(element, parent)</td>
@@ -667,19 +687,6 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 		</tr>
 	</table>
 
-	<h3>batt_db_table</h3>
-	<p>Meta object that defines data table behaviour.</p>
-	<p>These objects can be specified anywhere in code. Since they only contain data about database tables they will also never render.</p>
-
-	<table class="properties" data-properties="batt_db_table" data-properties-inherit="batt_container">
-		<tr>
-			<th>Property</th>
-			<th>Attributes</th>
-			<th>Default</th>
-			<th>Description</th>
-		</tr>
-	</table>
-
 	<h3>batt_dropdown</h3>
 	<p>A simple button with a dropdown menu attached.</p>
 	<p>All child items of this object are implied (via <code>implyChild</code>) to have the <code>batt_link</code> type.</p>
@@ -725,6 +732,19 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 					<li><code>BATT</code> - Submit a Batt AJAX request to a Batt server</li>
 				</ul>
 			</td>
+		</tr>
+	</table>
+
+	<h3>batt_feed</h3>
+	<p>Meta object that defines data table behaviour.</p>
+	<p>These objects can be specified anywhere in code. Since they only contain data about database tables they will also never render.</p>
+
+	<table class="properties" data-properties="batt_feed" data-properties-inherit="batt_container">
+		<tr>
+			<th>Property</th>
+			<th>Attributes</th>
+			<th>Default</th>
+			<th>Description</th>
 		</tr>
 	</table>
 
@@ -834,6 +854,24 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<td><span>String</span></td>
 			<td><code>A heading</code></td>
 			<td>The text of the link to display</td>
+		</tr>
+	</table>
+
+	<h3>batt_label</h3>
+	<p>A simple read-only label.</p>
+
+	<table class="properties" data-properties="batt_link" data-properties-inherit="batt_object">
+		<tr>
+			<th>Property</th>
+			<th>Attributes</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>title</td>
+			<td><span>String</span></td>
+			<td><code>A label</code></td>
+			<td>The text of the label to display</td>
 		</tr>
 	</table>
 
@@ -983,6 +1021,12 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<td>The currently assigned DOM object to the Batt field</td>
 		</tr>
 		<tr>
+			<td>showIf</td>
+			<td><span>Hash</span> OR <span>Function</span> <span>Optional</span></td>
+			<td><em>Null</em></td>
+			<td>Whether to show the current object. If the value is a function the field is only shown if the function returns boolean true. If the value is a hash/object each of the values specified must match for the element to show.</td>
+		</tr>
+		<tr>
 			<td>uses</td>
 			<td><span>String OR Array</span> <span>Optional</span></td>
 			<td><em>Null</em></td>
@@ -1017,6 +1061,12 @@ $.batt([ {element: $('#selector-id'), type: 'db_table', // DB TABLE SPEC HERE //
 			<td><span>Function</span></td>
 			<td><em>Built-in</em></td>
 			<td>The function triggered just before <code>render</code> to inherit data from <code>data</code> or user input if either are present</td>
+		</tr>
+		<tr>
+			<td>parse(string, additional_data)</td>
+			<td><span>Method</span></td>
+			<td><em>Built-in</em></td>
+			<td>Parse and return a template string using Mustache</td>
 		</tr>
 	</table>
 
