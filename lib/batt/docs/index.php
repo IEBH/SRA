@@ -1015,6 +1015,15 @@ $.batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE /
 			<td>The unique ID identifying the object</td>
 		</tr>
 		<tr>
+			<td>import</td>
+			<td><span>String</span> <span>Optional</span></td>
+			<td><em>Null</em></td>
+			<td>
+				If specified in the format <code>feed.id</code> the object definition will be imported from the specification inside the feed.<br/>
+				This is useful for having one definition of a data type and using it in multiple locations. The format must be the feed name and the field ID seperated by a dot. For example if importing from the feed 'foo' with the field 'quuzz' the value of import would be <code>foo.quuzz</code>.
+			</td>
+		</tr>
+		<tr>
 			<td>element</td>
 			<td><span>DOM Object</span> <span>Optional</span></td>
 			<td><em>Null</em></td>
@@ -1057,16 +1066,52 @@ $.batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE /
 			<td>The function triggered when the field is asked to validate itself</td>
 		</tr>
 		<tr>
+			<td>change</td>
+			<td><span>Function</span> <span>Optional</span></td>
+			<td><em>Null</em></td>
+			<td>The callback when the object value changes.</td>
+		</tr>
+		<tr>
+			<td>changeOther</td>
+			<td><span>Function</span> <span>Optional</span></td>
+			<td><em>Null</em></td>
+			<td>The callback when the value of any other field value changes.</td>
+		</tr>
+		<tr>
 			<td>loadData</td>
 			<td><span>Function</span></td>
 			<td><em>Built-in</em></td>
 			<td>The function triggered just before <code>render</code> to inherit data from <code>data</code> or user input if either are present</td>
 		</tr>
 		<tr>
+			<td>show(visible, animate)</td>
+			<td><span>Method</span></td>
+			<td><em>Built-in</em></td>
+			<td>The function to show or hide (via <code>show(false)</code>) an object. This method is usually overriden for more complex UI objects.</td>
+		</tr>
+		<tr>
+			<td>hide()</td>
+			<td><span>Method</span></td>
+			<td><em>Built-in</em></td>
+			<td>Dumb convenience call to <code>show(false)</code>.</td>
+		</tr>
+		<tr>
 			<td>parse(string, additional_data)</td>
 			<td><span>Method</span></td>
 			<td><em>Built-in</em></td>
 			<td>Parse and return a template string using Mustache</td>
+		</tr>
+		<tr>
+			<td>findParent(type)</td>
+			<td><span>Method</span></td>
+			<td><em>Built-in</em></td>
+			<td>Returns either the first parent matching <code>type</code> or an array of all parents in the object tree.</td>
+		</tr>
+		<tr>
+			<td>parent()</td>
+			<td><span>Method</span></td>
+			<td><em>Built-in</em></td>
+			<td>Returns the direct parent (which shoudl be a container) of the current object.</td>
 		</tr>
 	</table>
 
