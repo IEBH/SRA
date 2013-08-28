@@ -5,5 +5,6 @@ $batt_load = array(
 	'script' => true,
 	'mustache' => true,
 );
+$batt_root = SITE_ROOT;
 require('lib/batt/src/batt_debug.php');
 ?>
