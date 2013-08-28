@@ -3,6 +3,20 @@ $(function() {
 	$('input[name=username]').select();
 });
 </script>
+<div id="terms" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>User Agreement</h3>
+	</div>
+	<div class="modal-body">
+<pre class="font-tiny">
+<?=file_get_contents('LICENSE.txt')?>
+</pre>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+	</div>
+</div>
 <body class="login-layout">
 	<div class="main-container container-fluid">
 		<div class="main-content">
@@ -83,7 +97,7 @@ $(function() {
 														<input type="checkbox" name="agree" <?=isset($_POST['agree'])?'checked="checked"':''?>/>
 														<span class="lbl">
 															I accept the
-															<a href="#">User Agreement</a>
+															<a href="#terms" data-toggle="modal" data-target="#terms">User Agreement</a>
 														</span>
 													</label>
 

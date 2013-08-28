@@ -96,7 +96,7 @@ class Users extends CI_Controller {
 				$errs[] = 'That email already seems to be registered to someone else';
 
 			if (!isset($_POST['agree']))
-				$errs[] = 'You must agree to the T&amp;C';
+				$errs[] = 'You must accept the User Agreement';
 
 			if (!$errs) {
 				if ($userid = $this->User->Create($_POST)) {
