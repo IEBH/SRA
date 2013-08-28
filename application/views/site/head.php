@@ -15,6 +15,13 @@
 	<!-- FontAwesome -->
 	<link rel="stylesheet" href="<?=SITE_ROOT?>lib/fontawesome/css/font-awesome.min.css">
 
+	<!-- Livicons -->
+	<script src="<?=SITE_ROOT?>lib/livicons/raphael-min.js"></script>
+	<script src="<?=SITE_ROOT?>lib/livicons/livicons-1.3.min.js"></script>
+	<!--[if lt IE 8]>
+		<script src="<?=SITE_ROOT?>lib/livicons/json2.min.js"></script>
+	<![endif]-->
+
 	<!-- Shoelace -->
 	<link href="<?=SITE_ROOT?>lib/shoelace/shoelace.css" rel="stylesheet" type="text/css"/>
 	<script src="<?=SITE_ROOT?>lib/shoelace/shoelace.js"></script>

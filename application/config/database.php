@@ -4,9 +4,9 @@ $active_record = TRUE;
 
 if (preg_match('/crebp\.net\.au/', $_SERVER['SERVER_NAME'])) {
 	$db['default']['hostname'] = 'localhost';
-	$db['default']['database'] = 'cre21534_searchtool';
-	$db['default']['username'] = 'cre21534_searcht';
-	$db['default']['password'] = 'J8xGfzmPRP37';
+	$db['default']['database'] = 'cre21534_sra';
+	$db['default']['username'] = 'cre21534_sra';
+	$db['default']['password'] = 'u35K9gxDmpdw';
 } else {
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['database'] = 'crebpsearch';

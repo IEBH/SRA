@@ -78,7 +78,7 @@ $(function() {
 			<i class="icon-cog"></i> <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="/libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
+			<li><a href="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
 		</ul>
 	</div>
 </legend>
@@ -140,9 +140,9 @@ $(function() {
 				<i class="icon-tag"></i> <span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="/references/edit/<?=$ref['referenceid']?>"><i class="icon-pencil"></i> Edit reference </a></li>
+				<li><a href="<?=SITE_ROOT?>references/edit/<?=$ref['referenceid']?>"><i class="icon-pencil"></i> Edit reference </a></li>
 				<li class="divider"></li>
-				<li><a href="/references/delete/<?=$ref['referenceid']?>"><i class="icon-trash"></i> Delete reference</a></li>
+				<li><a href="<?=SITE_ROOT?>references/delete/<?=$ref['referenceid']?>"><i class="icon-trash"></i> Delete reference</a></li>
 			</ul>
 		</div>
 	</legend>
@@ -150,9 +150,9 @@ $(function() {
 		<table class="table table-bordered table-striped table-hover table-dupes">
 			<thead>
 				<th>Field</th>
-				<th><a href="/references/view/<?=$ref['referenceid']?>">Reference #<?=$ref['referenceid']?></a></th>
+				<th><a href="<?=SITE_ROOT?>references/view/<?=$ref['referenceid']?>">Reference #<?=$ref['referenceid']?></a></th>
 				<? foreach ($altrefs as $altrefid => $junk) { ?>
-				<th><a href="/references/view/<?=$altrefid?>">Reference #<?=$altrefid?></a></th>
+				<th><a href="<?=SITE_ROOT?>references/view/<?=$altrefid?>">Reference #<?=$altrefid?></a></th>
 				<? } ?>
 			</thead>
 			<? foreach ($alts as $field => $val) { ?>
@@ -188,5 +188,5 @@ $(function() {
 	<h3><i class="icon-smile"></i> End of duplicate list</h3>
 	<p>There are now more duplicates to review - yey!</p>
 	<div class="pull-center">
-		<a href="/libraries/view/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
+		<a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
 </div>

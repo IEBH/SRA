@@ -2,7 +2,7 @@ Options -Indexes
 
 # Rewrite fun
 RewriteEngine on
-RewriteBase /
+# RewriteBase /
 
 # If the file exists
 RewriteCond %{REQUEST_FILENAME} -f

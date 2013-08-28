@@ -1,4 +1,4 @@
-<script type="batt" src="/batt/schema"></script>
+<script type="batt" src="<?=SITE_ROOT?>batt/schema"></script>
 <script type="batt">
 [
 	{

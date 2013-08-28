@@ -1,4 +1,4 @@
-<script type="batt" src="/batt/schema"></script>
+<script type="batt" src="<?=SITE_ROOT?>batt/schema"></script>
 <script type="batt">
 [
 	{
@@ -6,15 +6,33 @@
 		title: 'Import an EndNode file'
 	},
 	{
+		id: 'where',
+		type: 'choice_radio',
+		title: 'Where to import',
+		choices: {
+			existing: 'Existing library',
+			new: 'New library'
+		}
+	},
+	{
 		id: 'title',
 		type: 'string',
-		title: 'Name of library',
-		default: 'My Imported Library'
+		title: 'Name of new library',
+		default: 'My Imported Library',
+		showIf: {where: 'new'}
+	},
+	{
+		id: 'libraryid',
+		type: 'reference',
+		to: 'libraries',
+		title: 'Library to import to',
+		showIf: {where: 'existing'}
 	},
 	{
 		id: 'file',	
 		type: 'file',
-		title: 'EndNote XML file'
+		title: 'EndNote XML file',
+		autoDuplicate: true
 	},
 	{
 		type: 'button',

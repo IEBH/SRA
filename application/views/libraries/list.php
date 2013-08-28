@@ -5,15 +5,15 @@
 			<i class="icon-cog"></i> Tools <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="/libraries/import"><i class="icon-cloud-upload"></i> Import references</a></li>
-			<li><a href="/libraries/export"><i class="icon-cloud-download"></i> Export references</a></li>
+			<li><a href="<?=SITE_ROOT?>libraries/import"><i class="icon-cloud-upload"></i> Import references</a></li>
+			<li><a href="<?=SITE_ROOT?>libraries/export"><i class="icon-cloud-download"></i> Export references</a></li>
 			<li class="divider"></li>
-			<li><a href="/libraries/dedupe"><i class="icon-resize-small"></i> Eliminate Duplicates</a></li>
+			<li><a href="<?=SITE_ROOT?>libraries/dedupe"><i class="icon-resize-small"></i> Eliminate Duplicates</a></li>
 		</ul>
 	</div>
 </legend>
 
-<script type="batt" src="/batt/schema"></script>
+<script type="batt" src="<?=SITE_ROOT?>batt/schema"></script>
 <script type="batt">
 [
 	{

@@ -105,7 +105,7 @@ $(function() {
 										</div>
 
 										<div class="toolbar center">
-											<a href="/login" class="back-to-login-link">
+											<a href="<?=SITE_ROOT?>login" class="back-to-login-link">
 												<i class="icon-arrow-left"></i>
 												Back to login
 											</a>

@@ -64,14 +64,14 @@ $(function() {
 
 										<div class="toolbar clearfix">
 											<div>
-												<a href="/recover/password" return false;" class="forgot-password-link">
+												<a href="<?=SITE_ROOT?>recover/password" return false;" class="forgot-password-link">
 													<i class="icon-arrow-left"></i>
 													I forgot my password
 												</a>
 											</div>
 
 											<div>
-												<a href="/signup" onclick="show_box('signup-box'); return false;" class="user-signup-link">
+												<a href="<?=SITE_ROOT?>signup" onclick="show_box('signup-box'); return false;" class="user-signup-link">
 													I want to register
 													<i class="icon-arrow-right"></i>
 												</a>

@@ -6,7 +6,7 @@
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container-fluid">
-			<a href="/" class="brand">
+			<a href="<?=SITE_ROOT?>" class="brand">
 				<small><i class="icon-leaf"></i> <?=SITE_TITLE?></small>
 			</a><!--/.brand-->
 
@@ -229,10 +229,10 @@
 						<i class="icon-caret-down"></i>
 					</a>
 					<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
-						<li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
+						<li><a href="<?=SITE_ROOT?>logout"><i class="icon-off"></i> Logout</a></li>
 					</ul>
 					<? } else { ?>
-					<a href="/login"><i class="icon-user"></i> Login</a>
+					<a href="<?=SITE_ROOT?>login"><i class="icon-user"></i> Login</a>
 					<? } ?>
 				</li>
 			</ul><!--/.ace-nav-->
@@ -248,11 +248,11 @@
 	<div class="sidebar fixed" id="sidebar">
 		<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 			<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-				<a href="/how-to" class="btn btn-small btn-success" data-tip-placement="right" data-tip="How to create a systematic review">
+				<a href="<?=SITE_ROOT?>how-to" class="btn btn-small btn-success" data-tip-placement="right" data-tip="How to create a systematic review">
 					<i class="icon-book"></i>
 				</a>
 
-				<a href="/libraries" class="btn btn-small btn-info" data-tip-placement="right" data-tip="View your reference libraries">
+				<a href="<?=SITE_ROOT?>libraries" class="btn btn-small btn-info" data-tip-placement="right" data-tip="View your reference libraries">
 					<i class="icon-tags"></i>
 				</a>
 
@@ -283,7 +283,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="icon-home home-icon"></i>
-						<a href="/">Home</a>
+						<a href="<?=SITE_ROOT?>">Home</a>
 						<span class="divider"><i class="icon-angle-right arrow-icon"></i></span>
 					</li>
 					<? if (isset($breadcrumbs) && $breadcrumbs) { ?>
