@@ -42,7 +42,7 @@ $(function() {
 											<? } else { ?>
 											<p> Enter your details to begin: </p>
 											<? } ?>
-											<form method="POST" action="/signup">
+											<form method="POST" action="<?=SITE_ROOT?>signup">
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">

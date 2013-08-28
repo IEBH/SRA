@@ -32,7 +32,7 @@ $(function() {
 
 											<div class="space-6"></div>
 
-											<form action="/login" method="post">
+											<form action="<?=SITE_ROOT?>login" method="post">
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">

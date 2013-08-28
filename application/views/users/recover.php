@@ -36,7 +36,7 @@ $(function() {
 												Enter your email and to receive instructions
 											</p>
 
-											<form action="/recover/password" method="post">
+											<form action="<?=SITE_ROOT?>recover/password" method="post">
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">
