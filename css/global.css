@@ -54,6 +54,11 @@ body {
 	margin: 0px !important;
 }
 
+/* Text-center missing for some reason */
+.text-center {
+	text-align: center;
+}
+
 /* Icons in dropdowns are too small */
 .dropdown > .btn > i {
 	font-size: 15pt;
@@ -69,6 +74,18 @@ body {
 .tooltip {
 	line-height: 150%;
 }
+
+/* Radios look weird {{{ */
+.radio {
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.radio input[type=radio] {
+	opacity: 1 !important;
+	margin-top: 3px;
+}
+/* }}} */
 /* }}} */
 /* FIXES: Waveform {{{ */
 .waveform-readonly {
