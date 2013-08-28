@@ -12,7 +12,8 @@
 		choices: {
 			existing: 'Existing library',
 			new: 'New library'
-		}
+		},
+		default: 'new'
 	},
 	{
 		id: 'title',
