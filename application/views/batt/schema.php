@@ -3,6 +3,7 @@
 	{
 		id: 'libraries',
 		type: 'feed-batt',
+		url: '<?=SITE_ROOT?>batt/api/feed',
 		key: 'libraryid',
 		order: 'title',
 		children: [
@@ -45,6 +46,7 @@
 	{
 		id: 'references',
 		type: 'feed-batt',
+		url: '<?=SITE_ROOT?>batt/api/feed',
 		key: 'referenceid',
 		order: 'title',
 		children: [

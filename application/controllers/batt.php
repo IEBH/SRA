@@ -59,7 +59,8 @@ class Batt extends CI_Controller {
 			die($this->site->JSONError('Key not specified'));
 		if (!isset($_REQUEST['fields']))
 			die($this->site->JSONError('Fields not specified'));
-		$_REQUEST['fields'] = preg_split('/\s*,\s*/', $_REQUEST['fields']);
+		if (!is_array($_REQUEST['fields']))
+			die($this->site->JSONError('Fields must be an array'));
 
 		$this->db->from($_REQUEST['table']);
 		$this->db->where('status', 'active'); // FIXME: This shouldn't be implied
@@ -82,7 +83,7 @@ class Batt extends CI_Controller {
 				$this->site->JSONError('Primary key not returned in data feed');
 			$row['_id'] = $data[$_REQUEST['key']];
 			foreach ($_REQUEST['fields'] as $col)
-				$row[$col] = isset($col) ? $data[$col] : null;
+				$row[$col] = isset($data[$col]) ? $data[$col] : null;
 			$json['payload'][] = $row;
 		}
 

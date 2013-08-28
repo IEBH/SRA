@@ -32,7 +32,7 @@
 		uses: 'references',
 		type: 'table',
 		dataSource: {
-			table: 'references',
+			feed: 'references',
 			filter: {
 				libraryid: '{{#url}}/libraries/view/!{{/url}}'
 			}

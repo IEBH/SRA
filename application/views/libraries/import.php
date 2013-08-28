@@ -25,7 +25,10 @@
 	{
 		id: 'libraryid',
 		type: 'reference',
-		to: 'libraries',
+		dataSource: {
+			feed: 'libraries',
+			filter: {},
+		},
 		title: 'Library to import to',
 		showIf: {where: 'existing'}
 	},

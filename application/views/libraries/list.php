@@ -20,8 +20,8 @@
 		uses: 'libraries',
 		type: 'table',
 		dataSource: {
-			table: 'libraries',
-			filter: {},
+			feed: 'libraries',
+			filter: {}
 		},
 		columns: [
 			{
