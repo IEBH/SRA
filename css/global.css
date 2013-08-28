@@ -12,6 +12,32 @@
 	src: local('Open Sans'), local('OpenSans'), url(/fonts/open-sans-400.woff) format('woff');
 }
 /* }}} */
+/* LivIcon {{{ */
+.livicon {
+	display: inline-block;
+	line-height: inherit;
+	vertical-align: middle;
+}
+
+.livicon-bg {
+	position: relative;
+}
+
+.livicon-bg > div {
+	position: absolute;
+	width: 220px;
+	height: auto;
+	left: -20px;
+	top: 20px;
+	padding: 20px;
+	color: #fff;
+	font-size: 14px;
+}
+
+.livicon-bg:hover > div {
+	color: #A65808;
+}
+/* }}} */
 /* Reference menu {{{ */
 .navbar .nav .dropdown a {
 	text-overflow: ellipsis;
