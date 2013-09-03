@@ -48,9 +48,17 @@ class Libraries extends CI_Controller {
 		$this->load->model('Reference');
 
 		if ($_FILES && isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name']) {
-			$libraryid = $this->Library->Create(array(
-				'title' => $_POST['title']
-			));
+			if (isset($_POST['where']) && $_POST['where'] == 'existing') {
+				if (!$library = $this->Library->Get($_POST['libraryid']))
+					$this->site->Error("Invalid library to import into");
+				if (!$this->Library->CanEdit($library))
+					$this->site->Error("This library cannot be edited, it may have been deleted or you may not be the owner");
+				$libraryid = $library['libraryid'];
+			} else { // Create new library and import into that
+				$libraryid = $this->Library->Create(array(
+					'title' => $_POST['title']
+				));
+			}
 
 			require('lib/php-endnote/endnote.php');
 			$this->endnote = new PHPEndNote();

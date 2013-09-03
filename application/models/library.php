@@ -39,6 +39,21 @@ class Library extends CI_Model {
 		}
 	}
 
+	/**
+	* Checks that the current user has permissions to edit this reference library
+	* @param object $library The library object to check
+	* @return bool Boolean as to whether the current user can edit this library
+	*/
+	function CanEdit($libraryid) {
+		if ($this->User->IsAdmin()) // Admin/root can edit everything
+			return true;
+		if ($library['status'] == 'deleted') // No if deleted
+			return false;
+		if ($library['userid'] == $this->User->GetActive('userid')) // Yes if owner
+			return true;
+		return false;
+	}
+
 	function Save($libraryid, $data) {
 		$fields = array();
 		foreach (qw('title') as $field)
