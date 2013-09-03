@@ -46,7 +46,10 @@ class References extends CI_Controller {
 	}
 
 	function Delete($referenceid = null) {
-		// Stub
+		if (!$reference = $this->Reference->Get($referenceid))
+			$this->site->Error('Invalid reference');
+		$this->Reference->Save($referenceid, array('status' => 'deleted'));
+		$this->site->Redirect("/libraries/view/{$reference['libraryid']}");
 	}
 
 	function Export() {
