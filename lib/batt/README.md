@@ -14,4 +14,8 @@ TODO
 * Modal popups
 * Signature input
 * Picture upload
-* BUGFIX: `batt_table.columns` should cope if its instead specified in `batt_table.children` (which is more logical anyway)
+* BUGFIX: Imported IDs are not unique!
+* BUGFIX: "What I meant was..." fixes. Make the following all be interpreted as object.children:
+	- `batt_table.columns`
+	- `batt_choice.choices`
+	- `batt_choice_radio.choices`
