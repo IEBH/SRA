@@ -38,7 +38,7 @@ $(function() {
 	*/
 	$.actionDupe = function(data, refresh) {
 		$.ajax({
-			url: '/api/libraries/dupeaction',
+			url: '<?=SITE_ROOT?>api/libraries/dupeaction',
 			data: data,
 			type: 'POST',
 			dataType: 'json',
@@ -84,7 +84,7 @@ $(function() {
 	</div>
 </legend>
 
-<div id="dupes-outer" data-url="/libraries/dedupe/<?=$library['libraryid']?>"><div id="dupes-inner">
+<div id="dupes-outer" data-url="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>"><div id="dupes-inner">
 
 <div class="infobox-container">
 	<div class="infobox infobox-green infobox-small infobox-dark">

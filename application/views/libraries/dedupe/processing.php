@@ -4,13 +4,13 @@ var updateDelay = 1000;
 $(function() {
 	$.requestUpdate = function () {
 		$.ajax({
-			url: '/api/libraries/dupes',
+			url: '<?=SITE_ROOT?>api/libraries/dupes',
 			data: {libraryid: libraryid},
 			type: 'POST',
 			dataType: 'json',
 			success: function(json) {
 				if (!json.payload || json.payload.done >= json.payload.total) { // Finished
-					document.location = '/libraries/dedupe/' + libraryid;
+					document.location = '<?=SITE_ROOT?>libraries/dedupe/' + libraryid;
 				} else {
 					var now = new Date();
 					$('#progress .bar').css('width', parseInt((json.payload.done / json.payload.total) * 100) + '%');

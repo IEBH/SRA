@@ -44,14 +44,14 @@
 				children: [
 					{
 						title: '<i class="icon-pencil"></i> Edit',
-						action: '/reference/edit/{{data._id}}'
+						action: '<?=SITE_ROOT?>references/edit/{{data._id}}'
 					},
 					{
 						title: '-',
 					},
 					{
 						title: '<i class="icon-trash"></i> Delete',
-						action: '/reference/delete/{{data._id}}'
+						action: '<?=SITE_ROOT?>references/delete/{{data._id}}'
 					}
 				]
 			},
@@ -59,7 +59,7 @@
 				type: 'link',
 				title: 'Title',
 				text: "{{data.title}}",
-				action: '/reference/edit/{{data._id}}'
+				action: '<?=SITE_ROOT?>reference/edit/{{data._id}}'
 			},
 			{
 				type: 'container_splitter',
@@ -74,7 +74,7 @@
 						type: 'tag',
 						classes: 'badge badge-info',
 						text: '<i class="icon-user"></i> {{data.author}}',
-						action: '/reference/edit/{{data._id}}'
+						action: '<?=SITE_ROOT?>reference/edit/{{data._id}}'
 					}
 				]
 			}
