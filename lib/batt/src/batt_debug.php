@@ -72,3 +72,6 @@ if ($batt_path) // Prefix with '/' if it is actually something other than root
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt_unknown.js"></script>
 
 	<script type="text/javascript" src="<?=$batt_path?>/src/batt.js"></script>
+	<script>
+	$.batt.path = '<?=$batt_path?>';
+	</script>
