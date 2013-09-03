@@ -147,6 +147,18 @@ class Libraries extends CI_Controller {
 	}
 
 	/**
+	* Called to finish the deupe process and reset the status of the library
+	*/
+	function Finish($libraryid = null) {
+		if (!$libraryid)
+			$this->site->redirect('/');
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+		$this->Library->SetStatus($libraryid, 'active');
+		$this->site->Redirect("/libraries/view/$libraryid");
+	}
+
+	/**
 	* Perform an action on the left/right side duplication
 	* @param string $_REQUEST['action'] The action to perform
 	* @param string $_REQUEST['left'] The left side reference ID to operate on

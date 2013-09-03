@@ -79,6 +79,7 @@ $(function() {
 		</a>
 		<ul class="dropdown-menu">
 			<li><a href="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
+			<li><a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>/force"><i class="icon-remove"></i> Cancel de-duplication</a></li>
 		</ul>
 	</div>
 </legend>
@@ -188,5 +189,5 @@ $(function() {
 	<h3><i class="icon-smile"></i> End of duplicate list</h3>
 	<p>There are now more duplicates to review - yey!</p>
 	<div class="pull-center">
-		<a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
+		<a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
 </div>
