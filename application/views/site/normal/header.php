@@ -12,8 +12,10 @@
 
 			<ul class="nav ace-nav pull-right">
 				<?
-				if ($basket = $this->Library->GetBasket()) {
-					$basketitems = $this->Reference->GetAll(array('libraryid' => $basket['libraryid'], 'status' => 'active'));
+				if (
+					($basket = $this->Library->GetBasket())
+					&& $basketitems = $this->Reference->GetAll(array('libraryid' => $basket['libraryid'], 'status' => 'active'))
+				) {
 				?>
 				<li id="basket" class="grey">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -23,7 +25,7 @@
 
 					<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
 						<li class="nav-header">
-							<i class="icon-ok"></i>
+							<i class="icon-shopping-cart"></i>
 							<?=count($basketitems)?> items in search basket
 						</li>
 
