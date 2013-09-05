@@ -6,6 +6,11 @@
 	</li>
 
 	<li>
+		<a href="<?=SITE_ROOT?>search">
+			<i class="icon-search"></i>
+			<span class="menu-text"> Search</span>
+		</a>
+	<li>
 		<a href="<?=SITE_ROOT?>how-to" class="dropdown-toggle">
 			<i class="icon-book"></i>
 			<span class="menu-text"> How to create a review</span>

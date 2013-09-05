@@ -51,8 +51,8 @@
 					<i class="icon-group"></i>
 				</a>
 
-				<a class="btn btn-small btn-danger">
-					<i class="icon-cogs"></i>
+				<a href="<?=SITE_ROOT?>search" class="btn btn-small btn-danger" data-tip-placement="right" data-tip="Search for research papers">
+					<i class="icon-search"></i>
 				</a>
 			</div>
 

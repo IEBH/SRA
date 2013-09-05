@@ -7,18 +7,7 @@ class Who extends CI_Controller {
 	}
 
 	function Index() {
-		$this->Search();
-	}
-
-	function Search() {
-		if (!isset($_REQUEST['q']))
-			$this->site->Redirect('/');
-
-		$this->site->Header('WHO Search');
-		$this->site->view('who/search', array(
-			'papers' => $this->Searchwho->GetAll($_REQUEST['q']),
-		));
-		$this->site->Footer();
+		$this->site->Redirect('/search');
 	}
 
 	function Paper($ref = null) {
@@ -68,7 +57,13 @@ class Who extends CI_Controller {
 		$this->waveform->Apply('link', 'url-who, url-real');
 		// }}}
 
-		$this->site->Header("WHO Paper | $ref");
+		if (preg_match('/(search\?q=.*)$/', $_SERVER['HTTP_REFERER'], $matches)) {
+			$breadcrumbs = array(SITE_ROOT . $matches[1] => 'Search');
+		} else {
+			$breadcrumbs = array('/search' => 'Search');
+		}
+
+		$this->site->Header($ref, array('breadcrumbs' => $breadcrumbs));
 		$this->site->view('who/paper', array(
 			'paper' => $paper,
 		));

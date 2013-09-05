@@ -13,6 +13,9 @@ $route['recover/(:any)'] = 'users/recover';
 $route['how-to'] = 'pages/howto';
 $route['how-to/(:any)'] = 'pages/howto/$1';
 
+// Search modules
+$route['search/(:any)'] = '$1';
+
 // Simple page aliases
 
 // Batt
