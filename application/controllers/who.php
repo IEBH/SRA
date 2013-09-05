@@ -83,7 +83,10 @@ class Who extends CI_Controller {
 
 		$basket = $this->Library->GetBasket(TRUE);
 		$data = $paper;
+		// Translate WHO -> EndNote {{{
 		unset($data['title']);
+		$data['date'] = $data['date-reg'];
+		// }}}
 		$this->Reference->Create(array(
 			'libraryid' => $basket['libraryid'],
 			'title' => $paper['title'],
