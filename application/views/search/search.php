@@ -33,7 +33,10 @@
 		</div>
 	</div>
 </form>
-<? if ($papers) { ?>
+<?
+if ($papers) {
+	$basket = $this->Library->GetBasket();
+?>
 <table class="table table-bordered table-stripped">
 	<tr>
 		<th width="50px">&nbsp;</th>
@@ -42,7 +45,7 @@
 	</tr>
 	<? foreach ($papers as $paper) { ?>
 	<tr>
-		<? if ($this->Basket->Has('who-' . $paper['paperid'])) { ?>
+		<? if ($this->Library->Has('who-' . $paper['paperid'], $basket['libraryid'])) { ?>
 		<td><a href="<?=SITE_ROOT?>who/remove/<?=$paper['paperid']?>" class="btn btn-success"><i class="icon-check"></i></td>
 		<? } else { ?>
 		<td><a href="<?=SITE_ROOT?>who/add/<?=$paper['paperid']?>" class="btn"><i class="icon-check-empty"></i></td>

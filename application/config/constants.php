@@ -42,6 +42,8 @@ define('VERSION', '0.1.0');
 define('SITE_ROOT', preg_match('/^local/', $_SERVER['SERVER_NAME']) ? '/' : '/sra/');
 define('SITE_TITLE', 'CREBP Systematic Review Creator');
 
+define('BASKET_NAME', 'Reference Basket');
+
 // De-duplication options
 define('DEDUPE_ORDERBY', 'referenceid'); // What to order references by
 define('DEDUPE_MAX_TIME', 4); // Maximum  amount of time (seconds) to let the process run

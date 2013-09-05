@@ -7,6 +7,28 @@ class Library extends CI_Model {
 		return $this->db->get()->row_array();
 	}
 
+	/**
+	* Retrieves the temporary search basket
+	* @param boolean $create If the basket does not exist it will be created
+	* @return array The data for the search basket
+	*/
+	function GetBasket($create = FALSE) {
+		$this->db->from('libraries');
+		$this->db->where('userid', $this->User->GetActive('userid'));
+		$this->db->where('title', BASKET_NAME);
+		$this->db->where('status', 'active');
+		$this->db->limit(1);
+		if ($result = $this->db->get()->row_array())
+			return $result;
+		if ($create) {
+			$bid = $this->Create(array(
+				'title' => BASKET_NAME
+			));
+			return $this->Get($bid);
+		}
+		return FALSE;
+	}
+
 	function GetAll($where = null, $orderby = 'title') {
 		$this->db->from('libraries');
 		if ($where)
@@ -14,6 +36,25 @@ class Library extends CI_Model {
 		if ($orderby)
 			$this->db->order_by($orderby);
 		return $this->db->get()->result_array();
+	}
+
+	/**
+	* Returns true if the given library has the reference matching references.yourref
+	* @param string $yourref The string to match against references.yourref
+	* @param int $libaryid OPTIONAL library to search. If none is specifed all user owned librarys are searched
+	* @return boolean True if the reference matching references.yourref exists within the given library
+	*/
+	function Has($yourref, $libraryid = null) {
+		$this->db->select('references.*');
+		$this->db->from('references');
+		$this->db->where('yourref', $yourref);
+		if ($libraryid) {
+			$this->db->where('libraryid', $libraryid);
+		} else { // Search all user owned libraries
+			$this->db->join('libraries', 'libraries.libraryid = references.libraryid');
+			$this->db->where('libraries.userid', $this->User->GetActive('userid'));
+		}
+		return $this->db->get()->row_array();
 	}
 
 	function Count($where = null) {

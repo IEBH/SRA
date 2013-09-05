@@ -62,7 +62,7 @@ class Searchwho extends CI_Model {
 		preg_match('!Recruitment status.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['recruitment-status'] = $matches[1];
 		preg_match('!URL:.*?<a id=".*?" href="(.*?)"!sm', $content, $matches);
-		$paper['url-real'] = $matches[1];
+		$paper['url'] = $matches[1];
 		preg_match('!Study type.*?<span.*?>(.*?)</span>!sm', $content, $matches);
 		$paper['study-type'] = $matches[1];
 		preg_match('!Study design.*?<td.*?>(.*?)</td>!sm', $content, $matches);

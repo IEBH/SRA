@@ -29,7 +29,10 @@
 		</ul>
 	</li>
 
-	<? if (isset($this->Library, $this->User) && $this->User->GetActive()) { ?>
+	<?
+	if (isset($this->Library, $this->User) && $this->User->GetActive()) {
+		$basket = $this->Library->GetBasket();
+	?>
 	<li>
 		<a href="<?=SITE_ROOT?>libraries" class="dropdown-toggle">
 			<i class="icon-tags"></i>
@@ -46,7 +49,17 @@
 					<li><a href="<?=SITE_ROOT?>libraries/import">Import New</a></li>
 				</ul>
 			</li>
-			<? foreach ($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'))) as $library) { ?>
+			<? if ($basket) { // Move reference basket to top ?>
+			<li>
+				<a href="<?=SITE_ROOT?>libraries/view/<?=$basket['libraryid']?>">
+					<i class="icon-double-angle-right"></i> <i class="icon-shopping-cart"></i> <?=$basket['title']?>
+				</a>
+			</li>
+			<? } ?>
+			<?
+			foreach ($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status' => 'active')) as $library) {
+				if ($library['libraryid'] == $basket['libraryid']) continue; // Skip the basket - which we displayed above
+			?>
 			<li>
 				<a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>">
 					<i class="icon-double-angle-right"></i> <?=$library['title']?>

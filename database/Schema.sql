@@ -44,9 +44,11 @@ CREATE TABLE libraries (
 	edited int
 );
 CREATE INDEX libraries_userid ON libraries(userid);
+CREATE INDEX libraries_status ON libraries(status);
 INSERT INTO libraries VALUES (null, 1, 'Sample library', 'active', null, null, null, null);
 -- }}}
 -- References {{{
+-- NOTES: references.yourref is a indexed reference. This is usually used to determine if a search term exists within a reference (i.e. did I add this WHO result to my library)
 DROP TABLE IF EXISTS `references`;
 CREATE TABLE `references` (
 	referenceid int primary key auto_increment, 
@@ -56,10 +58,13 @@ CREATE TABLE `references` (
 	edited int,
 	title varchar(200),
 	authors text,
+	yourref varchar(200),
 	data text,
 	altdata text
 );
 CREATE INDEX references_libraryid ON `references`(libraryid);
+CREATE INDEX references_status ON `references`(status);
+CREATE INDEX references_yourref ON `references`(yourref);
 -- }}}
 -- Logs {{{
 DROP TABLE IF EXISTS logs;

@@ -7,6 +7,8 @@ class Search extends CI_Controller {
 	}
 
 	function Index() {
+		$this->Security->EnsureLogin();
+
 		if (!isset($_REQUEST['q']))
 			$_REQUEST['q'] = null;
 
