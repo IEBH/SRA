@@ -1151,6 +1151,12 @@ $.batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE /
 			<th>Default</th>
 			<th>Description</th>
 		</tr>
+		<tr>
+			<td>autoHide</td>
+			<td><span>Boolean</span></td>
+			<td><code>true</code></td>
+			<td>Whether to hide the table completely if there is no data to display.</td>
+		</tr>
 	</table>
 
 	<h3>batt_tabs</h3>
