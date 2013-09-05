@@ -31,6 +31,10 @@ class References extends CI_Controller {
 			$this->Site->Error('Invalid parent library');
 		$reference = $this->Reference->Explode($reference);
 
+		// FIXME: Temporary kludge to make the reference viewer actually do something useful for WHO papers
+		if ($reference['yourref'] && preg_match('/^who-(.*)$/', $reference['yourref'], $matches))
+			$this->site->Redirect("/search/who/paper/{$matches[1]}");
+
 		$this->site->Header("Reference #$referenceid", array(
 			'breadcrumbs' => array(
 				'/libraries' => 'My References',
