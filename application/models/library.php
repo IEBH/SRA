@@ -56,9 +56,11 @@ class Library extends CI_Model {
 		$this->db->where('yourref', $yourref);
 		if ($libraryid) {
 			$this->db->where('libraryid', $libraryid);
+			$this->db->where('status', 'active');
 		} else { // Search all user owned libraries
 			$this->db->join('libraries', 'libraries.libraryid = references.libraryid');
 			$this->db->where('libraries.userid', $this->User->GetActive('userid'));
+			$this->db->where('references.status', 'active');
 		}
 		return $this->db->get()->row_array();
 	}
