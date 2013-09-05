@@ -168,7 +168,21 @@ class Libraries extends CI_Controller {
 			$this->site->redirect('/');
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+
 		$this->Library->SetStatus($libraryid, 'active');
+		$this->site->Redirect("/libraries/view/$libraryid");
+	}
+
+	function Clear($libraryid = null) {
+		if (!$libraryid)
+			$this->site->redirect('/');
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+		$this->Library->Clear($libraryid);
 		$this->site->Redirect("/libraries/view/$libraryid");
 	}
 

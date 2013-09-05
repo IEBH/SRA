@@ -39,6 +39,13 @@ class Library extends CI_Model {
 		}
 	}
 
+	function Clear($libraryid) {
+		$this->db->where('libraryid', $libraryid);
+		$this->db->update('references', array(
+			'status' => 'deleted',
+		));
+	}
+
 	/**
 	* Checks that the current user has permissions to edit this reference library
 	* @param object $library The library object to check
