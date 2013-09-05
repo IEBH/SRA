@@ -52,7 +52,7 @@ class Libraries extends CI_Controller {
 	function Import($libraryid = null) {
 		$this->load->model('Reference');
 
-		if ($_FILES && isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name']) {
+		if ($_FILES) {
 			if (isset($_POST['where']) && $_POST['where'] == 'existing') {
 				if (!$library = $this->Library->Get($_POST['libraryid']))
 					$this->site->Error("Invalid library to import into");
@@ -67,18 +67,23 @@ class Libraries extends CI_Controller {
 
 			require('lib/php-endnote/endnote.php');
 			$this->endnote = new PHPEndNote();
-			$this->endnote->SetXMLFile($_FILES['file']['tmp_name']);
 
-			foreach ($this->endnote->refs as $ref) {
-				$json_obj = $ref;
-				unset($json_obj['authors'], $json_obj['title']); // Scrap fields are are storing elsewhere anyway
+			foreach ($_FILES as $file) {
+				if (!$file['tmp_name'] || !file_exists($file['tmp_name']))
+					continue;
+				$this->endnote->SetXMLFile($file['tmp_name']);
 
-				$this->Reference->Create(array(
-					'libraryid' => $libraryid,
-					'title' => $ref['title'],
-					'authors' => implode(' AND ', $ref['authors']),
-					'data' => json_encode($json_obj),
-				));
+				foreach ($this->endnote->refs as $ref) {
+					$json_obj = $ref;
+					unset($json_obj['authors'], $json_obj['title']); // Scrap fields are are storing elsewhere anyway
+
+					$this->Reference->Create(array(
+						'libraryid' => $libraryid,
+						'title' => $ref['title'],
+						'authors' => implode(' AND ', $ref['authors']),
+						'data' => json_encode($json_obj),
+					));
+				}
 			}
 			$this->site->Redirect("/libraries/view/$libraryid");
 		} else { 
