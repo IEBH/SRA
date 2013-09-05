@@ -7,12 +7,17 @@ class Library extends CI_Model {
 		return $this->db->get()->row_array();
 	}
 
+	var $basketCache;
 	/**
 	* Retrieves the temporary search basket
+	* This function uses caching
 	* @param boolean $create If the basket does not exist it will be created
 	* @return array The data for the search basket
 	*/
 	function GetBasket($create = FALSE) {
+		if ($this->basketCache)
+			return $this->basketCache;
+
 		$this->db->from('libraries');
 		$this->db->where('userid', $this->User->GetActive('userid'));
 		$this->db->where('title', BASKET_NAME);
@@ -24,7 +29,8 @@ class Library extends CI_Model {
 			$bid = $this->Create(array(
 				'title' => BASKET_NAME
 			));
-			return $this->Get($bid);
+			$this->basketCache = $this->Get($bid);
+			return $this->basketCache;
 		}
 		return FALSE;
 	}

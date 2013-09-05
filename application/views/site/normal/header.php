@@ -11,6 +11,47 @@
 			</a><!--/.brand-->
 
 			<ul class="nav ace-nav pull-right">
+				<?
+				if ($basket = $this->Library->GetBasket()) {
+					$basketitems = $this->Reference->GetAll(array('libraryid' => $basket['libraryid'], 'status' => 'active'));
+				?>
+				<li id="basket" class="grey">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="icon-shopping-cart"></i>
+						<span class="badge badge-grey"><?=count($basketitems)?></span>
+					</a>
+
+					<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
+						<li class="nav-header">
+							<i class="icon-ok"></i>
+							<?=count($basketitems)?> items in search basket
+						</li>
+
+						<? for($i = 0; $i < min(count($basketitems), 10); $i++) {
+							$item = $basketitems[$i];
+						?>
+						<li>
+							<a href="<?=SITE_ROOT?>references/edit/<?=$item['referenceid']?>" class="clearfix">
+								<span class="badge badge-info">WHO</span>
+								<?=$item['title']?>
+							</a>
+						</li>
+						<? } ?>
+						<li>
+							<div class="pad-bottom-small clearfix">
+								<div class="btn-group pull-left">
+									<a href="<?=SITE_ROOT?>libraries/clear/<?=$basket['libraryid']?>" class="btn btn-mini" data-confirm="Are you sure you wish to clear the search basket?"><i class="icon-trash"></i> Clear</a>
+									<a href="<?=SITE_ROOT?>libraries/export/<?=$basket['libraryid']?>" class="btn btn-mini"><i class="icon-download"></i> Export</a>
+								</div>
+								<div class="btn-group pull-right">
+									<a href="<?=SITE_ROOT?>libraries/view/<?=$basket['libraryid']?>" class="btn btn-mini"><i class="icon-arrow-right"></i> View All</a>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</li>
+				<? } ?>
+
 				<li class="light-blue">
 					<? if (isset($this->User) && $this->User->GetActive()) { ?>
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">

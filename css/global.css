@@ -87,6 +87,19 @@ body {
 }
 /* }}} */
 /* }}} */
+/* Widget: Search basket {{{ */
+#basket > ul {
+	min-width: 400px;
+}
+
+#basket li > a {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+/* }}} */
 /* FIXES: Waveform {{{ */
 .waveform-readonly {
 	padding-top: 5px;
