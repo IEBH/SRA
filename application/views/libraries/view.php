@@ -1,5 +1,5 @@
 <legend>
-	Manage your references
+	<?=$library['title']?>
 	<div class="btn-group pull-right">
 		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 			<i class="icon-cog"></i> Tools <span class="caret"></span>
