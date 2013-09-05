@@ -72,7 +72,7 @@
 				type: 'link',
 				title: 'Title',
 				text: "{{data.title}}",
-				action: '<?=SITE_ROOT?>reference/edit/{{data._id}}'
+				action: '<?=SITE_ROOT?>references/edit/{{data._id}}'
 			},
 			{
 				type: 'container_splitter',
