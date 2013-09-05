@@ -13,6 +13,7 @@ Goals
 TODO
 ====
 * Multiple file upload when importing EndNote files
-* Import into existing library option
 * Citation editing interface
 * Email library functionality
+
+* BUGFIX: Make libraries/import/[NUMBER] auto select the current library when its in the URL string
