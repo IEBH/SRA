@@ -182,6 +182,15 @@ In the above scenario the parent `li` item will be selected if the page URL is `
 
 You can also specify `data-selectbyurl-parents="li"` to select all parents up the tree. This is useful if your theme requires all branches to be marked as 'active'.
 
+
+Link clicking confirmation
+--------------------------
+Make a confirmation box appear when a user clicks a link.
+
+	<a href="/something/dangerous" data-confirm="Are you REALLY sure you want to do this?">Danger will Robinson!</a>
+
+If the user cancels the confirm box the link click will be canceled.
+
 TODO list & ideas
 =================
 * Confirm buttons (possibly `<a href="/somewhere" data-confirm="Are you sure">`) will popup a small tooltip with Yes/No buttons when clicking a link - useful for delete buttons and other things that require two-factor checks
