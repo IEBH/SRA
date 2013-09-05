@@ -105,8 +105,11 @@ class Libraries extends CI_Controller {
 		require('lib/php-endnote/endnote.php');
 		$this->endnote = new PHPEndNote();
 		$this->endnote->name = $library['title'] . '.enl';
-		foreach ($this->Reference->GetAll(array('libraryid' => $libraryid, 'status' => 'active')) as $ref)
-			$this->endnote->Add($this->Reference->Explode($ref));
+		foreach ($this->Reference->GetAll(array('libraryid' => $libraryid, 'status' => 'active')) as $ref) {
+			$full = $this->Reference->Explode($ref);
+			$full['authors'] = explode(' AND ', $full['authors']);
+			$this->endnote->Add($full);
+		}
 
 		$this->endnote->OutputXML($library['title'] . '.xml');	
 	}
