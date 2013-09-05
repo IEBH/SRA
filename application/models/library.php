@@ -89,6 +89,7 @@ class Library extends CI_Model {
 
 		// Reset child references
 		$this->db->where('libraryid', $libraryid);
+		$this->db->where('status', 'dupe');
 		$this->db->update('references', array(
 			'status' => 'active', // Restore deleted
 			'altdata' => '', // Wipe alternative data
