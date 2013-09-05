@@ -22,7 +22,7 @@
 	height: 45px;
 }
 </style>
-<form action="/search" method="GET" class="row">
+<form action="<?=SITE_ROOT?>search" method="GET" class="row">
 	<div id="searchform" class="pull-center">
 		<? if ($papers === null) { ?>
 		<h1 class="pad-top">Search for research papers</h1>
