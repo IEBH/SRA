@@ -20,6 +20,8 @@ class Libraries extends CI_Controller {
 	function View($libraryid = null) {
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
 
 		$this->site->header($library['title'], array(
 			'breadcrumbs' => array(
@@ -36,6 +38,9 @@ class Libraries extends CI_Controller {
 	function Edit($libraryid = null) {
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+
 		$this->site->header('Manage your libraries');
 		$this->load->view('lib/batt');
 		$this->load->view('libraries/edit', array(
@@ -89,6 +94,8 @@ class Libraries extends CI_Controller {
 
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
 
 		require('lib/php-endnote/endnote.php');
 		$this->endnote = new PHPEndNote();
@@ -113,6 +120,8 @@ class Libraries extends CI_Controller {
 
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
 
 		$this->site->header("De-duplicate", array(
 			'breadcrumbs' => array(
