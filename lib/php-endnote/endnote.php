@@ -104,7 +104,7 @@ class PHPEndNote {
 
 			$out .= '<dates>';
 				$out .= '<year><style face="normal" font="default" size="100%">' . (isset($ref['year']) && $ref['year'] ? $ref['year'] : '') . '</style></year>';
-				$out .= '<pub-dates><date><style face="normal" font="default" size="100%">' . (isset($ref['year']) && $ref['year'] ? $ref['year'] : '') . '</style></date></pub-dates>';
+				$out .= '<pub-dates><date><style face="normal" font="default" size="100%">' . (isset($ref['date']) && $ref['date'] ? $ref['date'] : '') . '</style></date></pub-dates>';
 			$out .= '</dates>';
 
 			if (isset($ref['urls']) && $ref['urls']) {
