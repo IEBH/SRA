@@ -12,6 +12,9 @@ batt.js: src/batt.js src/batt*.js
 	git add batt.min.js batt.js
 	git commit -m 'AUTO: Compiled batt.js / batt.min.js'
 
+batt.browserify.js: batt.js
+	browserify -o batt.browserify.js -e batt.js -d
+
 gh-pages:
 	git checkout gh-pages
 	-git rm -rf .

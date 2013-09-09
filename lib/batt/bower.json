@@ -1,0 +1,11 @@
+{
+	"name": "Batt",
+	"version": "0.1.0",
+	"main": "batt.js",
+	"ignore": [
+		"site"
+	],
+	"dependencies": {
+		"mustache": ">=0.7.0"
+	}
+}

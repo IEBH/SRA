@@ -363,6 +363,17 @@ input[type="color"]:focus,
 	margin-top: 15px;
 	margin-left: 35px;
 }
+/* Feature hover effects {{{ */
+.feature:hover i {
+	text-decoration: none;
+	color: #aaf;
+	-webkit-transition: 500ms linear 0s;
+	-moz-transition: 500ms linear 0s;
+	-o-transition: 500ms linear 0s;
+	transition: 500ms linear 0s;
+	outline: 0 none;
+}
+/* }}} */
 
 /* pricing charts section */
 #pricing { }
@@ -911,3 +922,36 @@ i.myspace { background-position: -233px -51px; }
 .text-center {
 	text-align: center;
 }
+
+i {
+	margin-right: 5px;
+}
+
+i.shadowed {
+	text-shadow: 3px 3px 3px #333333;
+}
+
+/* Docs page overrides {{{ */
+#docs .affix {
+	margin-top: 10px !important;
+	overflow-y: auto;
+	top: 70px;
+	bottom: 10px;
+	background: transparent;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+
+#docs .affix li {
+	background: white;
+}
+
+#docs #content {
+	margin-top: 0px !important;
+}
+
+#docs #content h1 {
+	margin-top: 0px;
+}
+/* }}} */

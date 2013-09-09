@@ -1,15 +1,97 @@
-<!DOCTYPE HTML>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>Batt Documentation</title>
-
-	<? include('../src/batt_debug.php') ?>
+	<title>Batt</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/theme.css">
+	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+	<link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<script src="/js/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/theme.js"></script>
+	<script src="/js/mustache.js"></script>
+	<script src="/batt.js"></script>
 </head>
 <body>
+	<a href="#" class="scrolltop">
+		<span><i class="icon-chevron-up"></i></span>
+	</a>
+	<div class="navbar navbar-fixed-top">
+	  <div class="navbar-inner">
+		<div class="container">
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+		  	</a>
+		  	<a class="brand" href="/">
+				<img src="/img/batt-logo-64.png" alt="logo" style="height: 32px" />
+				<div>Batt<span>.io</span></div>
+			</a>
+		  	<div class="nav-collapse collapse">
+				<ul class="nav pull-right">
+					<li><a href="/#features" class="scroller" data-section="#features">Features</a></li>
+					<li><a href="/faq.html">FAQ</a></li>
+					<li><a href="/docs.html">Documentation</a></li>
+					<li><a href="/#download" class="btn-header scroller" data-section="#download">Download</a></li>
+				</ul>
+			</div>
+		</div>
+	  </div>
+	</div>
+	<script>
+function setCookie(name, value, expires) {
+	if (!expires)
+	expires = new Date();
+	expires.setTime(expires.getTime() + (1000 * 60 * 60 * 24 * 30));
+	document.cookie = name + "=" + escape(value) + "; path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
+}
+
+function getCookie (name) {
+	var dc = document.cookie;
+	var cname = name + "=";
+
+	if (dc.length > 0) {
+	  begin = dc.indexOf(cname);
+	  if (begin != -1) {
+		begin += cname.length;
+		end = dc.indexOf(";", begin);
+		if (end == -1) end = dc.length;
+		return unescape(dc.substring(begin, end));
+		}
+	  }
+	return null;
+}
+
+$(function() {
+	if (!getCookie('warned')) {
+		$('#warning').modal('show');
+		setCookie('warned', 1);
+	}
+});
+	</script>
+	<div id="warning" class="modal hide fade">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>Whoa there</h3>
+		</div>
+		<div class="modal-body">
+			<h3>Batt is still unstable</h3>
+			<p>The Batt API is still at a beta stage and very much in flux at the moment.</p>
+			<p>While you are free to use Batt to develop the APIs listed in the documentation are subject to sudden (and sometimes surprising) changes.</p>
+			<p>Continue at your own risk.</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">Close</a>
+		</div>
+	</div>
+	
+
 	<!-- begin content -->
-	<script src="docs.js"></script>
-	<link rel="stylesheet" type="text/css" href="docs.css">
+	<script src="/js/docs.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/docs.css">
 	<div id="docs">
 
 	<!-- Page opening {{{ -->
@@ -27,7 +109,7 @@
 	<p>Batt is a form generation library that works of a tree structure of widgets.</p>
 	<p>Heres an example of a simple <em>Contact Us</em> form.</p>
 
-<pre class="example" data-example-path="/examples/contact_form">
+<pre class="example" data-example-path="/docs/examples/contact_form">
 $('#example').batt([
 	{
 		type: 'heading',
@@ -260,12 +342,6 @@ $.batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE /
 			<td><span>String</span></td>
 			<td><code>unknown</code></td>
 			<td>An option to specify what all child item types should be if unspecified. This is useful when creating items such as dropdowns where all children are assumed to be of the type <code>batt_link</code></td>
-		</tr>
-		<tr>
-			<td>classes</td>
-			<td><span>String</span></td>
-			<td><code>btn</code></td>
-			<td>CSS classes for the container to use</td>
 		</tr>
 		<tr>
 			<td>dataSource</td>
@@ -989,5 +1065,14 @@ $.batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE /
 	<!-- }}} Page closing --!>
 	</div>
 	<!-- end content -->
+
+	<div id="footer">
+			<div class="row copyright">
+				<div class="text-center copy">
+					<p><a href="http://mfdc.biz">&copy; 2013 - MFDC Pty Ltd.</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
