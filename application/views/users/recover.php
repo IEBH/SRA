@@ -40,8 +40,8 @@ $(function() {
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">
-															<input type="email" name="email" class="span12" placeholder="Email" />
-															<i class="icon-envelope"></i>
+															Email address
+															<input type="email" name="email" class="span12"/>
 														</span>
 													</label>
 

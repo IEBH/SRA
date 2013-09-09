@@ -60,36 +60,36 @@ $(function() {
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="fname" class="span12" placeholder="First name" value="<?=isset($_POST['fname'])?$_POST['fname']:''?>"/>
-															<i class="icon-user"></i>
+															First name
+															<input type="text" name="fname" class="span12" value="<?=isset($_POST['fname'])?$_POST['fname']:''?>"/>
 														</span>
 													</label>
 
 													<label>
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="lname" class="span12" placeholder="Last name" value="<?=isset($_POST['lname'])?$_POST['lname']:''?>"/>
-															<i class="icon-user"></i>
+															Last name
+															<input type="text" name="lname" class="span12" value="<?=isset($_POST['lname'])?$_POST['lname']:''?>"/>
 														</span>
 													</label>
 
 													<label>
 														<span class="block input-icon input-icon-right">
-															<input type="email" name="email" class="span12" placeholder="Email" value="<?=isset($_POST['email'])?$_POST['email']:''?>"/>
-															<i class="icon-envelope"></i>
+															Email address
+															<input type="email" name="email" class="span12" value="<?=isset($_POST['email'])?$_POST['email']:''?>"/>
 														</span>
 													</label>
 
 													<label>
 														<span class="block input-icon input-icon-right">
-															<input type="password" name="password" class="span12" placeholder="Password" value="<?=isset($_POST['password'])?$_POST['password']:''?>"/>
-															<i class="icon-lock"></i>
+															Password
+															<input type="password" name="password" class="span12" value="<?=isset($_POST['password'])?$_POST['password']:''?>"/>
 														</span>
 													</label>
 
 													<label>
 														<span class="block input-icon input-icon-right">
-															<input type="password" name="password2" class="span12" placeholder="Repeat password" value="<?=isset($_POST['password2'])?$_POST['password2']:''?>"/>
-															<i class="icon-retweet"></i>
+															Password confirm
+															<input type="password" name="password2" class="span12" value="<?=isset($_POST['password2'])?$_POST['password2']:''?>"/>
 														</span>
 													</label>
 
