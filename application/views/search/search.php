@@ -21,7 +21,49 @@
 	font-size: 25px;
 	height: 45px;
 }
+#search-outer .btn-mini {
+	font-size: 14px;
+}
 </style>
+<script>
+$(function() {
+
+$(document)
+	.on('click', '[data-action=add]', function(event) {
+		event.preventDefault();
+		var button = $(this);
+		button.html('<i class="icon-spinner icon-spin"></i>');
+		$('#search-outer').load('<?=SITE_ROOT?>who/add/' + button.data('ref') + ' #search-inner');
+	})
+	.on('click', '[data-action=remove]', function(event) {
+		event.preventDefault();
+		var button = $(this);
+		button.html('<i class="icon-spinner icon-spin"></i>');
+		$('#search-outer').load('<?=SITE_ROOT?>who/remove/' + button.data('ref') + ' #search-inner');
+	})
+	.on('click', '[data-action=add-all]', function(event) {
+		event.preventDefault();
+		var button = $(this);
+		button.html('<i class="icon-spinner icon-spin"></i>');
+		var allRefs = [];
+		$('#search-inner [data-ref]').each(function() {
+			allRefs.push($(this).data('ref'));
+		});
+		$('#search-outer').load('<?=SITE_ROOT?>who/add #search-inner', {refs: allRefs});
+	})
+	.on('click', '[data-action=remove-all]', function(event) {
+		event.preventDefault();
+		var button = $(this);
+		button.html('<i class="icon-spinner icon-spin"></i>');
+		var allRefs = [];
+		$('#search-inner [data-ref]').each(function() {
+			allRefs.push($(this).data('ref'));
+		});
+		$('#search-outer').load('<?=SITE_ROOT?>who/remove #search-inner', {refs: allRefs});
+	});
+
+});
+</script>
 <form action="<?=SITE_ROOT?>search" method="GET" class="row">
 	<div id="searchform" class="pull-center">
 		<? if ($papers === null) { ?>
@@ -33,22 +75,36 @@
 		</div>
 	</div>
 </form>
+<div id="search-outer"><div id="search-inner">
 <?
 if ($papers) {
 	$basket = $this->Library->GetBasket();
+
+$hasall = true;
+foreach ($papers as $id => $paper)
+	if (! $papers[$id]['has'] = $this->Library->Has('who-' . $paper['paperid'], $basket['libraryid']))
+		$hasall = false;
 ?>
 <table class="table table-bordered table-stripped">
 	<tr>
-		<th width="50px">&nbsp;</th>
+		<th width="50px">
+			<div class="pull-center">
+			<? if ($hasall) { ?>
+				<a href="#" class="btn btn-mini btn-success" data-action="remove-all"><i class="icon-check"></i></a>
+			<? } else { ?>
+				<a href="#" class="btn btn-mini" data-action="add-all"><i class="icon-check-empty"></i></a>
+			<? } ?>
+			</div>
+		</th>
 		<th>Ref</th>
 		<th>Name</th>
 	</tr>
 	<? foreach ($papers as $paper) { ?>
 	<tr>
-		<? if ($this->Library->Has('who-' . $paper['paperid'], $basket['libraryid'])) { ?>
-		<td><a href="<?=SITE_ROOT?>who/remove/<?=$paper['paperid']?>" class="btn btn-success"><i class="icon-check"></i></td>
+		<? if ($paper['has']) { ?>
+		<td><a href="<?=SITE_ROOT?>who/remove/<?=$paper['paperid']?>" class="btn btn-success" data-action="remove" data-ref="<?=$paper['paperid']?>"><i class="icon-check"></i></td>
 		<? } else { ?>
-		<td><a href="<?=SITE_ROOT?>who/add/<?=$paper['paperid']?>" class="btn"><i class="icon-check-empty"></i></td>
+		<td><a href="<?=SITE_ROOT?>who/add/<?=$paper['paperid']?>" class="btn" data-action="add" data-ref="<?=$paper['paperid']?>"><i class="icon-check-empty"></i></td>
 		<? } ?>
 		<td><a href="<?=$paper['url']?>"><?=$paper['paperid']?></a></td>
 		<td><a href="<?=$paper['url']?>"><?=$paper['name']?></a></td>
@@ -61,3 +117,4 @@ if ($papers) {
 	<p>No results were found from this search. Maybe try removing some of your search criteria.</p>
 </div>
 <? } ?>
+</div></div>

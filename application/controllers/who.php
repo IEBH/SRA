@@ -70,48 +70,76 @@ class Who extends CI_Controller {
 		$this->site->Footer();
 	}
 
-	function Add($ref = null) {
+	/**
+	* Add the given WHO reference to the search basket
+	* @param string,...|array $_REQUEST['refs']|$refs The reference or references to add
+	*/
+	function Add($refs = null) {
 		$this->load->model('Library');
 		$this->load->model('Reference');
 
-		$args = func_get_args();
-		$ref = implode('/', $args);
-		if (!$ref)
+		if (isset($_REQUEST['refs'])) {
+			$refs = (array) $_REQUEST['refs'];
+		} else {
+			$args = func_get_args();
+			$refs = array(implode('/', $args));
+		}
+
+		if (!$refs)
 			$this->site->redirect('/');
-		if (!$paper = $this->Searchwho->Get($ref))
-			$this->Site->Error("Cannot find paper with reference $ref");
 
 		$basket = $this->Library->GetBasket(TRUE);
-		$data = $paper;
-		// Translate WHO -> EndNote {{{
-		unset($data['title']);
-		$data['date'] = $data['date-reg'];
-		// }}}
-		$this->Reference->Create(array(
-			'libraryid' => $basket['libraryid'],
-			'title' => $paper['title'],
-			'authors' => $paper['contact-name'],
-			'data' => $data,
-			'yourref' => 'who-' . $paper['ref'],
-		));
+
+		foreach ($refs as $ref) {
+			if (!$paper = $this->Searchwho->Get($ref))
+				$this->Site->Error("Cannot find paper with reference $ref");
+			if ($this->Reference->GetByYourRef("who-{$paper['ref']}", $basket['libraryid'])) // Already in basket - skip
+				continue;
+
+			$data = $paper;
+			// Translate WHO -> EndNote {{{
+			unset($data['title']);
+			$data['date'] = $data['date-reg'];
+			// }}}
+			$this->Reference->Create(array(
+				'libraryid' => $basket['libraryid'],
+				'title' => $paper['title'],
+				'authors' => $paper['contact-name'],
+				'data' => $data,
+				'yourref' => 'who-' . $paper['ref'],
+			));
+		}
 
 		$this->site->RedirectBack('/search');
 	}
 
-	function Remove($ref = null) {
+	/**
+	* Remove the given WHO reference from the search basket
+	* @param string,...|array $_REQUEST['refs']|$refs The reference or references to remove
+	*/
+	function Remove($refs = null) {
 		$this->load->model('Library');
 		$this->load->model('Reference');
 
-		$args = func_get_args();
-		$ref = implode('/', $args);
-		if (!$ref)
-			$this->site->redirect('/');
-		if (!$paper = $this->Searchwho->Get($ref))
-			$this->Site->Error("Cannot find paper with reference $ref");
+		if (isset($_REQUEST['refs'])) {
+			$refs = (array) $_REQUEST['refs'];
+		} else {
+			$args = func_get_args();
+			$refs = array(implode('/', $args));
+		}
 
+		if (!$refs)
+			$this->site->redirect('/');
 		$basket = $this->Library->GetBasket(TRUE);
-		if ($paper = $this->Reference->GetByYourRef("who-$ref", $basket['libraryid']))
-			$this->Reference->SetStatus($paper['referenceid'], 'deleted');
+
+		foreach ($refs as $ref) {
+			if (!$paper = $this->Searchwho->Get($ref))
+				$this->Site->Error("Cannot find paper with reference $ref");
+
+			if ($paper = $this->Reference->GetByYourRef("who-$ref", $basket['libraryid']))
+				$this->Reference->SetStatus($paper['referenceid'], 'deleted');
+		}
+
 		$this->site->RedirectBack('/search');
 	}
 }
