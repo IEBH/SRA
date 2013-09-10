@@ -7,6 +7,16 @@ class Reference extends CI_Model {
 		return $this->db->get()->row_array();
 	}
 
+	function GetByYourRef($yourref, $libraryid = null) {
+		$this->db->from('references');
+		$this->db->where('yourref', $yourref);
+		$this->db->where('status', 'active');
+		if ($libraryid)
+			$this->db->where('libraryid', $libraryid);
+		$this->db->limit(1);
+		return $this->db->get()->row_array();
+	}
+
 	function Count($where = null) {
 		$this->db->select('COUNT(*) AS count');
 		$this->db->from('references');
