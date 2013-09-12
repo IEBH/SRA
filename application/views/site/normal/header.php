@@ -122,7 +122,7 @@
 					<? if (isset($breadcrumbs) && $breadcrumbs) { ?>
 					<? foreach ($breadcrumbs as $link => $crumb) { ?>
 					<li>
-					<a href="<?=$link?>"><?=$crumb?></a>
+					<a href="<?=SITE_ROOT . substr($link,1)?>"><?=$crumb?></a>
 					<span class="divider"><i class="icon-angle-right arrow-icon"></i></span>
 					</li>
 					<? } ?>

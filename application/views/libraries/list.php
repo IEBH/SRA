@@ -29,19 +29,19 @@
 				children: [
 					{
 						title: 'View',
-						action: '/libraries/view/{{data._id}}'
+						action: '<?=SITE_ROOT?>libraries/view/{{data._id}}'
 					},
 					{
 						title: 'Edit',
-						action: '/libraries/edit/{{data._id}}'
+						action: '<?=SITE_ROOT?>libraries/edit/{{data._id}}'
 					},
 					{
 						title: 'Detect duplicates',
-						action: '/libraries/dupes/{{data._id}}'
+						action: '<?=SITE_ROOT?>libraries/dupes/{{data._id}}'
 					},
 					{
 						title: 'Delete',
-						action: '/libraries/delete/{{data._id}}'
+						action: '<?=SITE_ROOT?>libraries/delete/{{data._id}}'
 					},
 				]
 			},
@@ -49,13 +49,13 @@
 				type: 'link',
 				title: 'Title',
 				text: "{{data.title}}",
-				action: '/libraries/view/{{data._id}}'
+				action: '<?=SITE_ROOT?>libraries/view/{{data._id}}'
 			}
 		]
 	},
 	{
 		type: 'button',
-		action: '/libraries/create',
+		action: '<?=SITE_ROOT?>libraries/create',
 		text: '<i class="icon-plus"></i> Create new library',
 		class: 'btn btn-success'
 	}
