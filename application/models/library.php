@@ -100,7 +100,7 @@ class Library extends CI_Model {
 	* @param object $library The library object to check
 	* @return bool Boolean as to whether the current user can edit this library
 	*/
-	function CanEdit($libraryid) {
+	function CanEdit($library) {
 		if ($this->User->IsAdmin()) // Admin/root can edit everything
 			return true;
 		if ($library['status'] == 'deleted') // No if deleted
