@@ -600,10 +600,13 @@ class CI_Input {
 	*/
 	function _clean_input_keys($str)
 	{
+		// MC - Stupid stupid, unoverideable rule in CI
+		/*
 		if ( ! preg_match("/^[a-z0-9:_\/-]+$/i", $str))
 		{
 			exit('Disallowed Key Characters.');
 		}
+		*/
 
 		// Clean UTF-8 if supported
 		if (UTF8_ENABLED === TRUE)
