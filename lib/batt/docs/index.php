@@ -125,14 +125,14 @@ $('#example').batt([
 $('#selector-id').batt([ {type: 'heading', text: 'Hello World'} ]);
 </pre>
 
-	<h3>Via the '$.batt' global</h3>
+	<h3>Via the 'batt' global</h3>
 	<p>This method is usually used to define global Batt objects such as the <code>batt_feed</code> object type as it does not require a specific HTML element to operate on.</p>
 <pre>
-$.batt([ {type: 'feed_batt', // DB TABLE SPEC HERE // } ]);
+batt([ {type: 'feed_batt', // DB TABLE SPEC HERE // } ]);
 </pre>
 	<p>However you can also set an element during the batt specification:</p>
 <pre>
-$.batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // } ]);
+batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // } ]);
 </pre>
 
 	<h2>Object Reference</h2>
@@ -756,6 +756,12 @@ $.batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE /
 			<td><span>String</span> <span>Optional</span></td>
 			<td><em>Null</em></td>
 			<td>The unique ID identifying the object</td>
+		</tr>
+		<tr>
+			<td>dataId</td>
+			<td><span>String</span> <span>Optional</span></td>
+			<td><em>Null</em></td>
+			<td>If the storage system uses an alternate name to refer to the field it can be overriden here. For example if the field ID is "creator" but the database storage refers to the field as "creatorid".</td>
 		</tr>
 		<tr>
 			<td>import</td>

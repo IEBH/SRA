@@ -1,19 +1,18 @@
-environment:
-	# Install uglifyjs
-	sudo apt-get install -y node-uglify
-
 clean:
 	-rm batt.js batt.min.js
 
-batt.js: src/batt.js src/batt*.js
-	cat src/batt.js src/batt_*.js >batt.js
-	perl -pi -e 's/debug: true/debug: false/' batt.js
-	uglifyjs -o batt.min.js batt.js
+commit: batt.js batt.min.js
 	git add batt.min.js batt.js
 	git commit -m 'AUTO: Compiled batt.js / batt.min.js'
 
-batt.browserify.js: batt.js
-	browserify -o batt.browserify.js -e batt.js -d
+batt.js: src/*.js
+	browserify -o batt.js -e src/batt.js -d
+
+batt.min.js: batt.js
+	uglifyjs -o batt.min.js batt.js
+
+watch:
+	watchify -o batt.js -e src/batt.js -d -v
 
 gh-pages:
 	git checkout gh-pages

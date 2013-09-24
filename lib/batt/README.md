@@ -4,12 +4,14 @@ Prototype data management platform.
 
 Links:
 
-* [Docs](docs)
+* [Main website](http://batt.io)
+* [Docs](http://batt.io/docs.html)
 * [Example Applications](examples)
 
 
 TODO
 ====
+* Offline functionality shiv for feeds
 * Forms within forms
 * Modal popups
 * Signature input
@@ -19,3 +21,4 @@ TODO
 	- `batt_table.columns`
 	- `batt_choice.choices`
 	- `batt_choice_radio.choices`
+* REFACTOR: $script / jQuery as NPM modules

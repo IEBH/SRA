@@ -1,0 +1,27 @@
+{
+	"name": "batt",
+	"author": "Matt Carter <m@ttcarter.com>",
+	"version": "0.1.0",
+	"description": "Extremely modular form construction and validation library",
+	"main": "batt.js",
+	"scripts": {
+		"test": "node test.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/MomsFriendlyDevCo/Batt"
+	},
+	"dependencies": {
+		"mustache": ">= 0.7.2",
+		"jquery": ">= 1.8.3",
+		"simple-json-filter": ">= 0.3.0"
+	},
+	"keywords": [
+		"JSON",
+		"form",
+		"form validation",
+		"form ui",
+		"validation"
+	],
+	"license": "CC NonCommercial­NoDerivs 3.0 Unported"
+}
