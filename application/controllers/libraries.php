@@ -61,7 +61,7 @@ class Libraries extends CI_Controller {
 				if (!$library = $this->Library->Get($_POST['libraryid']))
 					$this->site->Error("Invalid library to import into");
 				if (!$this->Library->CanEdit($library))
-					$this->site->Error("This library cannot be edited, it may have been deleted or you may not be the owner");
+					$this->site->Error("This library cannot be edited, it may have been deleted or you may not be an owner");
 				$libraryid = $library['libraryid'];
 			} else { // Create new library and import into that
 				$libraryid = $this->Library->Create(array(

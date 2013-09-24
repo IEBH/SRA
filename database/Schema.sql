@@ -43,9 +43,20 @@ CREATE TABLE libraries (
 	created int,
 	edited int
 );
-CREATE INDEX libraries_userid ON libraries(userid);
 CREATE INDEX libraries_status ON libraries(status);
 INSERT INTO libraries VALUES (null, 1, 'Sample library', 'active', null, null, null, null);
+-- }}}
+-- User2Library {{{
+DROP TABLE IF EXISTS user2library;
+CREATE TABLE user2library (
+	libraryid int,
+	userid int,
+	created int,
+	PRIMARY KEY(libraryid, userid)
+);
+CREATE INDEX user2ibrary_userid ON user2library(userid);
+CREATE INDEX user2ibrary_libraryid ON user2library(libraryid);
+INSERT INTO user2library VALUES (1, 1, null);
 -- }}}
 -- References {{{
 -- NOTES: references.yourref is a indexed reference. This is usually used to determine if a search term exists within a reference (i.e. did I add this WHO result to my library)

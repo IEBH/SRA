@@ -19,9 +19,10 @@ class Library extends CI_Model {
 			return $this->basketCache;
 
 		$this->db->from('libraries');
-		$this->db->where('userid', $this->User->GetActive('userid'));
 		$this->db->where('title', BASKET_NAME);
 		$this->db->where('status', 'active');
+		$this->db->join('user2library', 'user2library.libraryid = libraries.libraryid');
+		$this->db->where('user2library.userid', $this->User->GetActive('userid'));
 		$this->db->limit(1);
 		if ($result = $this->db->get()->row_array())
 			return $result;
@@ -59,7 +60,8 @@ class Library extends CI_Model {
 			$this->db->where('status', 'active');
 		} else { // Search all user owned libraries
 			$this->db->join('libraries', 'libraries.libraryid = references.libraryid');
-			$this->db->where('libraries.userid', $this->User->GetActive('userid'));
+			$this->db->join('user2library', 'user2library.libraryid = libraries.libraryid');
+			$this->db->where('user2library.userid', $this->User->GetActive('userid'));
 			$this->db->where('references.status', 'active');
 		}
 		return $this->db->get()->row_array();
@@ -81,11 +83,33 @@ class Library extends CI_Model {
 				$fields[$field] = $data[$field];
 
 		if ($fields) {
-			$fields['userid'] = $this->User->GetActive('userid');
 			$fields['created'] = time();
 			$this->db->insert('libraries', $fields);
-			return $this->db->insert_id();
+			$lid = $this->db->insert_id();
+			$this->AddUser($this->User->GetActive('userid'), $lid);
+			return $lid;
 		}
+	}
+
+	function AddUser($userid, $libraryid) {
+		// Already linked?
+		$this->db->from('user2library');
+		$this->db->where('userid', $userid);
+		$this->db->where('libraryid', $libraryid);
+		if ($this->db->get()->result_array())
+			return;
+
+		$this->db->insert('user2library', array(
+			'userid' => $userid,
+			'libraryid' => $libraryid,
+			'created' => time(),
+		));
+	}
+
+	function RemoveUser($userid, $libraryid) {
+		$this->db->where('userid', $userid);
+		$this->db->where('libraryid', $libraryid);
+		$this->db->delete('user2library');
 	}
 
 	function Clear($libraryid) {
@@ -105,8 +129,13 @@ class Library extends CI_Model {
 			return true;
 		if ($library['status'] == 'deleted') // No if deleted
 			return false;
-		if ($library['userid'] == $this->User->GetActive('userid')) // Yes if owner
+		// Check if owner {{{
+		$this->db->from('user2library');
+		$this->db->where('libraryid', $library['libraryid']);
+		$this->db->where('userid', $this->User->GetActive('userid'));
+		if ($this->db->get()->row_array())
 			return true;
+		// }}}
 		return false;
 	}
 
