@@ -21,7 +21,12 @@
 		type: 'table',
 		dataSource: {
 			feed: 'libraries',
-			filter: {}
+			joins: {
+				'user2library': 'user2library.libraryid = libraries.libraryid'
+			},
+			filters: {
+				'user2library.userid': '<?=$this->User->GetActive('userid')?>'
+			}
 		},
 		columns: [
 			{
@@ -32,11 +37,7 @@
 						action: '<?=SITE_ROOT?>libraries/view/{{data._id}}'
 					},
 					{
-						title: 'Edit',
-						action: '<?=SITE_ROOT?>libraries/edit/{{data._id}}'
-					},
-					{
-						title: 'Detect duplicates',
+						title: 'Eliminate duplicates',
 						action: '<?=SITE_ROOT?>libraries/dupes/{{data._id}}'
 					},
 					{
