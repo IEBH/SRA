@@ -25,7 +25,7 @@ class Libraries extends CI_Controller {
 
 		$this->site->header($library['title'], array(
 			'breadcrumbs' => array(
-				'/libraries' => 'My References'
+				'/libraries' => 'Libraries'
 			),
 		));
 		$this->load->view('lib/batt');
@@ -41,7 +41,11 @@ class Libraries extends CI_Controller {
 		if (!$this->Library->CanEdit($library))
 			$this->site->Error('You do not have access to this library');
 
-		$this->site->header('Manage your libraries');
+		$this->site->header("Edit {$library['title']}", array(
+			'breadcrumbs' => array(
+				'/libraries' => 'Libraries'
+			),
+		));
 		$this->load->view('lib/batt');
 		$this->load->view('libraries/edit', array(
 			'library' => $library,
@@ -87,7 +91,11 @@ class Libraries extends CI_Controller {
 			}
 			$this->site->Redirect("/libraries/view/$libraryid");
 		} else { 
-			$this->site->Header('Import References');
+			$this->site->Header('Import References', array(
+				'breadcrumbs' => array(
+					'/libraries' => 'Libraries'
+				),
+			));
 			$this->load->view('lib/batt');
 			$this->site->view('libraries/import');
 			$this->site->Footer();
@@ -133,7 +141,7 @@ class Libraries extends CI_Controller {
 
 		$this->site->header("De-duplicate", array(
 			'breadcrumbs' => array(
-				'/libraries' => 'My References',
+				'/libraries' => 'Libraries',
 				"/libraries/view/$libraryid" => $library['title'],
 			),
 		));
