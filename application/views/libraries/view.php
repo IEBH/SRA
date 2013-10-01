@@ -46,8 +46,9 @@
 		type: 'table',
 		dataSource: {
 			feed: 'references',
-			filter: {
-				libraryid: '{{#url}}/libraries/view/!{{/url}}'
+			filters: {
+				libraryid: '{{#url}}/libraries/view/!{{/url}}',
+				status: 'active'
 			}
 		},
 		columns: [

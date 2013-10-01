@@ -21,12 +21,6 @@
 		type: 'table',
 		dataSource: {
 			feed: 'libraries',
-			joins: {
-				'user2library': 'user2library.libraryid = libraries.libraryid'
-			},
-			filters: {
-				'user2library.userid': '<?=$this->User->GetActive('userid')?>'
-			}
 		},
 		columns: [
 			{

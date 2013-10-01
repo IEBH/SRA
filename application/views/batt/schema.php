@@ -6,6 +6,14 @@
 		url: '<?=SITE_ROOT?>batt/api/feed',
 		key: 'libraryid',
 		order: 'title',
+
+		joins: {
+			'user2library': 'user2library.libraryid = libraries.libraryid'
+		},
+		filters: {
+			'user2library.userid': '<?=$this->User->GetActive('userid')?>'
+		},
+
 		children: [
 			{
 				id: 'libraryid',

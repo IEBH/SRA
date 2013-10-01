@@ -183,9 +183,6 @@ class Reference extends CI_Model {
 				}
 			}
 
-			//foreach($alts as $key => $vals) // Compress alt array
-			//	$alts[$key] = array_unique($vals);
-
 			$save['altdata'] = json_encode($alts);
 			$this->Save($a['referenceid'], $save);
 			$this->SetStatus($b['referenceid'], 'dupe');
