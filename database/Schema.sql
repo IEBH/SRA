@@ -35,7 +35,6 @@ INSERT INTO users VALUES (null, 'mc', ' Matt', 'Carter', '1ae4f82fe031f85fbff0ab
 DROP TABLE IF EXISTS libraries;
 CREATE TABLE libraries (
 	libraryid int primary key auto_increment, 
-	userid int,
 	title varchar(200),
 	status enum ('active', 'dedupe', 'deduped', 'deleted') default 'active', 
 	dedupe_refid INT,
