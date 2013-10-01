@@ -40,15 +40,6 @@
 			<b class="arrow icon-angle-down"></b>
 		</a>
 		<ul class="submenu">
-			<li>
-				<a href="#" class="dropdown-toggle">
-					<i class="icon-double-angle-right"></i> Tools
-					<b class="arrow icon-angle-down"></b>
-				</a>
-				<ul class="submenu">
-					<li><a href="<?=SITE_ROOT?>libraries/import">Import New</a></li>
-				</ul>
-			</li>
 			<? if ($basket) { // Move reference basket to top ?>
 			<li>
 				<a href="<?=SITE_ROOT?>libraries/view/<?=$basket['libraryid']?>">
@@ -66,6 +57,9 @@
 				</a>
 			</li>
 			<? } ?>
+			<li><a href="<?=SITE_ROOT?>libraries/import">
+				<i class="icon-double-angle-right"></i> <i class="icon-plus"></i> Import New</a>
+			</li>
 		</ul>
 	</li>
 	<? } ?>
