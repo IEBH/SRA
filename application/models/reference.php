@@ -127,18 +127,20 @@ class Reference extends CI_Model {
 	* Compare two reference objects and return a boolean if they are similar
 	* @param array $a The primary reference to compare
 	* @param array $b The secondary (slave) reference to compare
+	* @param bool $debug If true a string is returned as to why the papers are not identical instead of boolean FALSE
+	* @return bool|string Boolean indicating whether the papers are similar OR if $debug==true the reason why they match or not as a string
 	*/
-	function Compare($a, $b) {
-		$isdupe = 0;
+	function Compare($a, $b, $debug = FALSE) {
+		$isdupe = false;
 		$alts = array(); // Alternate values we found
 		$save = array(); // Data we should just save to A
 
 		// Simple field comparison
 		foreach (qw('title authors') as $f) {
 			if ($a[$f] == $b[$f]) { // Exact match
-				$isdupe = 1;
+				$isdupe = $debug ? "$f matches exactly - '{$a[$f]}' == '{$b[$f]}'" : true;
 			} elseif ($this->StringCompare($a[$f], $b[$f])) {
-				$isdupe = 1;
+				$isdupe = $debug ? "$f matches roughly - '{$a[$f]}' =~ '{$b[$f]}'" : true;
 				if (!isset($alts[$f]))
 					$alts[$f] = array();
 				$alts[$f][$b['referenceid']] = $b[$f];
@@ -152,15 +154,15 @@ class Reference extends CI_Model {
 
 			// Basic sanity checks
 			if (isset($adata['year'], $bdata['year']) && $adata['year'] != $bdata['year'])
-				return false;
+				return $debug ? "Year mismatch '{$adata['year']}' != '{$bdata['year']}'" : false;
 			if (isset($adata['pages'], $bdata['pages']) && $adata['pages'] != $bdata['pages'])
-				return false;
+				return $debug ? "Pages mismatch '{$adata['pages']}' != '{$bdata['pages']}'" : false;
 			if (isset($adata['volume'], $bdata['volume']) && $adata['volume'] != $bdata['volume'])
-				return false;
+				return $debug ? "Volume mismatch '{$adata['volume']}' != '{$bdata['volume']}'" : false;
 			if (isset($adata['isbn'], $bdata['isbn']) && $adata['isbn'] != $bdata['isbn'])
-				return false;
+				return $debug ? "ISBN mismatch '{$adata['isbn']}' != '{$bdata['isbn']}'" : false;
 			if (isset($adata['number'], $bdata['number']) && $adata['number'] != $bdata['number'])
-				return false;
+				return $debug ? "Number mismatch '{$adata['number']}' != '{$bdata['number']}'" : false;
 
 			foreach (array_merge(array_keys($adata), array_keys($bdata)) as $key) {
 				if (isset($adata[$key]) && is_array($adata[$key]))
