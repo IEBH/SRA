@@ -1,5 +1,5 @@
 <script type="batt" src="<?=SITE_ROOT?>batt/schema"></script>
-<script type="batt">
+<script type="batt" action="/libraries/import">
 [
 	{
 		type: 'heading',

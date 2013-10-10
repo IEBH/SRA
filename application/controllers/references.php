@@ -41,7 +41,6 @@ class References extends CI_Controller {
 				"/libraries/view/{$library['libraryid']}" => $library['title'],
 			),
 		));
-		$this->site->view('lib/batt');
 		$this->site->view('references/edit', array(
 			'library' => $library,
 			'reference' => $reference,

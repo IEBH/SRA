@@ -37,7 +37,7 @@
 			'<div class="alert alert-info">' +
 				'<h3><i class="icon-info-sign"></i> No references in this library</h3>' +
 				'<p>This library is empty. You can import references from a file or create new references manually.</p>' +
-				'<div class="pull-center"><a href="<?=SITE_ROOT?>/libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import EndNote XML file</div>' +
+				'<div class="pull-center"><a href="<?=SITE_ROOT?>libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import EndNote XML file</div>' +
 			'</div>',
 	},
 	{

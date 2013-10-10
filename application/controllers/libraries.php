@@ -12,7 +12,6 @@ class Libraries extends CI_Controller {
 
 	function All() {
 		$this->site->header('Manage your libraries');
-		$this->load->view('lib/batt');
 		$this->load->view('libraries/list');
 		$this->site->footer();
 	}
@@ -28,7 +27,6 @@ class Libraries extends CI_Controller {
 				'/libraries' => 'Libraries'
 			),
 		));
-		$this->load->view('lib/batt');
 		$this->load->view('libraries/view', array(
 			'library' => $library,
 		));
@@ -96,7 +94,6 @@ class Libraries extends CI_Controller {
 					'/libraries' => 'Libraries'
 				),
 			));
-			$this->load->view('lib/batt');
 			$this->site->view('libraries/import');
 			$this->site->Footer();
 		}
