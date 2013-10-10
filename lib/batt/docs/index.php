@@ -155,8 +155,9 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 			</ul></li>
 			<li><code>batt_input</code>
 			<ul>
-				<li><code>batt_string</code></li>
+				<li><code>batt_email</code></li>
 				<li><code>batt_number</code></li>
+				<li><code>batt_string</code></li>
 				<li><code>batt_text</code></li>
 			</ul></li>
 			<li><code>batt_file</code></li>
@@ -449,6 +450,18 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 		</tr>
 	</table>
 
+	<h3>batt_email</h3>
+	<p>Simple email input on a single line.</p>
+
+	<table class="properties" data-properties="batt_email" data-properties-inherit="batt_input">
+		<tr>
+			<th>Property</th>
+			<th>Attributes</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</table>
+
 	<h3>batt_form</h3>
 	<p>An extension of the <code>batt_container</code> object to provide a single interface for managing input.</p>
 
@@ -627,6 +640,12 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 			<th>Attributes</th>
 			<th>Default</th>
 			<th>Description</th>
+		</tr>
+		<tr>
+			<td>classes</td>
+			<td><span>String</span></td>
+			<td><code>btn</code></td>
+			<td>CSS classes for the input box to use</td>
 		</tr>
 		<tr>
 			<td>placeholder</td>
