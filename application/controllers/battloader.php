@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Batt extends CI_Controller {
+class BattLoader extends CI_Controller {
 	var $batt_path = 'lib/batt';
 	var $batt_load = array(
 		'bootstrap' => false,

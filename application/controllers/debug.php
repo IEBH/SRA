@@ -40,5 +40,10 @@ class Debug extends CI_Controller {
 		));
 		$this->site->Footer();
 	}
+
+	function Batt() {
+		echo "<pre>";
+		$this->batt->read('application/views/libraries/share.php');
+	}
 }
 ?>
