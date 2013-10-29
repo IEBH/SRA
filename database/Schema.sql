@@ -43,7 +43,7 @@ CREATE TABLE libraries (
 	edited int
 );
 CREATE INDEX libraries_status ON libraries(status);
-INSERT INTO libraries VALUES (null, 1, 'Sample library', 'active', null, null, null, null);
+INSERT INTO libraries VALUES (null, 'Sample library', 'active', null, null, null, null);
 -- }}}
 -- User2Library {{{
 DROP TABLE IF EXISTS user2library;
