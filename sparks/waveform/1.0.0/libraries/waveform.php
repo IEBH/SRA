@@ -46,7 +46,7 @@ class Waveform {
 	var $fresh;
 
 	/**
-	* Simple key => values of the incomming $_POST request
+	* Simple key => values of the incoming $_POST request
 	* This is intended as a simple method to return any Waveform fields that have been passed in post
 	* e.g.
 	* foreach ($Waveform->keys as $key => val)
@@ -350,7 +350,7 @@ class Waveform {
 
 	// Convenience functions {{{
 	/**
-	* Filter a hash based on an incomming CSV or array
+	* Filter a hash based on an incoming CSV or array
 	* This functionality is used by Form(), Table() or Input() to determine which fields to render
 	*
 	* 1. If $spec is null or empty the entire key set is returned
@@ -542,7 +542,7 @@ class Waveform {
 	}
 
 	/**
-	* Converts an incomming string back into an epoc value
+	* Converts an incoming string back into an epoc value
 	* This function can be thought as the opposit of the PHP Date() function
 	* @param string $format The format as supported by Date()
 	* @param string $string The string to convert back to an Epoc
@@ -1332,7 +1332,7 @@ class WaveformField {
 	* and $key = 'uid', $val = 'name' the following choice array will be used:
 	* array(100 => John, 101 => Luke)
 	*
-	* If $key === boolean false then the incomming array is copied into the keys of the array
+	* If $key === boolean false then the incoming array is copied into the keys of the array
 	* This is particularly usefull if you want the value returned rather than the index offset
 	* e.g. array('one', 'two', 'three') becomes array('one' => 'one', 'two' => 'two', 'three' => 'three')
 	*
@@ -1427,7 +1427,7 @@ class WaveformField {
 	* Accept a file upload and, if successful, store it as the supplied path
 	* * If $path is a directory - The file is saved there and a random file name generated
 	* * If $path is a file path + name - The file is saved as that path + name
-	* * If $path is omitted - Nothing is done with the incomming file and its name remains as PHP's temporary path storage name
+	* * If $path is omitted - Nothing is done with the incoming file and its name remains as PHP's temporary path storage name
 	* The actual name of the file can be accessed using the usual $_POST['file'] variable
 	* @param string $path Optional name of a file or directory to save the file in
 	*/
