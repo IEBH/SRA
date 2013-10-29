@@ -12,6 +12,8 @@ Goals
 
 TODO
 ====
+* libraries/edit/$id
+* libraries/share/$id
 * Multiple file upload when importing EndNote files
 * Citation editing interface
 * Email library functionality
