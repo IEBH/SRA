@@ -8,9 +8,9 @@ class Users extends CI_Controller {
 	/**
 	* Preform a user login
 	* This can be either a standard email/password combination or via the Facebook OAuth API
-	* @param string $skin Alternate views/login-<?> file to use to display the page
+	* @param string $message Display an optional status message
 	*/
-	function Login() {
+	function Login($message = null) {
 		if ( $_POST && isset($_POST['username']) && isset($_POST['password']) ) { // STANDARD ONSITE LOGIN
 			if (!$_POST['username'])
 				$this->site->Message('warning', 'You must specify a valid user name');
@@ -19,8 +19,11 @@ class Users extends CI_Controller {
 			if (!$this->site->HasErrs()) {
 				if ($user = $this->User->GetByLogin($_POST['username'], $_POST['password'])) { // Valid login
 					$redirect = TRUE;
-					if (isset($_POST['redirect']) && $_POST['redirect'])
+					if (isset($_POST['redirect']) && $_POST['redirect']) {
 						$redirect = $_POST['redirect'];
+					} elseif (isset($_SESSION['post_login_url'])) {
+						$redirect = $_SESSION['post_login_url'];
+					}
 					$this->User->Login($user['userid'], $redirect);
 				} else {
 					$this->site->Message('warning', 'Invalid user name or password');
@@ -30,10 +33,19 @@ class Users extends CI_Controller {
 			
 		}
 
+		$text = '';
+		switch ($message) {
+			case 'share':
+				$text = 'To access this reference library you need to login or create an account';
+				break;
+		}
+
 		$this->User->Count(); // Dumb call to DB to ensure that we can actually talk to the database
 		$this->site->SetTheme('minimal');
 		$this->site->Header('Login');
-		$this->site->View('users/login');
+		$this->site->View('users/login', array(
+			'text' => $text,
+		));
 		$this->site->Footer();
 	}
 

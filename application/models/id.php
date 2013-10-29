@@ -47,7 +47,7 @@ class ID extends CI_Model {
 	function Generate() {
 		$out = '';
 		for ($i = 0; $i < $this->saltlen; $i++)
-			$out .= $this->salt[rand(0, count($this->salt)-1)];
+			$out .= $this->salt[mt_rand(0, count($this->salt)-1)];
 		return $out;
 	}
 

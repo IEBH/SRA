@@ -44,11 +44,52 @@ class Libraries extends CI_Controller {
 				'/libraries' => 'Libraries'
 			),
 		));
-		$this->load->view('lib/batt');
 		$this->load->view('libraries/edit', array(
 			'library' => $library,
 		));
 		$this->site->footer();
+	}
+
+	function Share($libraryid = null) {
+		$this->load->model('Email');
+		$this->load->model('Reference');
+		$this->load->model('Urlpayload');
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+
+		if ($fields = $this->batt->done()) {
+			$this->Email->SendEmail('libraries/share', $fields['email'], array(
+				'library.name' => $library['title'],
+				'library.references' => $this->Reference->Count(array('libraryid' => $library['libraryid'])),
+				'share.url' => $this->Urlpayload->Create(array(
+					'command' => 'share',
+					'payloadid' => $library['libraryid'],
+					'expiry' => strtotime('+3 days'),
+				)),
+			));
+			$this->site->header("Share {$library['title']}", array(
+				'breadcrumbs' => array(
+					'/libraries' => 'Libraries'
+				),
+			));
+			$this->load->view('libraries/share/complete', array(
+				'library' => $library,
+				'email' => $fields['email'],
+			));
+			$this->site->footer();
+		} else { 
+			$this->site->header("Share {$library['title']}", array(
+				'breadcrumbs' => array(
+					'/libraries' => 'Libraries'
+				),
+			));
+			$this->load->view('libraries/share/index', array(
+				'library' => $library,
+			));
+			$this->site->footer();
+		}
 	}
 
 	function Import($libraryid = null) {

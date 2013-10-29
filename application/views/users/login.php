@@ -8,6 +8,11 @@ $(function() {
 		<div class="main-content">
 			<div class="row-fluid">
 				<div class="span12">
+					<? if ($text) { ?>
+					<div class="alert alert-info text-center pad">
+						<h4><?=$text?></h4>
+					</div>
+					<? } ?>
 					<div class="login-container">
 						<div class="row-fluid">
 							<div class="center">

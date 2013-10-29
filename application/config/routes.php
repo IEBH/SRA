@@ -5,6 +5,7 @@ $route['404_override'] = '';
 $route['designer'] = 'pages/designer';
 
 $route['login'] = 'users/login';
+$route['login/(:any)'] = 'users/login/$1';
 $route['logout'] = 'users/logout';
 $route['signup'] = 'users/signup';
 $route['recover'] = 'users/recover';
@@ -15,6 +16,9 @@ $route['how-to/(:any)'] = 'pages/howto/$1';
 
 // Search modules
 $route['search/(:any)'] = '$1';
+
+// TinyURL handler
+$route['go/(:any)'] = 'tinyurls/view/$1';
 
 // Simple page aliases
 

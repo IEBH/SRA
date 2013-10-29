@@ -37,7 +37,14 @@ class Library extends CI_Model {
 	}
 
 	function GetAll($where = null, $orderby = 'title') {
+		$this->db->select('libraries.*');
 		$this->db->from('libraries');
+
+		if (isset($where['userid'])) {
+			$this->db->join('user2library', 'user2library.libraryid = libraries.libraryid AND user2library.userid = ' . $where['userid']);
+			unset($where['userid']);
+		}
+
 		if ($where)
 			$this->db->where($where);
 		if ($orderby)

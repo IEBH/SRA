@@ -50,18 +50,17 @@ class Email extends CI_Model {
 			return;
 		}
 
-		foreach ($users as $user) {
-			$vars['link.site'] = SITE_URL;
-			$vars['link.login'] = SITE_URL . '/login';
+		$vars['link.site'] = SITE_URL;
+		$vars['link.login'] = SITE_URL . '/login';
 
-			$vars['site.title'] = SITE_TITLE;
-			$vars['site.name'] = SITE_TITLE;
+		$vars['site.title'] = SITE_TITLE;
+		$vars['site.name'] = SITE_TITLE;
 
-			$title = $this->Page->Replace($page['title'], $vars);
-			$body = $this->Page->Replace($page['text'], $vars);
-			$this->Dispatch($page['type'], $email, $title, $body);
-			$this->Log->Add('envelope', "Email $code dispatched to $email");
-		}
+		$title = $this->Page->Replace($page['title'], $vars);
+		$body = $this->Page->Replace($page['text'], $vars);
+		$this->Dispatch($page['type'], $email, $title, $body);
+		$this->Log->Add('envelope', "Email $code dispatched to $email");
+		
 		return TRUE;
 	}
 
@@ -90,7 +89,7 @@ class Email extends CI_Model {
 			$this->Log->Add('envelope', "Sent email with subject '$subject' to {$user['email']}", $user['userid']);
 		}
 
-		$headers .= 'From: ' . ADMIN_EMAIL_NAME . ' <' . ADMIN_EMAIL . ">\r\n";
+		$headers .= 'From: ' . EMAIL_NAME . ' <' . EMAIL_ADDRESS . ">\r\n";
 		mail($to, $subject, $body, $headers);
 	}
 

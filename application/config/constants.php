@@ -41,6 +41,8 @@ define('VERSION', '0.1.0');
 
 define('SITE_ROOT', preg_match('/^local/', $_SERVER['SERVER_NAME']) ? '/' : '/sra/');
 define('SITE_TITLE', 'CREBP Systematic Review Creator');
+define('SITE_DOMAIN', 'crebp.net.au');
+define('SITE_URL', 'http://crebp.net.au/sra');
 
 define('BASKET_NAME', 'Reference Basket');
 
@@ -49,3 +51,13 @@ define('DEDUPE_ORDERBY', 'referenceid'); // What to order references by
 define('DEDUPE_MAX_TIME', 4); // Maximum  amount of time (seconds) to let the process run
 define('DEDUPE_SCOOP_REFERENCES', 10); // Number of references to read into memory at once to analyze (i.e. ref A)
 define('DEDUPE_SCOOP_REFERENCES2', 50); // Number of secondary references to read into memory at once to analyze (i.e. ref A <=> B)
+
+// Email switches
+define('EMAIL_ADDRESS', 'noreply@' . SITE_DOMAIN);
+define('EMAIL_NAME', SITE_TITLE); // The human name of the EMAIL_ADDRESS
+define('EMAIL_OVERRIDE', 1); // If enabled all outgoing mail will sent to EMAIL_OVERRIDE_TO
+define('EMAIL_OVERRIDE_TO', 'matt@mfdc.biz');
+define('EMAIL_OVERRIDE_NAME', 'Matt Carter');
+
+define('URLPAYLOAD_DEFAULT_EXPIRY', strtotime('+3 days'));
+define('URLPAYLOAD_URL', SITE_URL . '/go/[CODE]');
