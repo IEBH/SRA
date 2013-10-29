@@ -29,7 +29,7 @@ CREATE TABLE users (
 	edited int,
 	lastlogin int
 );
-INSERT INTO users VALUES (null, 'mc', ' Matt', 'Carter', '1ae4f82fe031f85fbff0abf9812358c755c36c2d', null, 'matt@mfdc.biz', 'active', 'root', 1364342313, 1364342313, 1364342313);
+INSERT INTO users VALUES (null, 'mc', ' Matt', 'Carter', 'qwaszx', null, 'matt@mfdc.biz', 'active', 'root', 1364342313, 1364342313, 1364342313);
 -- }}}
 -- Libraries {{{
 DROP TABLE IF EXISTS libraries;
