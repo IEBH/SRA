@@ -190,4 +190,5 @@ $(function() {
 	<p>There are now more duplicates to review - yey!</p>
 	<div class="pull-center">
 		<a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
+	</div>
 </div>
