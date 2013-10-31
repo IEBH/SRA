@@ -140,6 +140,7 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 	<ul>
 		<li><code>batt_object</code>
 		<ul>
+			<li><code>batt_checkbox</code></li>
 			<li><code>batt_date</code></li>
 			<li><code>batt_choice</code></li>
 			<li><code>batt_choice_radio</code></li>
@@ -194,6 +195,42 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 			<td><span>String</span></td>
 			<td><code>btn</code></td>
 			<td>The style information for the button</td>
+		</tr>
+	</table>
+
+	<h3>batt_checkbox</h3>
+	<p>A simple checkbox which can have only two values: '1' and '0'.</p>
+
+	<table class="properties" data-properties="batt_checkbox" data-properties-inherit="batt_object">
+		<tr>
+			<th>Property</th>
+			<th>Attributes</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>errorRequired</td>
+			<td><span>String</span></td>
+			<td><code>String required</code></td>
+			<td>The validation message to display when trying to submit the form without checking the checkbox.</td>
+		</tr>
+		<tr>
+			<td>readOnly</td>
+			<td><span>Boolean</span></td>
+			<td><code>false</code></td>
+			<td>Whether actions from the user should be disabled</td>
+		</tr>
+		<tr>
+			<td>required</td>
+			<td><span>Boolean</span></td>
+			<td><code>false</code></td>
+			<td>Indicates that the checkbox <strong>must</strong> be checked to allow validation to succeed. This is useful for 'Terms &amp; conditons' style forms. If the validation values <code>errorRequired</code> will be thrown as the error message.</td>
+		</tr>
+		<tr>
+			<td>value</td>
+			<td><span>String</span></td>
+			<td><code>0</code></td>
+			<td>The value of the checkbox, either '0' or '1'</td>
 		</tr>
 	</table>
 

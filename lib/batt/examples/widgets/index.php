@@ -61,6 +61,10 @@ $('#batt').batt([
 		showIf: { choice_radio: 'baz' }
 	},
 	{
+		type: 'checkbox',
+		title: 'Checkbox'
+	},
+	{
 		type: 'date',
 		title: 'Date',
 		default: 'bar'
