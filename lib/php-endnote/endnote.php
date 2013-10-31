@@ -26,6 +26,7 @@ class PHPEndNote {
 	*	* urls - Array
 	*	* notes - String (optional)
 	*	* isbn - String (optional)
+	*	* label - String (optional)
 	*
 	* @var array
 	*/
@@ -99,6 +100,7 @@ class PHPEndNote {
 				'section' => 'section',
 				'abstract' => 'abstract',
 				'isbn' => 'isbn',
+				'label' => 'label',
 			) as $enkey => $ourkey)
 				$out .= "<$enkey><style face=\"normal\" font=\"default\" size=\"100%\">" . (isset($ref[$ourkey]) && $ref[$ourkey] ? $ref[$ourkey] : '') . "</style></$enkey>";
 
