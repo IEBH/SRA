@@ -37,6 +37,7 @@ CREATE TABLE libraries (
 	libraryid int primary key auto_increment, 
 	title varchar(200),
 	status enum ('active', 'dedupe', 'deduped', 'deleted') default 'active', 
+	debug enum ('active', 'inactive') default 'inactive',
 	dedupe_refid INT,
 	dedupe_refid2 INT,
 	created int,

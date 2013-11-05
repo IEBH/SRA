@@ -126,17 +126,24 @@ class Libraries extends CI_Controller {
 						'authors' => implode(' AND ', $ref['authors']),
 						'label' => $ref['label'],
 						'data' => json_encode($json_obj),
+						'debug' => (isset($_POST['debug']) && $_POST['debug'] ? 'active' : 'inactive'),
 					));
 				}
 			}
-			$this->site->Redirect("/libraries/view/$libraryid");
+
+			if (isset($_POST['auto_dedupe']) && $_POST['auto_dedupe']) {
+				$this->site->Redirect("/libraries/dedupe/$libraryid");
+			} else
+				$this->site->Redirect("/libraries/view/$libraryid");
 		} else { 
 			$this->site->Header('Import References', array(
 				'breadcrumbs' => array(
 					'/libraries' => 'Libraries'
 				),
 			));
-			$this->site->view('libraries/import');
+			$this->site->view('libraries/import', array(
+				'newName' => 'Imported Library',
+			));
 			$this->site->Footer();
 		}
 	}

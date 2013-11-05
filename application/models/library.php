@@ -85,7 +85,7 @@ class Library extends CI_Model {
 
 	function Create($data) {
 		$fields = array();
-		foreach (qw('title') as $field)
+		foreach (qw('title debug') as $field)
 			if (isset($data[$field]))
 				$fields[$field] = $data[$field];
 
@@ -148,7 +148,7 @@ class Library extends CI_Model {
 
 	function Save($libraryid, $data) {
 		$fields = array();
-		foreach (qw('title') as $field)
+		foreach (qw('title debug') as $field)
 			if (isset($data[$field]))
 				$fields[$field] = $data[$field];
 

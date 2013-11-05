@@ -1,5 +1,5 @@
 <script type="batt" src="<?=SITE_ROOT?>batt/schema"></script>
-<script type="batt" action="<?=SITE_ROOT?>libraries/import">
+<script type="batt" action="<?=SITE_ROOT?>libraries/import" method="post">
 [
 	{
 		type: 'heading',
@@ -19,7 +19,7 @@
 		id: 'title',
 		type: 'string',
 		title: 'Name of new library',
-		default: 'My Imported Library',
+		default: '<?=$newName?>',
 		showIf: {where: 'new'}
 	},
 	{
