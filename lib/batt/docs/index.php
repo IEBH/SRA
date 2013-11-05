@@ -643,6 +643,12 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 			</td>
 		</tr>
 		<tr>
+			<td>icon</td>
+			<td><span>String</span></td>
+			<td><em>null</em></td>
+			<td>Optional icon to insert before the title. The form of the icon will be a standard Bootstrap style <code>&lt;i class="ICON"&gt;&lt;/i&gt;</code> insert where 'ICON' is the value of this property.</td>
+		</tr>
+		<tr>
 			<td>title</td>
 			<td><span>String</span></td>
 			<td><code>A heading</code></td>
