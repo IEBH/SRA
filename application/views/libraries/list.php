@@ -28,18 +28,22 @@
 		columns: [
 			{
 				type: 'dropdown',
+				text: '<i class="icon-tags"></i>',
 				columnWidth: '50px',
 				children: [
 					{
 						title: 'View',
+						icon: 'icon-tags',
 						action: '<?=SITE_ROOT?>libraries/view/{{data._id}}'
 					},
 					{
 						title: 'Eliminate duplicates',
+						icon: 'icon-resize-small',
 						action: '<?=SITE_ROOT?>libraries/dupes/{{data._id}}'
 					},
 					{
 						title: 'Delete',
+						icon: 'icon-trash',
 						action: '<?=SITE_ROOT?>libraries/delete/{{data._id}}'
 					},
 				]

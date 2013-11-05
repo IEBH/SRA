@@ -36,10 +36,11 @@
 	<li>
 		<a href="<?=SITE_ROOT?>libraries" class="dropdown-toggle">
 			<i class="icon-tags"></i>
-			<span class="menu-text"> My references</span>
+			<span class="menu-text"> My libraries</span>
 			<b class="arrow icon-angle-down"></b>
 		</a>
 		<ul class="submenu">
+			<li><a href="<?=SITE_ROOT?>libraries"><i class="icon-double-angle-right"></i> View all</a></li>
 			<? if ($basket) { // Move reference basket to top ?>
 			<li>
 				<a href="<?=SITE_ROOT?>libraries/view/<?=$basket['libraryid']?>">
