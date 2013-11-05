@@ -169,7 +169,14 @@ class Libraries extends CI_Controller {
 	}
 
 	function Delete($libraryid = null) {
-		// Stub
+		if (!$libraryid)
+			$this->site->redirect('/');
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+		$this->Library->SetStatus($libraryid, 'deleted');
+		$this->site->Redirect("/libraries");
 	}
 
 	/**

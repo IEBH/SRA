@@ -21,10 +21,14 @@
 		type: 'table',
 		dataSource: {
 			feed: 'libraries',
+			filters: {
+				status: 'active'
+			}
 		},
 		columns: [
 			{
 				type: 'dropdown',
+				columnWidth: '50px',
 				children: [
 					{
 						title: 'View',
