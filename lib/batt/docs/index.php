@@ -229,8 +229,14 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 		<tr>
 			<td>value</td>
 			<td><span>String</span></td>
-			<td><code>0</code></td>
-			<td>The value of the checkbox, either '0' or '1'</td>
+			<td><em>null</em></td>
+			<td>The value of the checkbox, either valueChecked or <em>null</em></td>
+		</tr>
+		<tr>
+			<td>valueChecked</td>
+			<td><span>Mixed</span></td>
+			<td><code>1</code></td>
+			<td>The actual value to return when the checkbox is checked.</td>
 		</tr>
 	</table>
 
