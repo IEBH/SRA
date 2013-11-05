@@ -69,12 +69,14 @@ CREATE TABLE `references` (
 	title varchar(200),
 	authors text,
 	yourref varchar(200),
+	label varchar(100),
 	data text,
 	altdata text
 );
 CREATE INDEX references_libraryid ON `references`(libraryid);
 CREATE INDEX references_status ON `references`(status);
 CREATE INDEX references_yourref ON `references`(yourref);
+CREATE INDEX references_label ON `references`(label);
 -- }}}
 -- Logs {{{
 DROP TABLE IF EXISTS logs;

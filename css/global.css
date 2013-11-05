@@ -75,6 +75,10 @@ body {
 	line-height: 150%;
 }
 
+/* WTF are Checkboxes hidden? */
+input[type=checkbox] {
+	opacity: 1 !important;
+}
 /* Radios look weird {{{ */
 .radio {
 	margin-bottom: 10px;

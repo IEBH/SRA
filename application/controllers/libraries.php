@@ -124,6 +124,7 @@ class Libraries extends CI_Controller {
 						'libraryid' => $libraryid,
 						'title' => $ref['title'],
 						'authors' => implode(' AND ', $ref['authors']),
+						'label' => $ref['label'],
 						'data' => json_encode($json_obj),
 					));
 				}

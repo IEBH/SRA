@@ -33,6 +33,23 @@
 		showIf: {where: 'existing'}
 	},
 	{
+		id: 'advanced',
+		type: 'checkbox',
+		title: 'Advanced options'
+	},
+	{
+		id: 'auto_dedupe',
+		type: 'checkbox',
+		title: 'Automatic de-duplicate',
+		showIf: {advanced: '1'}
+	},
+	{
+		id: 'debug',
+		type: 'checkbox',
+		title: 'Debug mode',
+		showIf: {advanced: '1'}
+	},
+	{
 		id: 'file',	
 		type: 'file',
 		title: 'EndNote XML file',
