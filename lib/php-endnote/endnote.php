@@ -174,6 +174,7 @@ class PHPEndNote {
 				'isbn' => 'isbn',
 				'notes' => 'notes',
 				'research-notes' => 'notes',
+				'label' => 'label',
 			) as $enkey => $ourkey) {
 				if (! $find = $record->xpath("$enkey/style/text()") )
 					continue;

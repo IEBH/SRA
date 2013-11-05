@@ -95,7 +95,10 @@ class Libraries extends CI_Controller {
 	function Import($libraryid = null) {
 		$this->load->model('Reference');
 
-		if ($_FILES) {
+		if ($fields = $this->batt->done()) {
+			if (!$_FILES)
+				$this->site->Error('No files uploaded');
+
 			if (isset($_POST['where']) && $_POST['where'] == 'existing') {
 				if (!$library = $this->Library->Get($_POST['libraryid']))
 					$this->site->Error("Invalid library to import into");
@@ -104,7 +107,8 @@ class Libraries extends CI_Controller {
 				$libraryid = $library['libraryid'];
 			} else { // Create new library and import into that
 				$libraryid = $this->Library->Create(array(
-					'title' => $_POST['title']
+					'title' => $_POST['title'],
+					'debug' => $fields['debug'] ? 'active' : 'inactive',
 				));
 			}
 
@@ -126,12 +130,11 @@ class Libraries extends CI_Controller {
 						'authors' => implode(' AND ', $ref['authors']),
 						'label' => $ref['label'],
 						'data' => json_encode($json_obj),
-						'debug' => (isset($_POST['debug']) && $_POST['debug'] ? 'active' : 'inactive'),
 					));
 				}
 			}
 
-			if (isset($_POST['auto_dedupe']) && $_POST['auto_dedupe']) {
+			if ($fields['auto_dedupe']) {
 				$this->site->Redirect("/libraries/dedupe/$libraryid");
 			} else
 				$this->site->Redirect("/libraries/view/$libraryid");

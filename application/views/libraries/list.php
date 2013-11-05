@@ -17,6 +17,21 @@
 <script type="batt">
 [
 	{
+		type: 'html',
+		showIf: {'libraries-table is': 'empty'},
+		text: 
+			'<div class="alert alert-info">' +
+				'<h3><i class="icon-info-sign"></i> No libraries found</h3>' +
+				'<p>You dont appear to have any reference libraries. You can import an existing EndNote library or create new library manually.</p>' +
+				'<div class="pull-center">' +
+					'<a href="<?=SITE_ROOT?>libraries/import" class="btn"><i class="icon-cloud-upload"></i> Import EndNote XML file</a>' +
+					'&nbsp;' +
+					'<a href="<?=SITE_ROOT?>libraries/create" class="btn"><i class="icon-plus"></i> Manually create library</a>' +
+				'</div>' +
+			'</div>'
+	},
+	{
+		id: 'libraries-table',
 		uses: 'libraries',
 		type: 'table',
 		dataSource: {
@@ -58,6 +73,7 @@
 	},
 	{
 		type: 'button',
+		hideIf: {'libraries-table is': 'empty'},
 		action: '<?=SITE_ROOT?>libraries/create',
 		text: '<i class="icon-plus"></i> Create new library',
 		class: 'btn btn-success'
