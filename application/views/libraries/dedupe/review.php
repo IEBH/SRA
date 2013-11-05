@@ -121,6 +121,38 @@ $(function() {
 	</div>
 </div>
 
+<? if ($library['debug'] == 'active') { ?>
+<div class="infobox-container">
+	<div class="infobox infobox-grey infobox-medium infobox-dark">
+		<div class="infobox-icon">
+			<i class="icon-ok-sign"></i>
+		</div>
+
+		<div class="infobox-data">
+			<div class="infobox-content">Marked as OK</div>
+			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'OK')))?></div>
+		</div>
+	</div>
+	<div class="infobox infobox-grey infobox-medium infobox-dark">
+		<div class="infobox-icon">
+			<i class="icon-remove-sign"></i>
+		</div>
+
+		<div class="infobox-data">
+			<div class="infobox-content">Marked as DUPE</div>
+			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE')))?></div>
+		</div>
+	</div>
+	<div class="infobox infobox-grey infobox-large infobox-dark">
+		<div class="infobox-data">
+			<div class="infobox-content">False Neg (Dupe <i class="icon-arrow-right"></i> OK)</div>
+			<!-- FIXME: This number is obviously wrong -->
+			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE', )))?></div>
+		</div>
+	</div>V
+</div>
+<? } ?>
+
 <hr/>
 
 <? foreach ($dupes as $ref) {

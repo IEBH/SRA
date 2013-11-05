@@ -1,5 +1,6 @@
 TODO LIST
 =========
+* Support for hideIf (as opposed to showIf)
 * Signature widget
 * File upload widget
 * `batt_number.between`
