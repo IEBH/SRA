@@ -847,6 +847,12 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 			<td>The currently assigned DOM object to the Batt field</td>
 		</tr>
 		<tr>
+			<td>hideIf</td>
+			<td><span>Hash</span> OR <span>Function</span> <span>Optional</span></td>
+			<td><em>Null</em></td>
+			<td>Counterpart to showIf but the result is inverted. See <code>showIf</code> for documentation.</td>
+		</tr>
+		<tr>
 			<td>showIf</td>
 			<td><span>Hash</span> OR <span>Function</span> <span>Optional</span></td>
 			<td><em>Null</em></td>
@@ -929,6 +935,12 @@ batt([ {element: $('#selector-id'), type: 'feed_batt', // DB TABLE SPEC HERE // 
 			<td><span>Method</span></td>
 			<td><em>Built-in</em></td>
 			<td>Returns the direct parent (which shoudl be a container) of the current object.</td>
+		</tr>
+		<tr>
+			<td>evalBool()</td>
+			<td><span>Method</span></td>
+			<td><em>Built-in</em></td>
+			<td>Evaulate function or array of fields against values and return a boolean. See the function documentation for more complete documentation.</td>
 		</tr>
 	</table>
 
