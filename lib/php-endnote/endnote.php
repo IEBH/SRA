@@ -27,6 +27,7 @@ class PHPEndNote {
 	*	* notes - String (optional)
 	*	* isbn - String (optional)
 	*	* label - String (optional)
+	*	* caption - String (optional)
 	*
 	* @var array
 	*/
@@ -35,14 +36,21 @@ class PHPEndNote {
 	/**
 	* The internal name to call the file
 	* As far as I am aware this does not actually serve a purpose but EndNote refuses to import the file unless its specified
-	* @var string;
+	* @var string
 	*/
 	var $name;
+
+	/**
+	* Whether to apply htmlentitites() encoding during an export operation
+	* @var bool
+	*/
+	var $escapeExport;
 
 	// Constructor
 	function __construct() {
 		$this->refs = array();
 		$this->name = 'EndNote.enl';
+		$this->escapeExport = true;
 	}
 
 	/**
@@ -64,15 +72,39 @@ class PHPEndNote {
 	}
 
 	/**
+	* Escpe a string in an EndNote compatible way
+	* @param string $string The string to be escaped
+	* @return string The escaped string
+	*/
+	function Escape($string) {
+		return strtr($string, array(
+			"\r" => '&#13;',
+			'&' => '&amp;',
+			'<' => '&lt;',
+			'>' => '&gt;',
+		));
+	}
+
+	/**
+	* Internal function to optionally escape strings based on $escapeExport
+	* @param string $string The string to return, optionally escaped
+	* @return string The optionally escaped string
+	* @see $escapeExport
+	*/
+	function _export($string) {
+		return $this->escapeExport ? $this->Escape($string) : $string;
+	}
+
+	/**
 	* Return the raw XML of the $refs array
 	* @see $refs
 	*/
 	function GetXML() {
-		$out = '<?xml version="1.0" encoding="UTF-8"?><xml><records>';
+		$out = '<' . '?xml version="1.0" encoding="UTF-8"?' . '><xml><records>';
 		$number = 0;
 		foreach ($this->refs as $id => $ref) {
 			$out .= '<record>';
-			$out .= '<database name="' . $this->name . '" path="C:\\' . $this->name . '">' . $this->name . '</database>';
+			$out .= '<database name="' . $this->name . '" path="C:\\' . $this->name . '">' . $this->_export($this->name) . '</database>';
 			$out .= '<source-app name="EndNote" version="16.0">EndNote</source-app>';
 			$out .= '<rec-number>' . $number . '</rec-number>';
 			$out .= '<foreign-keys><key app="EN" db-id="s55prpsswfsepue0xz25pxai2p909xtzszzv">' . $number . '</key></foreign-keys>';
@@ -80,16 +112,17 @@ class PHPEndNote {
 
 			$out .= '<contributors><authors>';
 				foreach ($ref['authors'] as $author)
-					$out .= '<author><style face="normal" font="default" size="100%">' . $author . '</style></author>';
+					$out .= '<author><style face="normal" font="default" size="100%">' . $this->_export($author) . '</style></author>';
 			$out .= '</authors></contributors>';
 
 			$out .= '<titles>';
-				$out .= '<title><style face="normal" font="default" size="100%">' . $ref['title'] . '</style></title>';
-				$out .= '<secondary-title><style face="normal" font="default" size="100%">' . (isset($ref['title-secondary']) && $ref['title-secondary'] ? $ref['title-secondary'] : '') . '</style></secondary-title>';
-				$out .= '<short-title><style face="normal" font="default" size="100%">' . (isset($ref['title-short']) && $ref['title-short'] ? $ref['title-short'] : '') . '</style></short-title>';
+				$out .= '<title><style face="normal" font="default" size="100%">' . $this->_export($ref['title']) . '</style></title>';
+				$out .= '<secondary-title><style face="normal" font="default" size="100%">' . (isset($ref['title-secondary']) && $ref['title-secondary'] ? $this->_export($ref['title-secondary']) : '') . '</style></secondary-title>';
+				if (isset($ref['title-short']) && $ref['title-short'])
+					$out .= '<short-title><style face="normal" font="default" size="100%">' . $this->_export($ref['title-short']) . '</style></short-title>';
 			$out .= '</titles>';
 
-				$out .= '<periodical><full-title><style face="normal" font="default" size="100%">' . (isset($ref['periodical-title']) && $ref['periodical-title'] ? $ref['periodical-title'] : '') . '</style></full-title></periodical>';
+				$out .= '<periodical><full-title><style face="normal" font="default" size="100%">' . (isset($ref['periodical-title']) && $ref['periodical-title'] ? $this->_export($ref['periodical-title']) : '') . '</style></full-title></periodical>';
 
 			// Simple key values
 			foreach (array(
@@ -101,22 +134,23 @@ class PHPEndNote {
 				'abstract' => 'abstract',
 				'isbn' => 'isbn',
 				'label' => 'label',
+				'caption' => 'caption',
 			) as $enkey => $ourkey)
-				$out .= "<$enkey><style face=\"normal\" font=\"default\" size=\"100%\">" . (isset($ref[$ourkey]) && $ref[$ourkey] ? $ref[$ourkey] : '') . "</style></$enkey>";
+				$out .= "<$enkey><style face=\"normal\" font=\"default\" size=\"100%\">" . (isset($ref[$ourkey]) && $ref[$ourkey] ? $this->_export($ref[$ourkey]) : '') . "</style></$enkey>";
 
 			$out .= '<dates>';
-				$out .= '<year><style face="normal" font="default" size="100%">' . (isset($ref['year']) && $ref['year'] ? $ref['year'] : '') . '</style></year>';
-				$out .= '<pub-dates><date><style face="normal" font="default" size="100%">' . (isset($ref['date']) && $ref['date'] ? $ref['date'] : '') . '</style></date></pub-dates>';
+				$out .= '<year><style face="normal" font="default" size="100%">' . (isset($ref['year']) && $ref['year'] ? $this->_export($ref['year']) : '') . '</style></year>';
+				$out .= '<pub-dates><date><style face="normal" font="default" size="100%">' . (isset($ref['date']) && $ref['date'] ? $this->_export($ref['date']) : '') . '</style></date></pub-dates>';
 			$out .= '</dates>';
 
 			if (isset($ref['urls']) && $ref['urls']) {
 				$out .= '<urls><related-urls>';
 					foreach ($ref['urls'] as $url)
-						$out .= '<url><style face="normal" font="default" size="100%">' . $url . '</style></url>';
+						$out .= '<url><style face="normal" font="default" size="100%">' . $this->_export($url) . '</style></url>';
 				$out .= '</related-urls></urls>';
 			}
 
-			$out .= '<research-notes><style face="normal" font="default" size="100%">' . (isset($ref['notes']) && $ref['notes'] ? $ref['notes'] : '') . '</style></research-notes>';
+			$out .= '<research-notes><style face="normal" font="default" size="100%">' . (isset($ref['notes']) && $ref['notes'] ? $this->_export($ref['notes']) : '') . '</style></research-notes>';
 
 			$out .= '</record>';
 			$number++;
@@ -175,6 +209,7 @@ class PHPEndNote {
 				'notes' => 'notes',
 				'research-notes' => 'notes',
 				'label' => 'label',
+				'caption' => 'caption',
 			) as $enkey => $ourkey) {
 				if (! $find = $record->xpath("$enkey/style/text()") )
 					continue;
