@@ -92,6 +92,10 @@ class Libraries extends CI_Controller {
 		}
 	}
 
+	/**
+	* Import an EndNoteXML file
+	* @param bool $_REQUEST['debug'] If set the libraries.debug flag is set and all imported references have their .caption property set to the record number
+	*/
 	function Import($libraryid = null) {
 		$this->load->model('Reference');
 
@@ -120,9 +124,12 @@ class Libraries extends CI_Controller {
 					continue;
 				$this->endnote->SetXMLFile($file['tmp_name']);
 
-				foreach ($this->endnote->refs as $ref) {
+				foreach ($this->endnote->refs as $refno => $ref) {
 					$json_obj = $ref;
-					unset($json_obj['authors'], $json_obj['title']); // Scrap fields are are storing elsewhere anyway
+					unset($json_obj['authors'], $json_obj['title'], $json_obj['label']); // Scrap fields are are storing elsewhere anyway
+
+					if ($fields['debug'])
+						$json_obj['caption'] = $refno+1;
 
 					$this->Reference->Create(array(
 						'libraryid' => $libraryid,

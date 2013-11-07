@@ -33,6 +33,19 @@
 <script type="batt">
 [
 	{
+		id: 'pane-loading',
+		type: 'html',
+		showIf: {'references-table is': 'loading'},
+		text: 
+			'<div class="alert alert-info">' +
+				'<div class="pull-center">' +
+					'<div><i class="icon-spinner icon-spin icon-4x"></i></div>' +
+					'<h3>Loading...</h3>' +
+				'</div>' +
+			'</div>',
+	},
+	{
+		id: 'pane-empty',
 		type: 'html',
 		showIf: {'references-table is': 'empty'},
 		text: 
