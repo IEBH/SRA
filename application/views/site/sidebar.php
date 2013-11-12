@@ -49,7 +49,7 @@
 			</li>
 			<? } ?>
 			<?
-			foreach ($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status' => 'active')) as $library) {
+			foreach ($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')) as $library) {
 				if ($library['libraryid'] == $basket['libraryid']) continue; // Skip the basket - which we displayed above
 			?>
 			<li>
