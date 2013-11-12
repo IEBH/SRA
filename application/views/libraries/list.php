@@ -37,7 +37,7 @@
 		dataSource: {
 			feed: 'libraries',
 			filters: {
-				status: 'active'
+				'status !=': 'deleted'
 			}
 		},
 		columns: [
