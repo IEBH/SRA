@@ -122,18 +122,22 @@ $(function() {
 </div>
 
 <? if ($library['debug'] == 'active') { ?>
+<hr/>
+
 <div class="infobox-container">
-	<div class="infobox infobox-grey infobox-medium infobox-dark">
+	<div class="infobox infobox-green infobox-medium infobox-dark">
 		<div class="infobox-icon">
 			<i class="icon-ok-sign"></i>
 		</div>
 
 		<div class="infobox-data">
 			<div class="infobox-content">Marked as OK</div>
-			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'OK')))?></div>
+			<div class="infobox-content">
+				<?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'OK')))?>
+			</div>
 		</div>
 	</div>
-	<div class="infobox infobox-grey infobox-medium infobox-dark">
+	<div class="infobox infobox-blue infobox-medium infobox-dark">
 		<div class="infobox-icon">
 			<i class="icon-remove-sign"></i>
 		</div>
@@ -143,13 +147,24 @@ $(function() {
 			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE')))?></div>
 		</div>
 	</div>
-	<div class="infobox infobox-grey infobox-large infobox-dark">
-		<div class="infobox-data">
-			<div class="infobox-content">False Neg (Dupe <i class="icon-arrow-right"></i> OK)</div>
-			<!-- FIXME: This number is obviously wrong -->
-			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE', )))?></div>
+	<div class="infobox infobox-orange infobox-large infobox-dark" data-tip="Should be Dupe, Marked as OK">
+		<div class="infobox-icon">
+			<i class="icon-warning-sign"></i>
 		</div>
-	</div>V
+		<div class="infobox-data">
+			<div class="infobox-content">False Negatives</div>
+			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE', 'status' => 'active')))?></div>
+		</div>
+	</div>
+	<div class="infobox infobox-red infobox-large infobox-dark" data-tip="Should be OK, Marked as Dupe">
+		<div class="infobox-icon">
+			<i class="icon-exclamation-sign"></i>
+		</div>
+		<div class="infobox-data">
+			<div class="infobox-content">False Positives</div>
+			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'OK', 'status' => 'dupe')))?></div>
+		</div>
+	</div>
 </div>
 <? } ?>
 
