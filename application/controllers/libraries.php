@@ -166,12 +166,31 @@ class Libraries extends CI_Controller {
 		if (!$this->Library->CanEdit($library))
 			$this->site->Error('You do not have access to this library');
 
+		$where = array('libraryid' => $libraryid);
+		if ($library['debug'] == 'inactive')
+			$where['status'] = 'active';
+
 		require('lib/php-endnote/endnote.php');
 		$this->endnote = new PHPEndNote();
 		$this->endnote->name = $library['title'] . '.enl';
-		foreach ($this->Reference->GetAll(array('libraryid' => $libraryid, 'status' => 'active')) as $ref) {
+		foreach ($this->Reference->GetAll($where) as $ref) {
 			$full = $this->Reference->Explode($ref);
 			$full['authors'] = explode(' AND ', $full['authors']);
+
+			if ($library['debug'] == 'active') {
+				switch ($ref['status']) {
+					case 'active':
+						$full['custom1'] = 'OK';
+						break;
+					case 'dupe':
+						$full['custom1'] = 'DUPE';
+						break;
+					case 'deleted':
+						$full['custom1'] = 'DELETED';
+						break;
+				}
+			}
+
 			$this->endnote->Add($full);
 		}
 
