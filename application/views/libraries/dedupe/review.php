@@ -78,6 +78,10 @@ $(function() {
 			<i class="icon-cog"></i> <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
+			<li><a href="<?=SITE_ROOT?>libraries/export/<?=$library['libraryid']?>"><i class="icon-cloud-download"></i> Export references</a></li>
+			<li class="divider"></li>
+			<li><a href="<?=SITE_ROOT?>libraries/share/<?=$library['libraryid']?>"><i class="icon-share-alt"></i> Share library</a></li>
+			<li class="divider"></li>
 			<li><a href="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
 			<li><a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>/force"><i class="icon-remove"></i> Cancel de-duplication</a></li>
 		</ul>
@@ -87,7 +91,7 @@ $(function() {
 <div id="dupes-outer" data-url="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>"><div id="dupes-inner">
 
 <div class="infobox-container">
-	<div class="infobox infobox-green infobox-small infobox-dark">
+	<div class="infobox infobox-green infobox-medium infobox-dark">
 		<div class="infobox-icon">
 			<i class="icon-tag"></i>
 		</div>
@@ -98,18 +102,18 @@ $(function() {
 		</div>
 	</div>
 
-	<div class="infobox infobox-blue infobox-small infobox-dark">
+	<div class="infobox infobox-blue infobox-medium infobox-dark">
 		<div class="infobox-icon">
 			<i class="icon-resize-small"></i>
 		</div>
 
 		<div class="infobox-data">
 			<div class="infobox-content">Duplicates</div>
-			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'status' => 'dupe')))?></div>
+			<div class="infobox-content"><?=$markeddupes = $this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'status' => 'dupe')))?></div>
 		</div>
 	</div>
 
-	<div class="infobox infobox-grey infobox-small infobox-dark">
+	<div class="infobox infobox-grey infobox-medium infobox-dark">
 		<div class="infobox-icon">
 			<i class="icon-trash"></i>
 		</div>
@@ -144,7 +148,7 @@ $(function() {
 
 		<div class="infobox-data">
 			<div class="infobox-content">Marked as DUPE</div>
-			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE')))?></div>
+			<div class="infobox-content"><?=$debugdupes = $this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE')))?></div>
 		</div>
 	</div>
 	<div class="infobox infobox-orange infobox-large infobox-dark" data-tip="Should be Dupe, Marked as OK">
@@ -163,6 +167,17 @@ $(function() {
 		<div class="infobox-data">
 			<div class="infobox-content">False Positives</div>
 			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'OK', 'status' => 'dupe')))?></div>
+		</div>
+	</div>
+</div>
+<div class="infobox-container">
+	<div class="infobox infobox-green infobox-large infobox-dark">
+		<div class="infobox-icon">
+			<i class="icon-trophy"></i>
+		</div>
+		<div class="infobox-data">
+			<div class="infobox-content">Overall success</div>
+			<div class="infobox-content"><?=$this->Format->Percent($markeddupes / $debugdupes)?>%</div>
 		</div>
 	</div>
 </div>
