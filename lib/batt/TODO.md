@@ -7,6 +7,8 @@ TODO LIST
 
 Feature requests
 ================
+* General
+	- Improve debugging to use nicer console output (console.log('%cSomething\n%cElse', 'font-size: 1.5em;color:navy', 'color: #ffcc00;font-size:1em;'))
 * `batt_picture`
 	- Ability to take pictures using WebCam
 	- Signature widget

@@ -28,6 +28,7 @@ class PHPEndNote {
 	*	* isbn - String (optional)
 	*	* label - String (optional)
 	*	* caption - String (optional)
+	*	* custom{1..7} - String (optional)
 	*
 	* @var array
 	*/
@@ -135,8 +136,16 @@ class PHPEndNote {
 				'isbn' => 'isbn',
 				'label' => 'label',
 				'caption' => 'caption',
+				'custom1' => 'custom1',
+				'custom2' => 'custom2',
+				'custom3' => 'custom3',
+				'custom4' => 'custom4',
+				'custom5' => 'custom5',
+				'custom6' => 'custom6',
+				'custom7' => 'custom7',
 			) as $enkey => $ourkey)
-				$out .= "<$enkey><style face=\"normal\" font=\"default\" size=\"100%\">" . (isset($ref[$ourkey]) && $ref[$ourkey] ? $this->_export($ref[$ourkey]) : '') . "</style></$enkey>";
+				if (isset($ref[$ourkey]) && $ref[$ourkey])
+					$out .= "<$enkey><style face=\"normal\" font=\"default\" size=\"100%\">" . $this->_export($ref[$ourkey]) . "</style></$enkey>";
 
 			$out .= '<dates>';
 				$out .= '<year><style face="normal" font="default" size="100%">' . (isset($ref['year']) && $ref['year'] ? $this->_export($ref['year']) : '') . '</style></year>';
@@ -210,6 +219,13 @@ class PHPEndNote {
 				'research-notes' => 'notes',
 				'label' => 'label',
 				'caption' => 'caption',
+				'custom1' => 'custom1',
+				'custom2' => 'custom2',
+				'custom3' => 'custom3',
+				'custom4' => 'custom4',
+				'custom5' => 'custom5',
+				'custom6' => 'custom6',
+				'custom7' => 'custom7',
 			) as $enkey => $ourkey) {
 				if (! $find = $record->xpath("$enkey/style/text()") )
 					continue;
