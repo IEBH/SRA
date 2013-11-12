@@ -1,4 +1,5 @@
 * Libraries
+	- Saving picked duplicated info (e.g. selecting alt journal title)
 	- libraries/edit/$id
 	- libraries/share/$id
 	x Multiple file upload when importing EndNote files
