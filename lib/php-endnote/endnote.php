@@ -28,6 +28,7 @@ class PHPEndNote {
 	*	* isbn - String (optional)
 	*	* label - String (optional)
 	*	* caption - String (optional)
+	*	* language - String (optional)
 	*	* custom{1..7} - String (optional)
 	*
 	* @var array
@@ -136,6 +137,7 @@ class PHPEndNote {
 				'isbn' => 'isbn',
 				'label' => 'label',
 				'caption' => 'caption',
+				'language' => 'language',
 				'custom1' => 'custom1',
 				'custom2' => 'custom2',
 				'custom3' => 'custom3',
@@ -219,6 +221,7 @@ class PHPEndNote {
 				'research-notes' => 'notes',
 				'label' => 'label',
 				'caption' => 'caption',
+				'language' => 'language',
 				'custom1' => 'custom1',
 				'custom2' => 'custom2',
 				'custom3' => 'custom3',
