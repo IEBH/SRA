@@ -30,7 +30,7 @@
 	<tr>
 		<th width="60px">&nbsp;</th>
 		<th>Title</th>
-		<th>Authors</th>
+		<th width="100px">References</th>
 	</tr>
 	<? foreach ($libraries as $library) { ?>
 	<tr>
@@ -46,6 +46,7 @@
 			</div>
 		</td>
 		<td><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><?=$library['title']?></a></td>
+		<td><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><span class="badge badge-info"><i class="icon-tag"></i> <?=$this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'))?></span></a></td>
 	</tr>
 	<? } ?>
 </table>
