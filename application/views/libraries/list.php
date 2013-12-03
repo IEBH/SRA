@@ -9,6 +9,7 @@
 			<li><a href="<?=SITE_ROOT?>libraries/export"><i class="icon-cloud-download"></i> Export references</a></li>
 			<li class="divider"></li>
 			<li><a href="<?=SITE_ROOT?>libraries/dedupe"><i class="icon-resize-small"></i> Eliminate Duplicates</a></li>
+			<li><a href="<?=SITE_ROOT?>libraries/screen"><i class="icon-filter"></i> Screen references</a></li>
 		</ul>
 	</div>
 </legend>
@@ -39,7 +40,7 @@
 				<a class="btn" data-toggle="dropdown"><i class="icon-tags"></i></a>
 				<ul class="dropdown-menu">
 					<li><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><i class="icon-tags"></i> View</a></li>
-					<li><a href="<?=SITE_ROOT?>libraries/dupes/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Eliminate duplicates</a></li>
+					<? $this->load->view('libraries/verbs', array('library' => $library)) ?>
 					<li class="divider"></li>
 					<li><a href="<?=SITE_ROOT?>libraries/delete/<?=$library['libraryid']?>"><i class="icon-trash"></i> Delete</a></li>
 				</ul>
