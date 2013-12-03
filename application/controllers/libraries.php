@@ -541,10 +541,18 @@ class Libraries extends CI_Controller {
 			'referencetagid' => $_REQUEST['tagid'],
 		));
 
+		$tags = array(
+			0 => $this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted')),
+		);
+
+		foreach ($this->Library->GetAllTags($library['libraryid']) as $tag)
+			$tags[$tag['referencetagid']] = $this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted', 'referencetagid' => $tag['referencetagid']));
+
 		$this->site->JSON(array(
 			'header' => array(
 				'status' => 'ok',
 			),
+			'tags' => $tags,
 		));
 	}
 }

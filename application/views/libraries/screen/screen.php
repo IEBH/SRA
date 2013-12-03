@@ -6,15 +6,6 @@ $(function() {
 				.attr('rel', $(this).data('action-tag'));
 			$(this).closest('.btn-group').find('.btn').removeClass('btn-primary');
 			$(this).addClass('btn-primary');
-			$('#tab-filter a[data-filterid]').each(function() {
-				var count = $('#reference-table tr[rel="' + $(this).data('filterid') + '"]').length;
-				if (!count) {
-					$(this).children('span.badge').remove();
-				} else if ($(this).children('span.badge').length == 0) {
-					$(this).append(' <span class="badge badge-info">' + count + '</span>');
-				} else
-					$(this).children('span.badge').text(count);
-			});
 
 			$.ajax({
 				url: '<?=SITE_ROOT?>api/libraries/settag',
@@ -26,7 +17,15 @@ $(function() {
 				dataType: 'json',
 				success: function(json) {
 					if (json.header.status == 'ok') {
-						// Pass
+						$.each(json.tags, function(i, count) {
+							var a = $('#tag-filter a[data-filterid="' + i + '"]');
+							if (!count || count == 0) {
+								a.children('span.badge').remove();
+							} else if (a.children('span.badge').length == 0) {
+								a.append(' <span class="badge badge-info">' + count + '</span>');
+							} else
+								a.children('span.badge').text(count);
+						});
 					} else if (json.header.error) {
 						alert(json.header.error);
 					} else
@@ -38,8 +37,8 @@ $(function() {
 			});
 		});
 
-	$('#tab-filter').on('click', 'a[data-filterid]', function() {
-		$('#tab-filter > li').removeClass('active');
+	$('#tag-filter').on('click', 'a[data-filterid]', function() {
+		$('#tag-filter > li').removeClass('active');
 		$(this).closest('li').addClass('active');
 
 		if (!$(this).data('filterid')) {
@@ -80,10 +79,16 @@ $(function() {
 </div>
 <? } else { ?>
 <? if ($tags) { ?>
-<ul class="nav nav-tabs" id="tab-filter">
-	<li class="active"><a href="#" data-filterid="0"><i class="icon-asterisk"></i> All <span class="badge badge-info"><?=count($references)?></span></a></li>
+<ul class="nav nav-tabs" id="tag-filter">
+	<li class="active"><a href="#" data-filterid="0"><i class="icon-asterisk"></i> All <span class="badge badge-info"><?=$this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'))?></span></a></li>
 	<? foreach ($tags as $tag) { ?>
-	<li><a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?></a></li>
+	<li>
+		<a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?>
+		<? if ($count = $this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted', 'referencetagid' => $tag['referencetagid']))) { ?>
+			<span class="badge badge-info"><?=$count?></span>
+		<? } ?>
+		</a>
+	</li>
 	<? } ?>
 </ul>
 <? } ?>
