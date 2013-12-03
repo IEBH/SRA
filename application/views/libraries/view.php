@@ -29,85 +29,50 @@
 </div>
 <? } ?>
 
-<script type="batt" src="<?=SITE_ROOT?>batt/schema"></script>
-<script type="batt">
-[
-	{
-		id: 'pane-loading',
-		type: 'html',
-		showIf: {'references-table is': 'loading'},
-		text: 
-			'<div class="alert alert-info">' +
-				'<div class="pull-center">' +
-					'<div><i class="icon-spinner icon-spin icon-4x"></i></div>' +
-					'<h3>Loading...</h3>' +
-				'</div>' +
-			'</div>',
-	},
-	{
-		id: 'pane-empty',
-		type: 'html',
-		showIf: {'references-table is': 'empty'},
-		text: 
-			'<div class="alert alert-info">' +
-				'<h3><i class="icon-info-sign"></i> No references in this library</h3>' +
-				'<p>This library is empty. You can import references from a file or create new references manually.</p>' +
-				'<div class="pull-center"><a href="<?=SITE_ROOT?>libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import EndNote XML file</div>' +
-			'</div>',
-	},
-	{
-		id: 'references-table',
-		uses: 'references',
-		type: 'table',
-		dataSource: {
-			feed: 'references',
-			filters: {
-				libraryid: '{{#url}}/libraries/view/!{{/url}}',
-				status: 'active'
-			}
-		},
-		columns: [
-			{
-				type: 'dropdown',
-				text: '<i class="icon-tag"></i>',
-				children: [
-					{
-						title: '<i class="icon-pencil"></i> Edit',
-						action: '<?=SITE_ROOT?>references/edit/{{data._id}}'
-					},
-					{
-						title: '-',
-					},
-					{
-						title: '<i class="icon-trash"></i> Delete',
-						action: '<?=SITE_ROOT?>references/delete/{{data._id}}'
-					}
-				]
-			},
-			{
-				type: 'link',
-				title: 'Title',
-				text: "{{data.title}}",
-				action: '<?=SITE_ROOT?>references/edit/{{data._id}}'
-			},
-			{
-				type: 'container_splitter',
-				title: 'Authors',
-				target: '{{data.authors}}',
-				splitOn: ' AND ',
-				splitInto: 'author',
-				splitBetween: ' ',
-				children: [
-					{
-						containerDraw: 'row',
-						type: 'tag',
-						classes: 'badge badge-info',
-						text: '<i class="icon-user"></i> {{data.author}}',
-						action: '<?=SITE_ROOT?>reference/edit/{{data._id}}'
-					}
-				]
-			}
-		]
-	}
-]
-</script>
+<? if (!$references) { ?>
+<div class="alert alert-info">
+	<h3><i class="icon-info-sign"></i> No references in this library</h3>
+	<p>This library is empty. You can import references from a file or create new references manually.</p>
+	<div class="pull-center">
+		<a href="<?=SITE_ROOT?>libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import EndNote XML file</a>
+	</div>
+</div>
+<? } else { ?>
+<table class="table table-striped table-bordered">
+	<tr>
+		<th width="60px">&nbsp;</th>
+		<th>Title</th>
+		<th>Authors</th>
+	</tr>
+	<? foreach ($references as $reference) { ?>
+	<tr>
+		<td>
+			<div class="dropdown">
+				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>
+				<ul class="dropdown-menu">
+					<li><a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>"><i class="icon-pencil"></i> Edit</a></li>
+					<li class="divider"></li>
+					<li><a href="<?=SITE_ROOT?>references/delete/<?=$reference['referenceid']?>"><i class="icon-trash"></i> Delete</a></li>
+				</ul>
+			</div>
+		</td>
+		<td><a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>"><?=$reference['title']?></a></td>
+		<td>
+			<a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>">
+			<?
+			$authorno = 0;
+			$authors = explode(' AND ', $reference['authors']);
+			foreach ($authors as $author) {
+				if ($authorno++ > 3) { ?>
+					<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?> more</span>
+				<?
+					break;
+				} ?>
+				<span class="badge badge-info"><i class="icon-user"></i> <?=$author?></span>
+			<? } ?>
+			</a>
+		</td>
+	</tr>
+	<? } ?>
+</table>
+<? } ?>

@@ -12,7 +12,9 @@ class Libraries extends CI_Controller {
 
 	function All() {
 		$this->site->header('Manage your libraries');
-		$this->load->view('libraries/list');
+		$this->load->view('libraries/list', array(
+			'libraries' => $this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status' => 'active')),
+		));
 		$this->site->footer();
 	}
 
@@ -29,6 +31,7 @@ class Libraries extends CI_Controller {
 		));
 		$this->load->view('libraries/view', array(
 			'library' => $library,
+			'references' => $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'status' => 'active')),
 		));
 		$this->site->footer();
 	}
@@ -59,8 +62,17 @@ class Libraries extends CI_Controller {
 		if (!$this->Library->CanEdit($library))
 			$this->site->Error('You do not have access to this library');
 
-		if ($fields = $this->batt->done()) {
-			$this->Email->SendEmail('libraries/share', $fields['email'], array(
+		// Waveform config {{{
+		$this->load->spark('waveform/1.0.0');
+		
+		$this->waveform->Define('email')
+			->Title('Email address')
+			->Email()
+			->Style('class', 'input-block-level');
+		// }}}
+
+		if ($this->waveform->OK()) {
+			$this->Email->SendEmail('libraries/share', $this->waveform->Fields['email'], array(
 				'library.name' => $library['title'],
 				'library.references' => $this->Reference->Count(array('libraryid' => $library['libraryid'])),
 				'share.url' => $this->Urlpayload->Create(array(
@@ -99,19 +111,48 @@ class Libraries extends CI_Controller {
 	function Import($libraryid = null) {
 		$this->load->model('Reference');
 
-		if ($fields = $this->batt->done()) {
+		// Waveform config {{{
+		$this->load->spark('waveform/1.0.0');
+		
+		$this->waveform->Group('Import an EndNote file');
+		$this->waveform->Define('where')
+			->Choice(array(
+				'existing' => 'Existing library',
+				'new' => 'New library',
+			));
+
+		$this->waveform->Define('name_new')
+			->Title('Name of new library');
+
+		$this->waveform->Define('existing_id')
+			->Choice($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status' => 'active')), 'libraryid', 'title');
+
+		$this->waveform->Define('advanced')
+			->Checkbox();
+
+		$this->waveform->Define('auto_dedupe')
+			->Checkbox();
+
+		$this->waveform->Define('debug')
+			->Checkbox();
+				
+		$this->waveform->Define('file')
+			->File();
+		// }}}
+
+		if ($fields = $this->waveform->ok()) {
 			if (!$_FILES)
 				$this->site->Error('No files uploaded');
 
-			if (isset($_POST['where']) && $_POST['where'] == 'existing') {
-				if (!$library = $this->Library->Get($_POST['libraryid']))
+			if ($this->waveform->Fields['where'] == 'existing') {
+				if (!$library = $this->Library->Get($this->waveform->Fields['existing_id']))
 					$this->site->Error("Invalid library to import into");
 				if (!$this->Library->CanEdit($library))
 					$this->site->Error("This library cannot be edited, it may have been deleted or you may not have access to it");
 				$libraryid = $library['libraryid'];
 			} else { // Create new library and import into that
 				$libraryid = $this->Library->Create(array(
-					'title' => $_POST['title'],
+					'title' => $this->waveform->Fields['new_name'],
 					'debug' => $fields['debug'] ? 'active' : 'inactive',
 				));
 			}

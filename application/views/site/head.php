@@ -36,8 +36,6 @@
 	<script src="<?=SITE_ROOT?>js/ace-elements.min.js"></script>
 	<script src="<?=SITE_ROOT?>js/ace.min.js"></script>
 
-	<? if (isset($this->batt)) $this->batt->Headers() ?>
-
 	<!--[if lte IE 8]>
 		<link rel="stylesheet" href="<?=SITE_ROOT?>/css/ace-ie.min.css" />
 	<![endif]-->

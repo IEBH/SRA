@@ -13,70 +13,40 @@
 	</div>
 </legend>
 
-<script type="batt" src="<?=SITE_ROOT?>batt/schema"></script>
-<script type="batt">
-[
-	{
-		type: 'html',
-		showIf: {'libraries-table is': 'empty'},
-		text: 
-			'<div class="alert alert-info">' +
-				'<h3><i class="icon-info-sign"></i> No libraries found</h3>' +
-				'<p>You dont appear to have any reference libraries. You can import an existing EndNote library or create new library manually.</p>' +
-				'<div class="pull-center">' +
-					'<a href="<?=SITE_ROOT?>libraries/import" class="btn"><i class="icon-cloud-upload"></i> Import EndNote XML file</a>' +
-					'&nbsp;' +
-					'<a href="<?=SITE_ROOT?>libraries/create" class="btn"><i class="icon-plus"></i> Manually create library</a>' +
-				'</div>' +
-			'</div>'
-	},
-	{
-		id: 'libraries-table',
-		uses: 'libraries',
-		type: 'table',
-		dataSource: {
-			feed: 'libraries',
-			filters: {
-				'status !=': 'deleted'
-			}
-		},
-		columns: [
-			{
-				type: 'dropdown',
-				text: '<i class="icon-tags"></i>',
-				columnWidth: '50px',
-				children: [
-					{
-						title: 'View',
-						icon: 'icon-tags',
-						action: '<?=SITE_ROOT?>libraries/view/{{data._id}}'
-					},
-					{
-						title: 'Eliminate duplicates',
-						icon: 'icon-resize-small',
-						action: '<?=SITE_ROOT?>libraries/dupes/{{data._id}}'
-					},
-					{
-						title: 'Delete',
-						icon: 'icon-trash',
-						action: '<?=SITE_ROOT?>libraries/delete/{{data._id}}'
-					},
-				]
-			},
-			{
-				type: 'link',
-				title: 'Title',
-				text: "{{data.title}}",
-				action: '<?=SITE_ROOT?>libraries/view/{{data._id}}'
-			}
-		]
-	},
-	{
-		type: 'button',
-		hideIf: {'libraries-table is': 'empty'},
-		action: '<?=SITE_ROOT?>libraries/create',
-		text: '<i class="icon-plus"></i> Create new library',
-		class: 'btn btn-success'
-	}
-]
-</script>
+<? if (!$libraries) { ?>
+<div class="alert alert-info">
+	<div class="alert alert-info">
+		<h3><i class="icon-info-sign"></i> No libraries found</h3>
+		<p>You dont appear to have any reference libraries. You can import an existing EndNote library or create new library manually.</p>
+		<div class="pull-center">
+			<a href="<?=SITE_ROOT?>libraries/import" class="btn"><i class="icon-cloud-upload"></i> Import EndNote XML file</a>
+			&nbsp;
+			<a href="<?=SITE_ROOT?>libraries/create" class="btn"><i class="icon-plus"></i> Manually create library</a>
+		</div>
+	</div>
+</div>
+<? } else { ?>
+<table class="table table-striped table-bordered">
+	<tr>
+		<th width="60px">&nbsp;</th>
+		<th>Title</th>
+		<th>Authors</th>
+	</tr>
+	<? foreach ($libraries as $library) { ?>
+	<tr>
+		<td>
+			<div class="dropdown">
+				<a class="btn" data-toggle="dropdown"><i class="icon-tags"></i></a>
+				<ul class="dropdown-menu">
+					<li><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><i class="icon-tags"></i> View</a></li>
+					<li><a href="<?=SITE_ROOT?>libraries/dupes/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Eliminate duplicates</a></li>
+					<li class="divider"></li>
+					<li><a href="<?=SITE_ROOT?>libraries/delete/<?=$library['libraryid']?>"><i class="icon-trash"></i> Delete</a></li>
+				</ul>
+			</div>
+		</td>
+		<td><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><?=$library['title']?></a></td>
+	</tr>
+	<? } ?>
+</table>
+<? } ?>
