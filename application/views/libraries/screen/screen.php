@@ -92,7 +92,7 @@ $(function() {
 		<th>Authors</th>
 	</tr>
 	<? foreach ($references as $reference) { ?>
-	<tr data-id="<?=$reference['referenceid']?>">
+	<tr data-id="<?=$reference['referenceid']?>" rel="<?=$reference['referencetagid']?>">
 		<td>
 			<div class="dropdown">
 				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>

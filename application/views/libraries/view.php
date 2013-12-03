@@ -1,3 +1,18 @@
+<script>
+$(function() {
+	$('#tag-filter').on('click', 'a[data-filterid]', function() {
+		$('#tag-filter > li').removeClass('active');
+		$(this).closest('li').addClass('active');
+
+		if (!$(this).data('filterid')) {
+			$('#reference-table > tbody > tr').show();
+		} else {
+			$('#reference-table > tbody > tr').hide();
+			$('#reference-table > tbody > tr[rel="' + $(this).data('filterid') + '"]').show();
+		}
+	});
+});
+</script>
 <legend>
 	<?=$library['title']?>
 	<div class="btn-group pull-right">
@@ -32,21 +47,21 @@
 </div>
 <? } else { ?>
 <? if ($tags) { ?>
-<ul class="nav nav-tabs" id="tab-filter">
-	<li class="active"><a href="#"><i class="icon-asterisk"></i> All</a></li>
+<ul class="nav nav-tabs" id="tag-filter">
+	<li class="active"><a href="#" data-filterid="0"><i class="icon-asterisk"></i> All</a></li>
 	<? foreach ($tags as $tag) { ?>
 	<li><a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?></a></li>
 	<? } ?>
 </ul>
 <? } ?>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered" id="reference-table">
 	<tr>
 		<th width="60px">&nbsp;</th>
 		<th>Title</th>
 		<th>Authors</th>
 	</tr>
 	<? foreach ($references as $reference) { ?>
-	<tr>
+	<tr rel="<?=$reference['referencetagid']?>">
 		<td>
 			<div class="dropdown">
 				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>
