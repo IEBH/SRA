@@ -50,6 +50,10 @@ body {
 	overflow-x: hidden;
 }
 
+table a:hover {
+	text-decoration: none;
+}
+
 .hero-unit h1 {
 	margin: 0px !important;
 }
