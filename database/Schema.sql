@@ -72,12 +72,14 @@ CREATE TABLE `references` (
 	yourref varchar(200),
 	label varchar(100),
 	data text,
-	altdata text
+	altdata text,
+	referencetagid int
 );
 CREATE INDEX references_libraryid ON `references`(libraryid);
 CREATE INDEX references_status ON `references`(status);
 CREATE INDEX references_yourref ON `references`(yourref);
 CREATE INDEX references_label ON `references`(label);
+CREATE INDEX references_referencetag ON `references`(referencetagid);
 -- }}}
 -- ReferenceTags {{{
 DROP TABLE IF EXISTS `referencetags`;
@@ -87,16 +89,6 @@ CREATE TABLE `referencetags` (
 	title varchar(200)
 );
 CREATE INDEX refrencetags_libraryid ON referencetags(libraryid);
--- }}}
--- ReferenceTags2Reference {{{
-DROP TABLE IF EXISTS `referencetags2reference`;
-CREATE TABLE `referencetags2reference` (
-	referencetagid int,
-	referenceid int,
-	PRIMARY KEY(referencetagid,referenceid)
-);
-CREATE INDEX referencetags2reference_referenceid ON referencetags2reference(referenceid);
-CREATE INDEX referencetags2reference_referencetagid ON referencetags2reference(referencetagid);
 -- }}}
 -- Logs {{{
 DROP TABLE IF EXISTS logs;

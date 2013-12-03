@@ -518,4 +518,33 @@ class Libraries extends CI_Controller {
 			),
 		));
 	}
+
+	/**
+	* API for setting the reference tag of an item
+	* @param int $_REQUEST['referenceid'] The reference ID to work on
+	* @param int $_REQUEST['tagid'] The ID of the tag to set
+	*/
+	function JSONSetTag() {
+		$this->load->model('Reference');
+
+		foreach (qw('referenceid tagid') as $key)
+			if (!isset($_REQUEST[$key]))
+				die($this->site->JSONError("Missing parameter: $key"));
+
+		if (!$reference = $this->Reference->Get($_REQUEST['referenceid']))
+			$this->site->JSONError('Invalid reference');
+		if (!$library = $this->Library->Get($reference['libraryid']))
+			$this->site->JSONError('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->JSONError('You do not have access to this library');
+		$this->Reference->Save($reference['referenceid'], array(
+			'referencetagid' => $_REQUEST['tagid'],
+		));
+
+		$this->site->JSON(array(
+			'header' => array(
+				'status' => 'ok',
+			),
+		));
+	}
 }

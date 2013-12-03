@@ -2,7 +2,7 @@
 $(function() {
 	$('#reference-table')
 		.on('click', 'a[data-action=set-tag]', function() {
-			$(this).closest('tr')
+			var tr = $(this).closest('tr')
 				.attr('rel', $(this).data('action-tag'));
 			$(this).closest('.btn-group').find('.btn').removeClass('btn-primary');
 			$(this).addClass('btn-primary');
@@ -15,7 +15,29 @@ $(function() {
 				} else
 					$(this).children('span.badge').text(count);
 			});
+
+			$.ajax({
+				url: '<?=SITE_ROOT?>api/libraries/settag',
+				data: {
+					referenceid: tr.data('id'),
+					tagid: $(this).data('action-tag')
+				},
+				type: 'POST',
+				dataType: 'json',
+				success: function(json) {
+					if (json.header.status == 'ok') {
+						// Pass
+					} else if (json.header.error) {
+						alert(json.header.error);
+					} else
+						alert('An unknown error occured');
+				},
+				error: function(e, err) {
+					alert('An error occured: ' + err);
+				}
+			});
 		});
+
 	$('#tab-filter').on('click', 'a[data-filterid]', function() {
 		$('#tab-filter > li').removeClass('active');
 		$(this).closest('li').addClass('active');
@@ -72,7 +94,7 @@ $(function() {
 		<th>Authors</th>
 	</tr>
 	<? foreach ($references as $reference) { ?>
-	<tr>
+	<tr data-id="<?=$reference['referenceid']?>">
 		<td>
 			<div class="dropdown">
 				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>
@@ -90,7 +112,7 @@ $(function() {
 			$authorno = 0;
 			$authors = explode(' AND ', $reference['authors']);
 			foreach ($authors as $author) {
-				if ($authorno++ > 3) { ?>
+				if ($authorno++ > 2) { ?>
 					<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?> more</span>
 				<?
 					break;
@@ -101,9 +123,9 @@ $(function() {
 		</td>
 		<td>
 			<div class="btn-group">
-				<a class="btn btn-small btn-primary" data-action="set-tag" data-action-tag="clear">Unfiled</a>
+				<a class="btn btn-small <?=!$reference['referencetagid']?'btn-primary':''?>" data-action="set-tag" data-action-tag="0">Unfiled</a>
 				<? foreach ($tags as $tag) { ?>
-				<a class="btn btn-small" data-action="set-tag" data-action-tag="<?=$tag['referencetagid']?>"><?=$tag['title']?></a>
+				<a class="btn btn-small <?=$reference['referencetagid']==$tag['referencetagid']?'btn-primary':''?>" data-action="set-tag" data-action-tag="<?=$tag['referencetagid']?>"><?=$tag['title']?></a>
 				<? } ?>
 			</div>
 		</td>	

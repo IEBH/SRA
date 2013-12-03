@@ -39,7 +39,7 @@
 </div>
 <? } else { ?>
 <? if ($tags) { ?>
-<ul class="nav nav-tabs" id="myTab">
+<ul class="nav nav-tabs" id="tab-filter">
 	<li class="active"><a href="#"><i class="icon-asterisk"></i> All</a></li>
 	<? foreach ($tags as $tag) { ?>
 	<li><a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?></a></li>
@@ -71,7 +71,7 @@
 			$authorno = 0;
 			$authors = explode(' AND ', $reference['authors']);
 			foreach ($authors as $author) {
-				if ($authorno++ > 3) { ?>
+				if ($authorno++ > 2) { ?>
 					<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?> more</span>
 				<?
 					break;

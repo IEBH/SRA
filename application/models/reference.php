@@ -50,7 +50,7 @@ class Reference extends CI_Model {
 	*/
 	function Save($referenceid, $data) {
 		$fields = array();
-		foreach (qw('libraryid title authors data altdata label status') as $field)
+		foreach (qw('libraryid title authors data altdata label status referencetagid') as $field)
 			if (isset($data[$field])) {
 				$fields[$field] = $data[$field];
 				unset($data[$field]);
