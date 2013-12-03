@@ -221,13 +221,13 @@ class Libraries extends CI_Controller {
 			if ($library['debug'] == 'active') {
 				switch ($ref['status']) {
 					case 'active':
-						$full['custom1'] = 'OK';
+						$full['language'] = 'OK';
 						break;
 					case 'dupe':
-						$full['custom1'] = 'DUPE';
+						$full['language'] = 'DUPE';
 						break;
 					case 'deleted':
-						$full['custom1'] = 'DELETED';
+						$full['language'] = 'DELETED';
 						break;
 				}
 			}
