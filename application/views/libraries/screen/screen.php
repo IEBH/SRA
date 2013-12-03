@@ -1,3 +1,34 @@
+<script>
+$(function() {
+	$('#reference-table')
+		.on('click', 'a[data-action=set-tag]', function() {
+			$(this).closest('tr')
+				.attr('rel', $(this).data('action-tag'));
+			$(this).closest('.btn-group').find('.btn').removeClass('btn-primary');
+			$(this).addClass('btn-primary');
+			$('#tab-filter a[data-filterid]').each(function() {
+				var count = $('#reference-table tr[rel="' + $(this).data('filterid') + '"]').length;
+				if (!count) {
+					$(this).children('span.badge').remove();
+				} else if ($(this).children('span.badge').length == 0) {
+					$(this).append(' <span class="badge badge-info">' + count + '</span>');
+				} else
+					$(this).children('span.badge').text(count);
+			});
+		});
+	$('#tab-filter').on('click', 'a[data-filterid]', function() {
+		$('#tab-filter > li').removeClass('active');
+		$(this).closest('li').addClass('active');
+
+		if (!$(this).data('filterid')) {
+			$('#reference-table > tbody > tr').show();
+		} else {
+			$('#reference-table > tbody > tr').hide();
+			$('#reference-table > tbody > tr[rel="' + $(this).data('filterid') + '"]').show();
+		}
+	});
+});
+</script>
 <legend>
 	<?=$library['title']?>
 	<div class="btn-group pull-right">
@@ -17,18 +48,6 @@
 	</div>
 </legend>
 
-<? if (in_array($library['status'], qw('dedupe deduped'))) { ?>
-<div class="alert alert-info alert-block">
-	<a href="#" data-dismiss="alert" class="close"><i class="icon-remove-sign"></i></a>
-	<h3><i class="icon-bell-alt icon-animated-bell"></i> De-duplication in progress</h3>
-	<p>This library is still marked as having duplicate references.</p>
-	<div class="pull-center pad-top">
-		<a class="btn" href="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Examine duplicates</a>
-		<a class="btn" href="#" data-dismiss="alert"><i class="icon-remove-sign"></i> Not right now</a>
-	</div>
-</div>
-<? } ?>
-
 <? if (!$references) { ?>
 <div class="alert alert-info">
 	<h3><i class="icon-info-sign"></i> No references in this library</h3>
@@ -39,14 +58,14 @@
 </div>
 <? } else { ?>
 <? if ($tags) { ?>
-<ul class="nav nav-tabs" id="myTab">
-	<li class="active"><a href="#"><i class="icon-asterisk"></i> All</a></li>
+<ul class="nav nav-tabs" id="tab-filter">
+	<li class="active"><a href="#" data-filterid="0"><i class="icon-asterisk"></i> All <span class="badge badge-info"><?=count($references)?></span></a></li>
 	<? foreach ($tags as $tag) { ?>
 	<li><a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?></a></li>
 	<? } ?>
 </ul>
 <? } ?>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered" id="reference-table">
 	<tr>
 		<th width="60px">&nbsp;</th>
 		<th>Title</th>
@@ -80,7 +99,18 @@
 			<? } ?>
 			</a>
 		</td>
+		<td>
+			<div class="btn-group">
+				<a class="btn btn-small btn-primary" data-action="set-tag" data-action-tag="clear">Unfiled</a>
+				<? foreach ($tags as $tag) { ?>
+				<a class="btn btn-small" data-action="set-tag" data-action-tag="<?=$tag['referencetagid']?>"><?=$tag['title']?></a>
+				<? } ?>
+			</div>
+		</td>	
 	</tr>
 	<? } ?>
 </table>
+<div class="pull-center">
+	<?=$this->pagination->create_links()?>
+</div>
 <? } ?>

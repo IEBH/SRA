@@ -13,7 +13,7 @@ class Libraries extends CI_Controller {
 	function All() {
 		$this->site->header('Manage your libraries');
 		$this->load->view('libraries/list', array(
-			'libraries' => $this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status' => 'active')),
+			'libraries' => $this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')),
 		));
 		$this->site->footer();
 	}
@@ -31,7 +31,8 @@ class Libraries extends CI_Controller {
 		));
 		$this->load->view('libraries/view', array(
 			'library' => $library,
-			'references' => $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'status' => 'active')),
+			'references' => $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted')),
+			'tags' => $this->Library->GetAllTags($library['libraryid']),
 		));
 		$this->site->footer();
 	}
@@ -104,6 +105,88 @@ class Libraries extends CI_Controller {
 		}
 	}
 
+	function Screen($libraryid = null, $method = null, $page = 1) {
+		$library = null;
+		if ($libraryid) { // Specifying a specific library to use
+			if (!$library = $this->Library->Get($libraryid))
+				$this->site->Error('Invalid library');
+			if (!$this->Library->CanEdit($library))
+				$this->site->Error('You do not have access to this library');
+		}
+
+		if ($method) { // We are actually screening
+			$this->config->load('pagination', TRUE);
+			$total = $this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'));
+			$this->load->library('pagination', array_merge($this->config->item('pagination'), array(
+				'base_url' => SITE_ROOT . "libraries/screen/{$library['libraryid']}/$method",
+				'total_rows' => $total,
+				'per_page' => SCREEN_LIMIT,
+				'uri_segment' => 5,
+			)));
+			$this->site->header("Screening", array(
+				'breadcrumbs' => array(
+					'/libraries' => 'Libraries',
+					"/libraries/view/{$library['libraryid']}" => $library['title'],
+				),
+			));
+			$this->load->view('libraries/screen/screen', array(
+				'library' => $library,
+				'total' => $total,
+				'references' => $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'), 'referenceid', SCREEN_LIMIT, SCREEN_LIMIT * $page),
+				'tags' => $this->Library->GetAllTags($library['libraryid']),
+			));
+			$this->site->footer();
+			return;
+		}
+		// If we fell though to here we dont have enough information to screen
+
+		// Waveform config {{{
+		$this->load->spark('waveform/1.0.0');
+		
+		$this->waveform->Define('libraryid')
+			->Title('Reference library')
+			->Choice($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')), 'libraryid', 'title')
+			->Default($library ? $library : null);
+
+		$this->waveform->Define('method')
+			->Title('Screening method')
+			->Choice(array(
+				'title' => 'Title only',
+				'title+authors' => 'Title + authors',
+				'title+authors+abstract' => 'Title, authors + abstract',
+			))
+			->Default('title+authors');
+
+		$this->waveform->Define('tags')
+			->Title('Tags to provide')
+			->Text()
+			->Style('data-tip', 'Seperate tags with commas')
+			->Style('data-tip-placement', 'right')
+			->Default('Full text, Background, Exclude');
+		// }}}
+
+		if ($this->waveform->OK()) {
+			if (!$library = $this->Library->Get($this->waveform->Fields['libraryid']))
+				$this->site->Error('Invalid library');
+			if (!$this->Library->CanEdit($library))
+				$this->site->Error('You do not have access to this library');
+			foreach (preg_split('/\s*,\s*/', $this->waveform->Fields['tags']) as $tag)
+				$this->Library->CreateTag($library['libraryid'], array('title' => $tag));
+
+			$this->site->Redirect("/libraries/screen/{$library['libraryid']}/{$this->waveform->Fields['method']}");
+		} else { 
+			$this->site->header("Screen {$library['title']}", array(
+				'breadcrumbs' => array(
+					'/libraries' => 'Libraries'
+				),
+			));
+			$this->load->view('libraries/screen/index', array(
+				'library' => $library,
+			));
+			$this->site->footer();
+		}
+	}
+
 	/**
 	* Import an EndNoteXML file
 	* @param bool $_REQUEST['debug'] If set the libraries.debug flag is set and all imported references have their .caption property set to the record number
@@ -126,7 +209,7 @@ class Libraries extends CI_Controller {
 			->NotRequired();
 
 		$this->waveform->Define('existing_id')
-			->Choice($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status' => 'active')), 'libraryid', 'title')
+			->Choice($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')), 'libraryid', 'title')
 			->NotRequired();
 
 		$this->waveform->Define('advanced')

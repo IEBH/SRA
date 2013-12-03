@@ -52,6 +52,12 @@ class Library extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 
+	function GetAllTags($libraryid) {
+		$this->db->from('referencetags');
+		$this->db->where('libraryid', $libraryid);
+		return $this->db->get()->result_array();
+	}
+
 	/**
 	* Returns true if the given library has the reference matching references.yourref
 	* @param string $yourref The string to match against references.yourref
@@ -190,5 +196,33 @@ class Library extends CI_Model {
 		$this->db->update('libraries', array(
 			'status' => $status,
 		));
+	}
+
+	/**
+	* Returns a bool indicating whether the given tag exists for the given library
+	* @param int $libraryid The library to query
+	* @param int $title The tag to query
+	* @returns bool Whether the tag exists
+	*/
+	function HasTag($libraryid, $title) {
+		$this->db->where('libraryid', $libraryid);
+		$this->db->where('title', $title);
+		$this->db->from('referencetags');
+		return (bool) $this->db->get()->row_array();
+	}
+
+	/**
+	* Create a new tag for the given library
+	* NOTE: This function checks HasTag() first to verify that the tag does not exist
+	* @param int $libraryid The library on which to create the tag
+	* @param array $data The data of the tag to create
+	*/
+	function CreateTag($libraryid, $data) {
+		if (!$this->HasTag($libraryid, $data['title'])) {
+			$this->db->insert('referencetags', array(
+				'libraryid' => $libraryid,
+				'title' => $data['title'],
+			));
+		}
 	}
 }
