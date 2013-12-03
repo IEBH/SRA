@@ -1,5 +1,4 @@
 <? $this->load->view('waveform/bootstrap') ?>
-<?=$this->waveform->Form()?>
 <script>
 $(function() {
 	$('select[name=where]')
@@ -21,3 +20,9 @@ $(function() {
 		.trigger('change');
 });
 </script>
+<form action="<?=SITE_ROOT?>libraries/import" method="post" class="form-horizontal">
+	<?=$this->waveform->Table()?>
+	<div class="pull-center">
+		<button class="btn btn-success" action="submit"><i class="icon-ok"></i> Import file</button>
+	</div>
+</form>

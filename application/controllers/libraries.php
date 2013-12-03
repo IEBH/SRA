@@ -117,17 +117,20 @@ class Libraries extends CI_Controller {
 		$this->waveform->Group('Import an EndNote file');
 		$this->waveform->Define('where')
 			->Choice(array(
-				'existing' => 'Existing library',
 				'new' => 'New library',
+				'existing' => 'Existing library',
 			));
 
 		$this->waveform->Define('name_new')
-			->Title('Name of new library');
+			->Title('Name of new library')
+			->NotRequired();
 
 		$this->waveform->Define('existing_id')
-			->Choice($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status' => 'active')), 'libraryid', 'title');
+			->Choice($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status' => 'active')), 'libraryid', 'title')
+			->NotRequired();
 
 		$this->waveform->Define('advanced')
+			->Title('Advanced options')
 			->Checkbox();
 
 		$this->waveform->Define('auto_dedupe')
