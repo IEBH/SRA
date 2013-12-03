@@ -22,13 +22,13 @@
 // $config['base_url'] = '';
 $config['per_page'] = 2;
 $config['uri_segment'] = 3;
-$config['num_links'] = 9;
-$config['page_query_string'] = TRUE;
-// $config['use_page_numbers'] = TRUE;
-$config['query_string_segment'] = 'page';
+$config['num_links'] = 3;
+$config['use_page_numbers'] = TRUE;
+$config['page_query_string'] = FALSE;
+$config['query_string_segment'] = '';
 
 $config['full_tag_open'] = '<div class="pagination"><ul>';
-$config['full_tag_close'] = '</ul></div><!--pagination-->';
+$config['full_tag_close'] = '</ul></div>';
 
 $config['first_link'] = '&laquo; First';
 $config['first_tag_open'] = '<li class="prev page">';
