@@ -340,7 +340,7 @@ class Waveform {
 		$this->_fields[$field] = new WaveformField($this, $field);
 		$this->Fields[$field] =& $this->_fields[$field]->value;
 		if (isset($_POST[$field])) { // Import value from _POST if it exists
-			$this->_fields[$field]->value = $_POST[$field];
+			$this->_fields[$field]->Set($_POST[$field]);
 			$this->keys[$field] =& $this->_fields[$field]->value;
 			$this->fresh = FALSE; // This implies the user has tried posting before
 		}
@@ -704,7 +704,7 @@ class Waveform {
 			case WAVEFORM_TYPE_MULTIPLE_CHOICE:
 				$element = 'select';
 				$params = array_merge(array(
-					'name' => $field,
+					'name' => $field . '[]',
 					'multiple' => 'multiple',
 				), $params);
 				$content = '';
@@ -758,7 +758,14 @@ class Waveform {
 				), $params);
 				break;
 			case WAVEFORM_TYPE_CHECKBOX:
-				return '';
+				$element = 'input';
+				$params = array_merge(array(
+					'name' => $field,
+					'type' => 'checkbox',
+				), $params);
+				if ($this->_fields[$field]->value)
+					$params['checked'] = 'checked';
+				break;
 			case WAVEFORM_TYPE_STRING:
 			default: // Fall though from _STRING
 				$element = 'input';
@@ -1179,6 +1186,18 @@ class WaveformField {
 
 	// Convenience functions {{{
 	/**
+	* Set this field to a given value
+	* @param mixed $value The value to set this field to
+	*/
+	function Set($value) {
+		if ($this->type == WAVEFORM_TYPE_MULTIPLE_CHOICE && !is_array($value)) {
+			$this->value = array($value);
+		} else	
+			$this->value = $value;
+		return $this;
+	}
+
+	/**
 	* Set the title of the current field
 	* @param string $title The new title to apply
 	*/
@@ -1514,10 +1533,6 @@ class WaveformField {
 	function Checkbox() {
 		$this->type = WAVEFORM_TYPE_CHECKBOX;
 		$this->value = (isset($_POST[$this->field])); // Import correct value from _POST
-		$this->Style('table_label', 'colspan', 2);
-		$this->Style('table_label', 'PREFIX', '<input type="checkbox" id="{$field->field}" name="{$field->field}"' . ($this->value ? ' checked="checked"' : '') . '/><label for="{$field->field}"> ');
-		$this->Style('table_label', 'SUFFIX', '</label>');
-		$this->Style('table_input', 'TAG', '');
 		$this->NotRequired();
 	}
 
