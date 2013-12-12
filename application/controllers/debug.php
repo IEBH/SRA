@@ -45,5 +45,29 @@ class Debug extends CI_Controller {
 		echo "<pre>";
 		$this->batt->read('application/views/libraries/share.php');
 	}
+
+	function Backport() {
+		$this->load->model('Reference');
+		require('lib/php-endnote/endnote.php');
+	
+		// Alloc $myrefs[caption] lookup hash {{{
+		set_time_limit(0);
+		$myrefsraw = $this->Reference->GetAll();
+		$myrefs = array();
+		foreach ($myrefsraw as $ref) {
+			$ref = $this->Reference->Explode($ref);
+			$myrefs[$ref['caption']] = $ref;
+		}
+		// }}}
+
+		$this->endnote = new PHPEndNote();
+		$this->endnote->SetXMLFile('data/A057 - Post SRA Friday 27-11-2013.xml');
+		foreach ($this->endnote->refs as $refno => $ref) {
+			if (isset($myrefs[$ref['caption']]))
+				$ref['language'] = $ref['label'];
+			$this->endnote->refs[$refno] = $ref; // Save back
+		}
+		$this->endnote->OutputXML();
+	}
 }
 ?>
