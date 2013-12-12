@@ -33,26 +33,40 @@ class PHPEndNote {
 	*
 	* @var array
 	*/
-	var $refs;
+	var $refs = array();
 
 	/**
 	* The internal name to call the file
 	* As far as I am aware this does not actually serve a purpose but EndNote refuses to import the file unless its specified
 	* @var string
 	*/
-	var $name;
+	var $name = 'EndNote.enl';
 
 	/**
 	* Whether to apply htmlentitites() encoding during an export operation
 	* @var bool
 	*/
-	var $escapeExport;
+	var $escapeExport = true;
+
+	/**
+	* Enables the auto-fixing of reference.pages to be absolute
+	* Some journals mangle the page references for certain references, this attempts to fix that during import
+	* e.g. pp520-34 becomes 520-534
+	* @see FixPages()
+	* @var bool
+	*/
+	var $applyFixPages = true;
 
 	// Constructor
 	function __construct() {
+		// Pass
+	}
+
+	function Reset() {
 		$this->refs = array();
 		$this->name = 'EndNote.enl';
 		$this->escapeExport = true;
+		$this->fixPages = true;
 	}
 
 	/**
@@ -234,11 +248,57 @@ class PHPEndNote {
 					continue;
 				$ref[$ourkey] = end(current($find));
 			}
-			$this->refs[] = $ref;
+			$this->refs[] = $this->ApplyFixes($ref);
 		}
 	}
 
 	function SetXMLFile($filename) {
 		$this->SetXML(file_get_contents($filename));
+	}
+
+	/**
+	* Apply all enabled features
+	* This is really just one big switch that enables the $this->Fix* methods
+	* @param array $ref The reference to fix
+	* @return array $ref The now fixed reference
+	*/
+	function ApplyFixes($ref) {
+		if ($this->applyFixPages)
+			$ref = $this->FixPages($ref);
+		return $ref;
+	}
+
+	/**
+	* Fix reference.pages to be absolute
+	* Some journals mangle the page references for certain references
+	* NOTE: References beginning/ending with 'S' are left with that prefix as that denotes a section
+	* e.g. pp520-34 becomes 520-534
+	* @param array $ref The refernce object to fix
+	* @return array $ref The fixed reference object
+	*/
+	function FixPages($ref) {
+		$prefix = '';
+		$pages = $ref['pages'];
+		if (preg_match('/^s|s$/i', $ref['pages'])) { // Has an 'S' prefix or suffix
+			$prefix = 'S';
+			$pages = preg_replace('/^s|s$/i', '', $pages);
+		}
+
+		if (preg_match('/^([0-9]+)\s*-\s*([0-9]+)$/', $pages, $matches)) { // X-Y
+			list($junk, $begin, $end) = $matches;
+			if ((int) $begin == (int) $end) { // Really just a single page
+				$pages = $begin;
+			} elseif (strlen($end) < strlen($begin)) { // Relative lengths - e.g. 219-22
+				$end = substr($begin, 0, strlen($begin) - strlen($end)) . $end;
+				$pages = "$begin-$end";
+			} else { // Already absolute range
+				$pages = "$begin-$end";
+			}
+		} elseif (preg_match('/^([0-9]+)$/', $pages)) {
+			$pages = (int) $pages;
+		}
+
+		$ref['pages'] = $prefix . $pages;
+		return $ref;
 	}
 }
