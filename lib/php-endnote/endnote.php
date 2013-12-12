@@ -277,6 +277,9 @@ class PHPEndNote {
 	* @return array $ref The fixed reference object
 	*/
 	function FixPages($ref) {
+		if (!isset($ref['pages'])) // Nothing to do
+			return $ref;
+
 		$prefix = '';
 		$pages = $ref['pages'];
 		if (preg_match('/^s|s$/i', $ref['pages'])) { // Has an 'S' prefix or suffix
