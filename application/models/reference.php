@@ -220,7 +220,7 @@ class Reference extends CI_Model {
 	function StripNoise($string) {
 		$string = trim($string);
 		$string = preg_replace('/[^a-z0-9]+/i', ' ', $string);
-		$string = preg_replace('/ (\&|the|a) /', ' ', $string);
+		$string = preg_replace('/ (the|a) /', ' ', $string);
 		return $string;
 	}
 
