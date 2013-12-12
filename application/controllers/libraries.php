@@ -204,7 +204,7 @@ class Libraries extends CI_Controller {
 				'existing' => 'Existing library',
 			));
 
-		$this->waveform->Define('name_new')
+		$this->waveform->Define('new_name')
 			->Title('Name of new library')
 			->Default('Imported Library')
 			->NotRequired();
