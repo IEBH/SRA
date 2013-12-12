@@ -191,12 +191,18 @@ class Reference extends CI_Model {
 		return $isdupe;
 	}
 
+	/**
+	* Fuzzy compare for two strings
+	* @param string $a The first string to compare
+	* @param string $b The second string to compare
+	* @return bool Whether the two strings are similar
+	*/
 	function StringCompare($a, $b) {
-		$as = trim(preg_replace('/[^a-zA-z0-9]+/', ' ', $a));
+		$as = $this->StripNoise($a);
 		if (strlen($as) > 255)
 			$as = substr($as, 0, 255);
 
-		$bs = trim(preg_replace('/[^a-zA-z0-9]+/', ' ', $b));
+		$bs = $this->StripNoise($b);
 		if (strlen($bs) > 255)
 			$bs = substr($bs, 0, 255);
 
@@ -204,6 +210,18 @@ class Reference extends CI_Model {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	* Removes 'noise' from strings for easy comparison
+	* @param string $string The incomming string
+	* @return string The output string with noise removed
+	*/
+	function StripNoise($string) {
+		$string = trim($string);
+		$string = preg_replace('/[^a-z0-9]+/i', ' ', $string);
+		$string = preg_replace('/ (\&|the|a) /', ' ', $string);
+		return $string;
 	}
 
 	/**
