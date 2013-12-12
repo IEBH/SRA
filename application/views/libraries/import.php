@@ -20,7 +20,7 @@ $(function() {
 		.trigger('change');
 });
 </script>
-<form action="<?=SITE_ROOT?>libraries/import" method="post" class="form-horizontal">
+<form action="<?=SITE_ROOT?>libraries/import" method="post" class="form-horizontal" enctype="multipart/form-data">
 	<?=$this->waveform->Table()?>
 	<div class="pull-center">
 		<button class="btn btn-success" action="submit"><i class="icon-ok"></i> Import file</button>
