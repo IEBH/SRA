@@ -80,7 +80,7 @@ $(function() {
 			$authors = explode(' AND ', $reference['authors']);
 			foreach ($authors as $author) {
 				if ($authorno++ > 2) { ?>
-					<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?> more</span>
+					<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?></span>
 				<?
 					break;
 				} ?>
