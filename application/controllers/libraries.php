@@ -250,6 +250,8 @@ class Libraries extends CI_Controller {
 			foreach ($_FILES as $file) {
 				if (!$file['tmp_name'] || !file_exists($file['tmp_name']))
 					continue;
+				if ($fields['debug'])
+					$this->endnote->fixesBackup = true;
 				$this->endnote->SetXMLFile($file['tmp_name']);
 
 				foreach ($this->endnote->refs as $refno => $ref) {
