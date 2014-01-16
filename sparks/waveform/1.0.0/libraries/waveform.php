@@ -216,12 +216,12 @@ class Waveform {
 	/**
 	* Tests the validation of all or a selected number of fields
 	* @param string|array $fields A field spec according to Filter()
-	* @return bool Whether all validations passed
+	* @return null|array Either null if there was a fault or an array of fields (actually a pointer to $this->Fields)
 	*/
 	function OK($fields = null) {
 		$fields = $this->Filter($this->_fields, $fields);
 		if ($this->fresh)
-			return FALSE;
+			return null;
 		$this->_failed = $this->_ok = array();
 		foreach ($fields as $field) {
 			if (! $this->_fields[$field]->Check()) {
@@ -231,11 +231,11 @@ class Waveform {
 			}
 		}
 		if ($this->_failed) {
-			return FALSE;
+			return null;
 		} else { // Everything was ok
 			foreach ($fields as $field)
 				$this->_fields[$field]->Accepted();
-			return TRUE;
+			return $this->Fields;
 		}
 	}
 

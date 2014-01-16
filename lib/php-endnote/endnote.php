@@ -49,6 +49,12 @@ class PHPEndNote {
 	var $escapeExport = true;
 
 	/**
+	* Whenever a fix is applied (See $applyFix*) any data that gets rewritten should be stored in $ref[]['RAW']
+	* @type bool
+	*/
+	var $fixesBackup = false;
+
+	/**
 	* Enables the auto-fixing of reference.pages to be absolute
 	* Some journals mangle the page references for certain references, this attempts to fix that during import
 	* e.g. pp520-34 becomes 520-534
@@ -301,7 +307,16 @@ class PHPEndNote {
 			$pages = (int) $pages;
 		}
 
-		$ref['pages'] = $prefix . $pages;
+		$pages = $prefix . $pages;
+		if ($ref['pages'] != $pages) { // Actually rewrite 'pages'
+			if ($this->fixesBackup) {
+				if (!isset($ref['RAW']))
+					$ref['RAW'] = array();
+				$ref['RAW']['pages'] = $ref['pages'];
+			}
+			$ref['pages'] = $pages;
+		}
+		$ref['TEST'] = array();
 		return $ref;
 	}
 }
