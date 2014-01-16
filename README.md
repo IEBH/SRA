@@ -16,6 +16,29 @@ SRA is built using the [PHP](http://www.php.net) Programming language using the 
 The project is available open source via GitHub at https://github.com/CREBP/SRA
 
 
+EndNote compatibility
+---------------------
+EndNote forms a central tool to most researchers so the SRA project aims to work in tandem with EndNote as far as possible.
+At present this functionality is reflected in the ability to import or export reference collections from the SRA project with minimal data loss via the EndNote XML format.
+
+
+Reference Deduplication
+-----------------------
+The deduplication module is the first major module in the SRA project. Since most reference searches can provide similar results the purpose of the deduplicator is to merge these semi-identical references together 'fuzzy' matching criteria. At present the system uses a number of different matching techniques (e.g. similarity of title or author names after dis-guarding misleading punctuation).
+
+Over time other methods of detecting matches have been developed such as standardising and checking page references (e.g. 'pages 345-352' is the same semantically as 'pages 345-52') which assist in matching references which may have been rewritten to conform to the search engine standards they were originally retrieved from.
+
+Upon locating a reference the SRA software will either merge the references (where applicable) or present the researcher with choices on what conflicting information was found when doing so.
+
+The process of performing a duplication operation is as follows:
+
+1. Import one or more existing EndNote reference libraries
+2. Select 'Deduplication' from the reference library drop-down menu
+3. The SRA software will take a few moments to perform its processing
+4. If any conflicting information is detected the researcher can now select which of the various pieces of data should be used in the 'final' citation
+5. The dedplicated library can now be exported back to EndNote
+
+
 Goals
 =====
 * Integrated citation management tools including various functionality useful to Systematic Review creation
