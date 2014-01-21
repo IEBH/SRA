@@ -25,6 +25,7 @@ class PHPEndNote {
 	*	* abstract - String (optional)
 	*	* urls - Array
 	*	* notes - String (optional)
+	*	* research-notes - String (optional)
 	*	* isbn - String (optional)
 	*	* label - String (optional)
 	*	* caption - String (optional)
@@ -158,6 +159,8 @@ class PHPEndNote {
 				'label' => 'label',
 				'caption' => 'caption',
 				'language' => 'language',
+				'notes' => 'notes',
+				'research-notes' => 'research-notes',
 				'custom1' => 'custom1',
 				'custom2' => 'custom2',
 				'custom3' => 'custom3',
@@ -180,8 +183,6 @@ class PHPEndNote {
 						$out .= '<url><style face="normal" font="default" size="100%">' . $this->_export($url) . '</style></url>';
 				$out .= '</related-urls></urls>';
 			}
-
-			$out .= '<research-notes><style face="normal" font="default" size="100%">' . (isset($ref['notes']) && $ref['notes'] ? $this->_export($ref['notes']) : '') . '</style></research-notes>';
 
 			$out .= '</record>';
 			$number++;
@@ -238,7 +239,7 @@ class PHPEndNote {
 				'abstract' => 'abstract',
 				'isbn' => 'isbn',
 				'notes' => 'notes',
-				'research-notes' => 'notes',
+				'research-notes' => 'research-notes',
 				'label' => 'label',
 				'caption' => 'caption',
 				'language' => 'language',

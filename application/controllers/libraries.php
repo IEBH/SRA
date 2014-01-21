@@ -256,7 +256,9 @@ class Libraries extends CI_Controller {
 
 				foreach ($this->endnote->refs as $refno => $ref) {
 					$json_obj = $ref;
-					unset($json_obj['authors'], $json_obj['title'], $json_obj['label']); // Scrap fields are are storing elsewhere anyway
+					foreach(array('authors', 'title', 'label') as $k) // Scrap fields are are storing elsewhere anyway
+						if (isset($json_obj[$k]))
+							unset($json_obj[$k]);
 
 					if ($fields['debug'])
 						$json_obj['caption'] = $refno+1;
@@ -265,7 +267,7 @@ class Libraries extends CI_Controller {
 						'libraryid' => $libraryid,
 						'title' => $ref['title'],
 						'authors' => implode(' AND ', $ref['authors']),
-						'label' => $ref['label'],
+						'label' => isset($ref['label']) ? $ref['label'] : null,
 						'data' => json_encode($json_obj),
 					));
 				}
@@ -305,6 +307,15 @@ class Libraries extends CI_Controller {
 		$this->endnote->name = $library['title'] . '.enl';
 		foreach ($this->Reference->GetAll($where) as $ref) {
 			$full = $this->Reference->Explode($ref);
+
+			if (isset($full['RAW'])) {
+				$raw = $full['RAW'];
+				unset($full['RAW']);
+				if (is_array($raw))
+					foreach ($raw as $k => $v)
+						$full[$k] = $v;
+			}
+
 			$full['authors'] = explode(' AND ', $full['authors']);
 
 			if ($library['debug'] == 'active') {

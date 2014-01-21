@@ -61,7 +61,7 @@ class Debug extends CI_Controller {
 		// }}}
 
 		$this->endnote = new PHPEndNote();
-		$this->endnote->SetXMLFile('data/A057 - Post SRA Friday 27-11-2013.xml');
+		$this->endnote->SetXMLFile('data/John/131120 TEST IMPORT.xml');
 		foreach ($this->endnote->refs as $refno => $ref) {
 			if (isset($myrefs[$ref['caption']]))
 				$ref['language'] = $ref['label'];
