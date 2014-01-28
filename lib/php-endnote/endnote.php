@@ -37,6 +37,15 @@ class PHPEndNote {
 	var $refs = array();
 
 	/**
+	* When using SetXML() this field will be used as the ID to refer to the reference
+	* If the ID does not exist for this reference an error will be raised
+	* Meta types:
+	*		NULL - Use next index offset (i.e. $this->refs will be an indexed array)
+	* @var string|null
+	*/
+	var $refId = null;
+
+	/**
 	* The internal name to call the file
 	* As far as I am aware this does not actually serve a purpose but EndNote refuses to import the file unless its specified
 	* @var string
@@ -74,6 +83,8 @@ class PHPEndNote {
 		$this->name = 'EndNote.enl';
 		$this->escapeExport = true;
 		$this->fixPages = true;
+		$this->fixesBakup = false;
+		$this->refId = null;
 	}
 
 	/**
@@ -255,7 +266,17 @@ class PHPEndNote {
 					continue;
 				$ref[$ourkey] = end(current($find));
 			}
-			$this->refs[] = $this->ApplyFixes($ref);
+			$ref = $this->ApplyFixes($ref);
+
+			if (!$this->refId) { // Use indexed array
+				$this->refs[] = $ref;
+			} elseif (is_string($this->refId)) { // Use assoc array
+				if (!isset($ref[$this->refId])) {
+					trigger_error("No ID found in reference to use as key");
+				} else {
+					$this->refs[$ref[$this->refId]] = $ref;
+				}
+			}
 		}
 	}
 
