@@ -135,7 +135,7 @@ class PHPEndNote {
 	*/
 	function GetXML() {
 		$out = '<' . '?xml version="1.0" encoding="UTF-8"?' . '><xml><records>';
-		$number = 0;
+		$number = 1;
 		foreach ($this->refs as $id => $ref) {
 			$out .= '<record>';
 			$out .= '<database name="' . $this->name . '" path="C:\\' . $this->name . '">' . $this->_export($this->name) . '</database>';
