@@ -137,7 +137,7 @@ class PHPEndNote {
 	*/
 	function GetXML() {
 		$out = '<' . '?xml version="1.0" encoding="UTF-8"?' . '><xml><records>';
-		$number = 1;
+		$number = 0;
 		foreach ($this->refs as $id => $ref) {
 			$out .= '<record>';
 			$out .= '<database name="' . $this->name . '" path="C:\\' . $this->name . '">' . $this->_export($this->name) . '</database>';
@@ -290,6 +290,8 @@ class PHPEndNote {
 				}
 			}
 		}
+		if ($this->refId == 'rec-number') // Resort by keys so that everything is in order
+			ksort($this->refs);
 	}
 
 	function SetXMLFile($filename) {

@@ -263,7 +263,7 @@ class Libraries extends CI_Controller {
 							unset($json_obj[$k]);
 
 					if ($fields['debug'])
-						$json_obj['caption'] = $refno+1;
+						$json_obj['caption'] = $refno;
 
 					$this->Reference->Create(array(
 						'libraryid' => $libraryid,
