@@ -41,6 +41,8 @@ class PHPEndNote {
 	* If the ID does not exist for this reference an error will be raised
 	* Meta types:
 	*		NULL - Use next index offset (i.e. $this->refs will be an indexed array)
+	*		rec-number - Use EndNotes own record number as a reference (only set this if you need to maintain EndNotes own record numbering against this libraries indexing)
+	*
 	* @var string|null
 	*/
 	var $refId = null;
@@ -271,7 +273,17 @@ class PHPEndNote {
 			if (!$this->refId) { // Use indexed array
 				$this->refs[] = $ref;
 			} elseif (is_string($this->refId)) { // Use assoc array
-				if (!isset($ref[$this->refId])) {
+				if ($this->refId == 'rec-number') {
+					// Stupidly convert the XML object into an array - wish there were some easier way to do this but xPath doesnt seem to watch to match 'rec-number/text()'
+					$recArr = (array) $record;
+					$recno = (int) $recArr['rec-number'];
+					if (!$recno) {
+						trigger_error('No record number to associate reference to');
+						$this->refs[$ref[$this->refId]] = $ref;
+					} else {
+						$this->refs[$recno] = $ref;
+					}
+				} elseif (!isset($ref[$this->refId])) {
 					trigger_error("No ID found in reference to use as key");
 				} else {
 					$this->refs[$ref[$this->refId]] = $ref;
