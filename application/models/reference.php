@@ -135,24 +135,33 @@ class Reference extends CI_Model {
 		$alts = array(); // Alternate values we found
 		$save = array(); // Data we should just save to A
 
-		// Simple field comparison
-		foreach (qw('title authors') as $f) {
+		// Simple field comparison - only one of these has to match
+		$match_exact = qw('title authors');
+		$match_exact_count = 0;
+		$match_exact_debug = array();
+		foreach ($match_exact as $f) {
 			if ($a[$f] == $b[$f]) { // Exact match
-				$isdupe = $debug ? "$f matches exactly - '{$a[$f]}' == '{$b[$f]}'" : true;
+				$match_exact_count++;
+				if ($debug)
+					$match_exact_debug[] = "$f matches exactly - '{$a[$f]}' == '{$b[$f]}'";
 			} elseif ($this->StringCompare($a[$f], $b[$f])) {
-				$isdupe = $debug ? "$f matches roughly - '{$a[$f]}' =~ '{$b[$f]}'" : true;
+				$match_exact_count++;
+				if ($debug)
+					$match_exact_debug[] = "$f matches roughly - '{$a[$f]}' =~ '{$b[$f]}'";
 				if (!isset($alts[$f]))
 					$alts[$f] = array();
 				$alts[$f][$b['referenceid']] = $b[$f];
 			}
 		}
+		if ($match_exact_count == count($match_exact)) // All of the above match exactly / fuzzily
+			$isdupe = $debug ? implode('/', $match_exact) . ' all match - ' . implode(', ', $match_exact_debug) : true;
 
 		// We've determined the data is a duplicate - now decide what to merge before we delete $b
 		if ($isdupe) {
 			$adata = json_decode($a['data'], true);
 			$bdata = json_decode($b['data'], true);
 
-			// Basic sanity checks
+			// Basic sanity checks - not a match if year, page, volume, isbn or number is present BUT mismatch exactly
 			if (isset($adata['year'], $bdata['year']) && $adata['year'] != $bdata['year'])
 				return $debug ? "Year mismatch '{$adata['year']}' != '{$bdata['year']}'" : false;
 			if (isset($adata['pages'], $bdata['pages']) && $adata['pages'] != $bdata['pages'])
