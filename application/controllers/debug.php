@@ -36,7 +36,7 @@ class Debug extends CI_Controller {
 			'text' => 
 				'A = ' . print_r($aref, 1) . "\n\n"
 				. 'B = ' . print_r($bref, 1) . "\n\n"
-				. 'Compare = ' . print_r($this->Reference->Compare($aref, $bref), 1)
+				. 'Compare = ' . print_r($this->Reference->Compare($aref, $bref, 1), 1)
 		));
 		$this->site->Footer();
 	}
