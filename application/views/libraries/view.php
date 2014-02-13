@@ -77,14 +77,19 @@ $(function() {
 			<a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>">
 			<?
 			$authorno = 0;
-			$authors = explode(' AND ', $reference['authors']);
-			foreach ($authors as $author) {
-				if ($authorno++ > 2) { ?>
-					<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?></span>
-				<?
-					break;
-				} ?>
-				<span class="badge badge-info"><i class="icon-user"></i> <?=$author?></span>
+			if ($reference['authors']) {
+				$authors = explode(' AND ', $reference['authors']);
+				foreach ($authors as $author) {
+					if ($authorno++ > 2) { ?>
+						<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?></span>
+					<?
+						break;
+					} ?>
+					<span class="badge badge-info"><i class="icon-user"></i> <?=$author?></span>
+						[<?=$reference['authors']?>]
+				<? } ?>
+			<? } else { ?>
+			<em>none</em>
 			<? } ?>
 			</a>
 		</td>
