@@ -1,10 +1,8 @@
-<? if (!$raw) { ?>
 <style>
-.page-content {
+body {
 	overflow-x: auto;
 }
 </style>
-<? } ?>
 <table class="table table-bordered table-striped">
 	<tr>
 		<th>&nbsp;</th>

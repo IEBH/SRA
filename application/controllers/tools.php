@@ -76,7 +76,6 @@ class Tools extends CI_Controller {
 						),
 					));
 					$this->site->view('tools/collabmatrix-html', array(
-						'raw' => 0,
 						'authors' => $authors,
 						'matrix' => $matrix,
 						'sep' => $sep,
@@ -92,7 +91,6 @@ class Tools extends CI_Controller {
 						),
 					));
 					$this->site->view('tools/collabmatrix-html', array(
-						'raw' => 1,
 						'authors' => $authors,
 						'matrix' => $matrix,
 						'sep' => $sep,
