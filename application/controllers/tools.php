@@ -107,7 +107,7 @@ class Tools extends CI_Controller {
 					$line = '"",';
 					foreach ($authors as $a => $junk)
 						$line .= '"' . $a . '",';
-					echo substr($line, 0, -1);
+					echo substr($line, 0, -1) . "\n";
 					// }}}
 					foreach ($authors as $a => $junk) {
 						$line = '"' . $a . '",';
@@ -115,7 +115,7 @@ class Tools extends CI_Controller {
 							$key = ($a < $b) ? "$a$sep$b" : "$b$sep$a";
 							$line .= (isset($matrix[$key]) ? $matrix[$key] : '') . ',';
 						}
-						echo substr($line, 0, -1);
+						echo substr($line, 0, -1) . "\n";
 					}
 					break;
 				case 'raw':
