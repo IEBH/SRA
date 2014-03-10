@@ -82,9 +82,13 @@ class Tools extends CI_Controller {
 
 			if ($fields['threshold'] > 1) {
 				$new = array();
+				$authors = array();
 				foreach ($matrix as $key => $val)
-					if ($val > $fields['threshold'])
+					if ($val >= $fields['threshold']) {
 						$new[$key] = $val;
+						list($a, $b) = explode($sep, $key);
+						$authors[$a] = 1;
+					}
 				$matrix = $new;
 			}
 
