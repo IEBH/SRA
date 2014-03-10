@@ -26,6 +26,7 @@ class Tools extends CI_Controller {
 			->Choice(array(
 				'html' => 'HTML table',
 				'html-raw' => 'HTML table (no styling)',
+				'list' => 'List',
 				'csv' => 'CSV output',
 				'raw' => 'Raw output',
 			));
@@ -95,7 +96,7 @@ class Tools extends CI_Controller {
 							'/tools/collabmatrix' => 'Collaboration Matrix',
 						),
 					));
-					$this->site->view('tools/collabmatrix-html', array(
+					$this->site->view('tools/collabmatrix-table', array(
 						'authors' => $authors,
 						'matrix' => $matrix,
 						'sep' => $sep,
@@ -110,7 +111,21 @@ class Tools extends CI_Controller {
 							'/tools/collabmatrix' => 'Collaboration Matrix',
 						),
 					));
-					$this->site->view('tools/collabmatrix-html', array(
+					$this->site->view('tools/collabmatrix-table', array(
+						'authors' => $authors,
+						'matrix' => $matrix,
+						'sep' => $sep,
+					));
+					$this->site->Footer();
+					break;
+				case 'list':
+					$this->site->Header('Results', array(
+						'breadcrumbs' => array(
+							'/tools' => 'Tools',
+							'/tools/collabmatrix' => 'Collaboration Matrix',
+						),
+					));
+					$this->site->view('tools/collabmatrix-list', array(
 						'authors' => $authors,
 						'matrix' => $matrix,
 						'sep' => $sep,
