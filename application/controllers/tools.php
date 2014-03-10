@@ -16,6 +16,11 @@ class Tools extends CI_Controller {
 			->Default(2)
 			->int();
 
+		$this->waveform->Define('threshold')
+			->Title('Threshold')
+			->Default(1)
+			->int();
+
 		$this->waveform->Define('output')
 			->Title('Output format')
 			->Choice(array(
@@ -45,26 +50,41 @@ class Tools extends CI_Controller {
 					if (!isset($bits[$col]))
 						$this->site->Error("Column {$fields['col']}, does not exist on line $line");
 					$csvauthors = preg_split('/\s*,\s*/', $bits[$col]);
-					foreach ($csvauthors as $a) {
-						foreach ($csvauthors as $b) {
+					foreach ($csvauthors as $aoffset => $a) {
+						foreach ($csvauthors as $boffset => $b) {
 							if ($a == $b) // Skip if same person
 								continue;
-							if ($a > $b) // Sort low to high
-								list($a, $b) = array($b, $a);
+
 							if (!isset($authors[$a]))
 								$authors[$a] = 1;
+
 							if (!isset($authors[$b]))
 								$authors[$b] = 1;
+
 							if (!isset($matrix["$a$sep$b"])) {
-								$matrix["$a$sep$b"] = 1;
+								$matrix["$a$sep$b"] = 0;
 							} else {
 								$matrix["$a$sep$b"]++;
+							}
+
+							if (!isset($matrix["$b$sep$a"])) {
+								$matrix["$b$sep$a"] = 0;
+							} else {
+								$matrix["$b$sep$a"]++;
 							}
 						}
 					}
 					ksort($authors);
 				}
 				fclose($fh);
+			}
+
+			if ($fields['threshold'] > 1) {
+				$new = array();
+				foreach ($matrix as $key => $val)
+					if ($val > $fields['threshold'])
+						$new[$key] = $val;
+				$matrix = $new;
 			}
 
 			switch ($fields['output']) {
@@ -118,6 +138,7 @@ class Tools extends CI_Controller {
 					break;
 				case 'raw':
 					header('Content-type: text/plain');
+					ksort($matrix);
 					print_r($matrix);
 			}
 		} else {
