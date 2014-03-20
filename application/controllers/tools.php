@@ -52,7 +52,8 @@ class Tools extends CI_Controller {
 						$this->site->Error("Column {$fields['col']}, does not exist on line $line");
 					$csvauthors = preg_split('/\s*,\s*/', $bits[$col]);
 					foreach ($csvauthors as $aoffset => $a) {
-						foreach ($csvauthors as $boffset => $b) {
+						for ($boffset = $aoffset+1; $boffset < count($csvauthors); $boffset++) {
+							$b = $csvauthors[$boffset];
 							if ($a == $b) // Skip if same person
 								continue;
 
@@ -63,13 +64,13 @@ class Tools extends CI_Controller {
 								$authors[$b] = 1;
 
 							if (!isset($matrix["$a$sep$b"])) {
-								$matrix["$a$sep$b"] = 0;
+								$matrix["$a$sep$b"] = 1;
 							} else {
 								$matrix["$a$sep$b"]++;
 							}
 
 							if (!isset($matrix["$b$sep$a"])) {
-								$matrix["$b$sep$a"] = 0;
+								$matrix["$b$sep$a"] = 1;
 							} else {
 								$matrix["$b$sep$a"]++;
 							}
