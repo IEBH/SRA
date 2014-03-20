@@ -76,9 +76,9 @@ class Tools extends CI_Controller {
 							}
 						}
 					}
-					ksort($authors);
 				}
 				fclose($fh);
+				ksort($authors);
 			}
 
 			if ($fields['threshold'] > 1) {
