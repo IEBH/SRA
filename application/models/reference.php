@@ -297,13 +297,9 @@ class Reference extends CI_Model {
 			} else {
 				$aAuth = $this->SplitAuthor($a[$aPos]);
 				$bAuth = $this->SplitAuthor($b[$bPos]);
-				echo "NAMES [{$a[$aPos]}] & [{$b[$bPos]}]\n";
-				echo "NAME A[" . print_r($aAuth, 1) . "]\n";
-				echo "NAME B[" . print_r($bAuth, 1) . "]\n";
 				$nameLimit = min(count($aAuth), count($bAuth));
 				$nameMatches = 1;
 				for ($n = 0; $n < $nameLimit; $n++) {
-					echo "NAME COMPARE [{$aAuth[$n]}] <=> [{$bAuth[$n]}]\n";
 					if ($aAuth[$n] == $bAuth[$n]) { // Direct match
 						$nameMatches++;
 					} elseif (strlen($aAuth[$n]) == 1 && substr($bAuth[$n], 0, 1)) { // A is initial and B full name
@@ -320,7 +316,6 @@ class Reference extends CI_Model {
 					$aPos++;
 					$bPos++;
 				} else {
-					echo "MISMATCH AT [{$a[$aPos]}] <=> [{$b[$bPos]}]\n";
 					$failed = 1;
 				}
 				break;
