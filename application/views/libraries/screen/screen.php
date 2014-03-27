@@ -2,10 +2,11 @@
 $(function() {
 	$('#reference-table')
 		.on('click', 'a[data-action=set-tag]', function() {
+			var me = $(this);
 			var tr = $(this).closest('tr')
 				.attr('rel', $(this).data('action-tag'));
-			$(this).closest('.btn-group').find('.btn').removeClass('btn-primary');
-			$(this).addClass('btn-primary');
+			me.closest('.btn-group').find('.btn').removeClass('btn-primary btn-danger').addClass('btn-default');
+			me.removeClass('btn-default').addClass(me.data('action-tag') == 0 ? 'btn-danger' : 'btn-primary');
 
 			$.ajax({
 				url: '<?=SITE_ROOT?>api/libraries/settag',
@@ -85,6 +86,7 @@ $(function() {
 	<? } ?>
 </ul>
 <? } ?>
+<div class="page-screening">
 <table class="table table-striped table-bordered" id="reference-table">
 	<tr>
 		<th width="60px">&nbsp;</th>
@@ -121,9 +123,9 @@ $(function() {
 		</td>
 		<td>
 			<div class="btn-group">
-				<a class="btn btn-small <?=!$reference['referencetagid']?'btn-primary':''?>" data-action="set-tag" data-action-tag="0">Unfiled</a>
+				<a class="btn btn-small <?=!$reference['referencetagid']?'btn-danger':'btn-default'?>" data-action="set-tag" data-action-tag="0">Unfiled</a>
 				<? foreach ($tags as $tag) { ?>
-				<a class="btn btn-small <?=$reference['referencetagid']==$tag['referencetagid']?'btn-primary':''?>" data-action="set-tag" data-action-tag="<?=$tag['referencetagid']?>"><?=$tag['title']?></a>
+				<a class="btn btn-small <?=$reference['referencetagid']==$tag['referencetagid']?'btn-primary':'btn-default'?>" data-action="set-tag" data-action-tag="<?=$tag['referencetagid']?>"><?=$tag['title']?></a>
 				<? } ?>
 			</div>
 		</td>	
@@ -132,5 +134,6 @@ $(function() {
 </table>
 <div class="pull-center">
 	<?=$this->pagination->create_links()?>
+</div>
 </div>
 <? } ?>

@@ -95,6 +95,13 @@ input[type=checkbox] {
 }
 /* }}} */
 /* }}} */
+/* Screening {{{ */
+.page-screening #reference-table .btn-default {
+	background-color: #F0F0F0 !important;
+	color: #424242 !important;
+	border-color: #DBDBDB;
+}
+/* }}} */
 /* Widget: Search basket {{{ */
 #basket > ul {
 	min-width: 400px;
