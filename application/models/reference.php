@@ -255,4 +255,115 @@ class Reference extends CI_Model {
 		$this->db->order_by('referencedupes.referenceid1');
 		return $this->db->get()->result_array();
 	}
+
+	/**
+	* Split a string of authors into an array
+	* @param string $authors The raw author string to be split
+	* @return array An array of author information extracted from the @authors string
+	*/
+	function SplitAuthors($authors) {
+		return preg_split('/\s*;\s*/', $authors);
+	}
+
+	/**
+	* Attempt to match two author strings using fuzzy logic
+	* @param string|array $a The first set of authors - either as a string or after using SplitAuthors()
+	* @param string|array $b The second set of authors - either as a string or after using SplitAuthors()
+	* @see SplitAuthors()
+	* @return bool Whether the author strings seem similar
+	*/
+	function CompareAuthors($a, $b) {
+		if (is_string($a))
+			$a = $this->SplitAuthors($a);
+		if (is_string($b))
+			$b = $this->SplitAuthors($b);
+
+		$authorLimit = min(count($a), count($b));
+
+		$aPos = 0;
+		$bPos = 0;
+		$failed = 0;
+		while ($aPos < $authorLimit && $bPos < $authorLimit) {
+			if ($this->IsDecendentNumeric($a[$aPos])) {
+				$aPos++;
+			} elseif ($this->IsDecendentNumeric($b[$bPos])) {
+				$bPos++;
+			} elseif ($a[$aPos] == $b[$bPos]) {
+				$aPos++;
+				$bPos++;
+			} elseif ($this->StringCompare($a[$aPos], $b[$bPos])) {
+				$aPos++;
+				$bPos++;
+			} else {
+				$aAuth = $this->SplitAuthor($a[$aPos]);
+				$bAuth = $this->SplitAuthor($b[$bPos]);
+				echo "NAMES [{$a[$aPos]}] & [{$b[$bPos]}]\n";
+				echo "NAME A[" . print_r($aAuth, 1) . "]\n";
+				echo "NAME B[" . print_r($bAuth, 1) . "]\n";
+				$nameLimit = min(count($aAuth), count($bAuth));
+				$nameMatches = 1;
+				for ($n = 0; $n < $nameLimit; $n++) {
+					echo "NAME COMPARE [{$aAuth[$n]}] <=> [{$bAuth[$n]}]\n";
+					if ($aAuth[$n] == $bAuth[$n]) { // Direct match
+						$nameMatches++;
+					} elseif (strlen($aAuth[$n]) == 1 && substr($bAuth[$n], 0, 1)) { // A is initial and B full name
+						$nameMatches++;
+					} elseif (strlen($bAuth[$n]) == 1 && substr($aAuth[$n], 0, 1)) { // B is initial and A full name
+						$nameMatches++;
+					} elseif (strlen($aAuth[$n]) > 1 && strlen($bAuth[$n]) > 1 && $this->StringCompare($aAuth[$n], $bAuth[$n])) { // Both are full names and they match a fuzzy match criteria
+					} else { // Nothing matched - name comparison failure
+						break;
+					}
+				}
+
+				if ($nameMatches >= $nameLimit) {
+					$aPos++;
+					$bPos++;
+				} else {
+					echo "MISMATCH AT [{$a[$aPos]}] <=> [{$b[$bPos]}]\n";
+					$failed = 1;
+				}
+				break;
+			}
+			$aPos++;
+		}
+		return !$failed;
+	}
+
+	/**
+	* Splits an author string into its component parts
+	* @param string $author The author information to split
+	* @param bool $firstLast Whether to allow for first-last human style names (e.g. 'John Smith'). If disabled all names are treated as if its in last-first order
+	* @return array An array composed of array(lastname, inital/name...)
+	*/
+	function SplitAuthor($author, $firstLast = false) {
+		$out = array();
+		if (preg_match('/^(.*?)' . ($firstLast ? ',' : ',?') . '\s*(.*)\s*$/', $author, $matches)) { // Smith, J. Hoover / Smith, John
+			if ($matches[1])
+				$out[] = $matches[1];
+			foreach (preg_split('/\s*(\.| )\s*/', $matches[2]) as $initial) {
+				$initial = trim($initial);
+				$initial = rtrim($initial, ',');
+				if ($initial)
+					$out[] = $initial;
+			}
+		} elseif ($firstLast && preg_match('/^(.*)\s+(.*)/', $author, $matches)) { // John Smith // John H. W. Smith
+			$out[] = $matches[2];
+			foreach (preg_split('/\s*(\.| )\s*/', $matches[1]) as $initial)
+				if ($initial = trim($initial))
+					$out[] = $initial;
+		} else { // No idea - return whole string
+			$out[] = $author;
+		}
+		return $out;
+	}
+
+	/**
+	* Returns true if the input string looks like a decendency numeric e.g. '1st, 2nd, 3rd, 4th'
+	* @param string $string The string to examine
+	* @return bool True if the $string is a decendency numeric
+	*/
+	function IsDecendentNumeric($string) {
+		return (bool) preg_match('/^[0-9]+(st|nd|rd|th)$/', $string);
+	}
 }
