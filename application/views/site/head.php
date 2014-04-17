@@ -28,6 +28,7 @@
 
 	<!-- Site style -->
 	<link href="<?=SITE_ROOT?>css/global.css" rel="stylesheet">
+	<link rel="stylesheet" href="<?=SITE_ROOT?>css/print.css" media="print">
 	<link rel="stylesheet" href="<?=SITE_ROOT?>css/ace-fonts.css" />
 
 	<link rel="stylesheet" href="<?=SITE_ROOT?>css/ace.min.css" />
