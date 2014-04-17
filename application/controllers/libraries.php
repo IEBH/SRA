@@ -485,13 +485,13 @@ class Libraries extends CI_Controller {
 
 		switch (isset($_REQUEST['output']) && $_REQUEST['output'] ? $_REQUEST['output'] : 'table') {
 			case 'table':
-				$this->site->Header('Results', array(
+				$this->site->Header('Author Collaboration Matrix', array(
 					'breadcrumbs' => array(
-						'/tools' => 'Tools',
-						'/tools/collabmatrix' => 'Collaboration Matrix',
+						'/libraries' => 'Libraries',
+						"/libraries/view/{$library['libraryid']}" => $library['title'],
 					),
 				));
-				$this->site->view('tools/collabmatrix-table', array(
+				$this->site->view('libraries/collabmatrix/table', array(
 					'authors' => $authors,
 					'matrix' => $matrix,
 					'sep' => $sep,
@@ -500,13 +500,13 @@ class Libraries extends CI_Controller {
 				break;
 			case 'table-raw':
 				$this->site->SetTheme('minimal');
-				$this->site->Header('Results', array(
+				$this->site->Header('Author Collaboration Matrix', array(
 					'breadcrumbs' => array(
-						'/tools' => 'Tools',
-						'/tools/collabmatrix' => 'Collaboration Matrix',
+						'/libraries' => 'Libraries',
+						"/libraries/view/{$library['libraryid']}" => $library['title'],
 					),
 				));
-				$this->site->view('tools/collabmatrix-table', array(
+				$this->site->view('libraries/collabmatrix/table', array(
 					'authors' => $authors,
 					'matrix' => $matrix,
 					'sep' => $sep,
@@ -514,13 +514,13 @@ class Libraries extends CI_Controller {
 				$this->site->Footer();
 				break;
 			case 'list':
-				$this->site->Header('Results', array(
+				$this->site->Header('Author Collaboration Matrix', array(
 					'breadcrumbs' => array(
-						'/tools' => 'Tools',
-						'/tools/collabmatrix' => 'Collaboration Matrix',
+						'/libraries' => 'Libraries',
+						"/libraries/view/{$library['libraryid']}" => $library['title'],
 					),
 				));
-				$this->site->view('tools/collabmatrix-list', array(
+				$this->site->view('libraries/collabmatrix/list', array(
 					'authors' => $authors,
 					'matrix' => $matrix,
 					'sep' => $sep,
@@ -528,13 +528,13 @@ class Libraries extends CI_Controller {
 				$this->site->Footer();
 				break;
 			case 'chord':
-				$this->site->Header('Results', array(
+				$this->site->Header('Author Collaboration Matrix', array(
 					'breadcrumbs' => array(
-						'/tools' => 'Tools',
-						'/tools/collabmatrix' => 'Collaboration Matrix',
+						'/libraries' => 'Libraries',
+						"/libraries/view/{$library['libraryid']}" => $library['title'],
 					),
 				));
-				$this->site->view('tools/collabmatrix-chord', array(
+				$this->site->view('libraries/collabmatrix/chord', array(
 					'library' => $library,
 				));
 				$this->site->Footer();

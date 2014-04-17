@@ -28,16 +28,6 @@
 			<? } ?>
 		</ul>
 	</li>
-	<li>
-		<a href="<?=SITE_ROOT?>tools" class="dropdown-toggle">
-			<i class="icon-beaker"></i>
-			<span class="menu-text"> Tools</span>
-			<b class="arrow icon-angle-down"></b>
-		</a>
-		<ul class="submenu">
-			<li><a href="<?=SITE_ROOT?>tools/collabmatrix">Collaboration Matrix</a></li>
-		</ul>
-	</li>
 
 	<?
 	if (isset($this->Library, $this->User) && $this->User->GetActive()) {
