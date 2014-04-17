@@ -471,6 +471,11 @@ class Libraries extends CI_Controller {
 			}
 		}
 
+		if (!isset($_REQUEST['threshold']) || $_REQUEST['threshold'] == 'auto') {
+			$scores = array_unique(array_values($matrix));
+			$_REQUEST['threshold'] = floor(array_sum($scores) / count($scores));
+		}
+
 		if (isset($_REQUEST['threshold']) && $_REQUEST['threshold'] > 1) {
 			$new = array();
 			$authors = array();
