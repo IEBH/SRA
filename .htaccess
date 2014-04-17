@@ -4,6 +4,9 @@ Options -Indexes
 RewriteEngine on
 # RewriteBase /
 
+# Dont do anything if its in the /lab directory
+RewriteRule ^lab/		- [L]
+
 # If the file exists
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^(.*)$		- [L]
