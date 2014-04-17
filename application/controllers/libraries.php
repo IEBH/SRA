@@ -428,14 +428,59 @@ class Libraries extends CI_Controller {
 	* @param int $_REQUEST['output'] The output format, see the function for available options
 	* @param int $_REQUEST['threshold'] All colaborations under this number will be ignored
 	*/
-	function CollabMatrix($libraryid = null) {
+	function CollabMatrix($libraryid = null, $output = null) {
 		$this->load->model('Reference');
-		if (!$libraryid)
-			$this->site->redirect('/');
-		if (!$library = $this->Library->Get($libraryid))
-			$this->site->Error('Invalid library');
-		if (!$this->Library->CanEdit($library))
-			$this->site->Error('You do not have access to this library');
+
+		if (isset($_REQUEST['libraryid']))
+			$libraryid = $_REQUEST['libraryid'];
+		if (isset($_REQUEST['output']))
+			$output = $_REQUEST['output'];
+
+		if ($libraryid) {
+			if (!$library = $this->Library->Get($libraryid))
+				$this->site->Error('Invalid library');
+			if (!$this->Library->CanEdit($library))
+				$this->site->Error('You do not have access to this library');
+		}
+
+		if (!$libraryid || !$output) { // No library of output selected - display options screen
+			// Waveform config {{{
+			$this->Waveform = new Waveform();
+			$this->Waveform->Style('bootstrap');
+
+			$this->Waveform->Define('libraryid')
+				->Title('Library')
+				->Choice($this->Library->GetAll(array('status !=' => 'deleted', 'userid' => $this->User->GetActive('userid'))), 'libraryid', 'title')
+				->Default($libraryid);
+
+			$this->Waveform->Define('threshold')
+				->Int()
+				->Style('data-help-block', 'The paper threshold to use. Leave blank to use the average number of collaborations');
+
+			$this->Waveform->Define('output')
+				->Title('Style')
+				->Choice(array(
+					'table' => 'Table',
+					'table-raw' => 'Table (no styling)',
+					'list' => 'List',
+					'chord' => 'Chord diagram',
+					'csv' => 'Downloadble CSV file',
+					'raw' => 'Raw data',
+				))
+				->Default('chord');
+			// }}}
+			$this->site->Header('Collaboration Matrix', array(
+				'breadcrumbs' => array_merge(array(
+					'/libraries' => 'Libraries',
+				), $libraryid ? array(
+					"/libraries/view/{$library['libraryid']}" => $library['title'],
+				) : array()),
+			));
+			$this->site->view('libraries/collabmatrix/options');
+			$this->site->Footer();
+			return;
+		}
+
 
 		$sep = '|||';
 		$authors = array();
@@ -471,7 +516,10 @@ class Libraries extends CI_Controller {
 			}
 		}
 
-		if (!isset($_REQUEST['threshold']) || $_REQUEST['threshold'] == 'auto') {
+		if (!$matrix)
+			$this->site->Error('No collaborations to display');
+
+		if (!isset($_REQUEST['threshold']) || !$_REQUEST['threshold'] || $_REQUEST['threshold'] == 'auto') {
 			$scores = array_unique(array_values($matrix));
 			$_REQUEST['threshold'] = floor(array_sum($scores) / count($scores));
 		}
@@ -488,7 +536,7 @@ class Libraries extends CI_Controller {
 			$matrix = $new;
 		}
 
-		switch (isset($_REQUEST['output']) && $_REQUEST['output'] ? $_REQUEST['output'] : 'table') {
+		switch ($output) {
 			case 'table':
 				$this->site->Header('Author Collaboration Matrix', array(
 					'breadcrumbs' => array(
@@ -552,8 +600,11 @@ class Libraries extends CI_Controller {
 					foreach ($authors as $b => $junk) {
 						if ($a == $b)
 							continue;
+						$key = ($a < $b) ? "$a$sep$b" : "$b$sep$a";
+						if (!isset($matrix[$key]))
+							continue;
 						echo "\"$a\",\"$b\"," .
-							(isset($matrix["$a$sep$b"]) && $matrix["$a$sep$b"] ? $matrix["$a$sep$b"] : 0) . 
+							(isset($matrix[$key]) && $matrix[$key] ? $matrix[$key] : 0) . 
 							"\n";
 					}
 				}
