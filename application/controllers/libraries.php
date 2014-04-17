@@ -538,10 +538,11 @@ class Libraries extends CI_Controller {
 
 		switch ($output) {
 			case 'table':
-				$this->site->Header('Author Collaboration Matrix', array(
+				$this->site->Header('Tabular layout', array(
 					'breadcrumbs' => array(
 						'/libraries' => 'Libraries',
 						"/libraries/view/{$library['libraryid']}" => $library['title'],
+						"/libraries/collabmatrix/{$library['libraryid']}" => 'Collaboration Matrix',
 					),
 				));
 				$this->site->view('libraries/collabmatrix/table', array(
@@ -553,10 +554,11 @@ class Libraries extends CI_Controller {
 				break;
 			case 'table-raw':
 				$this->site->SetTheme('minimal');
-				$this->site->Header('Author Collaboration Matrix', array(
+				$this->site->Header('Tabular layout', array(
 					'breadcrumbs' => array(
 						'/libraries' => 'Libraries',
 						"/libraries/view/{$library['libraryid']}" => $library['title'],
+						"/libraries/collabmatrix/{$library['libraryid']}" => 'Collaboration Matrix',
 					),
 				));
 				$this->site->view('libraries/collabmatrix/table', array(
@@ -567,10 +569,11 @@ class Libraries extends CI_Controller {
 				$this->site->Footer();
 				break;
 			case 'list':
-				$this->site->Header('Author Collaboration Matrix', array(
+				$this->site->Header('List layout', array(
 					'breadcrumbs' => array(
 						'/libraries' => 'Libraries',
 						"/libraries/view/{$library['libraryid']}" => $library['title'],
+						"/libraries/collabmatrix/{$library['libraryid']}" => 'Collaboration Matrix',
 					),
 				));
 				$this->site->view('libraries/collabmatrix/list', array(
@@ -581,10 +584,11 @@ class Libraries extends CI_Controller {
 				$this->site->Footer();
 				break;
 			case 'chord':
-				$this->site->Header('Author Collaboration Matrix', array(
+				$this->site->Header('Chord Diagram', array(
 					'breadcrumbs' => array(
 						'/libraries' => 'Libraries',
 						"/libraries/view/{$library['libraryid']}" => $library['title'],
+						"/libraries/collabmatrix/{$library['libraryid']}" => 'Collaboration Matrix',
 					),
 				));
 				$this->site->view('libraries/collabmatrix/chord', array(
