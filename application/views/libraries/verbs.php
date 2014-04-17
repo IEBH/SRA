@@ -3,6 +3,8 @@
 <li class="divider"></li>
 <li><a href="<?=SITE_ROOT?>libraries/share/<?=$library['libraryid']?>"><i class="icon-share-alt"></i> Share library</a></li>
 <li class="divider"></li>
+<li><a href="<?=SITE_ROOT?>libraries/collabmatrix/<?=$library['libraryid']?>"><i class="icon-group"></i> Author collaboration</a></li>
+<li class="divider"></li>
 <li><a href="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Eliminate Duplicates</a></li>
 <li><a href="<?=SITE_ROOT?>libraries/screen/<?=$library['libraryid']?>"><i class="icon-filter"></i> Screen references</a></li>
 <li class="divider"></li>

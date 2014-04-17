@@ -423,6 +423,166 @@ class Libraries extends CI_Controller {
 	}
 
 	/**
+	* Output a collaboration matrix
+	* @param int $libraryid The library ID to prepare the matrix for
+	* @param int $_REQUEST['output'] The output format, see the function for available options
+	* @param int $_REQUEST['threshold'] All colaborations under this number will be ignored
+	*/
+	function CollabMatrix($libraryid = null) {
+		$this->load->model('Reference');
+		if (!$libraryid)
+			$this->site->redirect('/');
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+
+		$sep = '|||';
+		$authors = array();
+		$matrix = array(); // Key = $author1$sep$author2
+
+		foreach ($this->Reference->GetAll(array('libraryid' => $library['libraryid'])) as $ref) {
+			$refauthors = preg_split('/\s+AND\s+/', $ref['authors']);
+			if (count($refauthors) == 1 && !$refauthors[0]) // Skip papers with no authors
+				continue;
+			for ($aoffset = 0; $aoffset < count($refauthors)-1; $aoffset++) {
+				for ($boffset = $aoffset+1; $boffset < count($refauthors)-1; $boffset++) {
+					$a = $refauthors[$aoffset];
+					$b = $refauthors[$boffset];
+
+					if (!isset($authors[$a]))
+						$authors[$a] = 1;
+
+					if (!isset($authors[$b]))
+						$authors[$b] = 1;
+
+					if (!isset($matrix["$a$sep$b"])) {
+						$matrix["$a$sep$b"] = 1;
+					} else {
+						$matrix["$a$sep$b"]++;
+					}
+
+					if (!isset($matrix["$b$sep$a"])) {
+						$matrix["$b$sep$a"] = 1;
+					} else {
+						$matrix["$b$sep$a"]++;
+					}
+				}
+			}
+		}
+
+		if (isset($_REQUEST['threshold']) && $_REQUEST['threshold'] > 1) {
+			$new = array();
+			$authors = array();
+			foreach ($matrix as $key => $val)
+				if ($val >= $_REQUEST['threshold']) {
+					$new[$key] = $val;
+					list($a, $b) = explode($sep, $key);
+					$authors[$a] = 1;
+				}
+			$matrix = $new;
+		}
+
+		switch (isset($_REQUEST['output']) && $_REQUEST['output'] ? $_REQUEST['output'] : 'table') {
+			case 'table':
+				$this->site->Header('Results', array(
+					'breadcrumbs' => array(
+						'/tools' => 'Tools',
+						'/tools/collabmatrix' => 'Collaboration Matrix',
+					),
+				));
+				$this->site->view('tools/collabmatrix-table', array(
+					'authors' => $authors,
+					'matrix' => $matrix,
+					'sep' => $sep,
+				));
+				$this->site->Footer();
+				break;
+			case 'table-raw':
+				$this->site->SetTheme('minimal');
+				$this->site->Header('Results', array(
+					'breadcrumbs' => array(
+						'/tools' => 'Tools',
+						'/tools/collabmatrix' => 'Collaboration Matrix',
+					),
+				));
+				$this->site->view('tools/collabmatrix-table', array(
+					'authors' => $authors,
+					'matrix' => $matrix,
+					'sep' => $sep,
+				));
+				$this->site->Footer();
+				break;
+			case 'list':
+				$this->site->Header('Results', array(
+					'breadcrumbs' => array(
+						'/tools' => 'Tools',
+						'/tools/collabmatrix' => 'Collaboration Matrix',
+					),
+				));
+				$this->site->view('tools/collabmatrix-list', array(
+					'authors' => $authors,
+					'matrix' => $matrix,
+					'sep' => $sep,
+				));
+				$this->site->Footer();
+				break;
+			case 'chord':
+				$this->site->Header('Results', array(
+					'breadcrumbs' => array(
+						'/tools' => 'Tools',
+						'/tools/collabmatrix' => 'Collaboration Matrix',
+					),
+				));
+				$this->site->view('tools/collabmatrix-chord', array(
+					'library' => $library,
+				));
+				$this->site->Footer();
+				break;
+			case 'csv-chord':
+				//header('Content-Encoding: UTF-8');
+				//header('Content-type: text/csv; charset=UTF-8');
+				echo "has,prefers,count\n";
+				foreach ($authors as $a => $junk) {
+					foreach ($authors as $b => $junk) {
+						if ($a == $b)
+							continue;
+						echo "\"$a\",\"$b\"," .
+							(isset($matrix["$a$sep$b"]) && $matrix["$a$sep$b"] ? $matrix["$a$sep$b"] : 0) . 
+							"\n";
+					}
+				}
+				break;
+			case 'csv':
+				header('Content-Encoding: UTF-8');
+				header('Content-type: text/csv; charset=UTF-8');
+				header('Content-Disposition: attachment; filename="Author Collaboration Matrix.csv"');
+				// Header row {{{
+				$line = '"",';
+				foreach ($authors as $a => $junk)
+					$line .= '"' . $a . '",';
+				echo substr($line, 0, -1) . "\n";
+				// }}}
+				foreach ($authors as $a => $junk) {
+					$line = '"' . $a . '",';
+					foreach ($authors as $b => $junk) {
+						$key = ($a < $b) ? "$a$sep$b" : "$b$sep$a";
+						$line .= (isset($matrix[$key]) ? $matrix[$key] : '') . ',';
+					}
+					echo substr($line, 0, -1) . "\n";
+				}
+				break;
+			case 'raw':
+				header('Content-type: text/plain');
+				ksort($matrix);
+				print_r($matrix);
+				break;
+			default:
+				$this->site->Error('Unknown collaboration matrix output format');
+		}
+	}
+
+	/**
 	* Perform an action on the left/right side duplication
 	* @param string $_REQUEST['action'] The action to perform
 	* @param string $_REQUEST['left'] The left side reference ID to operate on
