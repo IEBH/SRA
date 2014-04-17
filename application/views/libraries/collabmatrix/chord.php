@@ -121,3 +121,10 @@ function drawChords (matrix, mmap) {
 }
 </script>
 <div id="tooltip"></div>
+<div class="no-print">
+	<form action="/libraries/collabmatrix/<?=$library['libraryid']?>/chord" class="form-inline pull-center" method="GET">
+		<label class="control-label">Threshold</label>
+		<input type="number" name="threshold" class="form-control" value="<?=isset($_REQUEST['threshold']) ? $_REQUEST['threshold'] : 0?>"/>
+		<button type="submit" class="btn btn-success btn-small"><i class="icon-refresh"></i> Refresh</button>
+	</form>
+</div>
