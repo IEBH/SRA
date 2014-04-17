@@ -5,4 +5,7 @@ $autoload['helper'] = array();
 $autoload['config'] = array();
 $autoload['language'] = array();
 $autoload['model'] = array('User', 'Page', 'Library', 'Reference', 'Log', 'Format', 'Security');
-$autoload['sparks'] = array('pherl/1.0.0');
+
+// Composer
+require('vendor/autoload.php');
+include('vendor/hashbang/pherl/lib/pherl.php');
