@@ -32,6 +32,7 @@ $(function() {
 	<p>This library is still marked as having duplicate references.</p>
 	<div class="pull-center pad-top">
 		<a class="btn" href="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Examine duplicates</a>
+		<a class="btn" href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>"><i class="icon-stop-sign"></i> Stop de-duping</a>
 		<a class="btn" href="#" data-dismiss="alert"><i class="icon-remove-sign"></i> Not right now</a>
 	</div>
 </div>
