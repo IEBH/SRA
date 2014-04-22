@@ -50,8 +50,9 @@ Goals
 
 TODO
 ====
+* TECHNICAL: Upgrade to Bootstrap 3
+* TECHNICAL: Replace views with Angular
 * Welcome email
-* Co-occurance diagram for cross referencing tool - http://bost.ocks.org/mike/miserables/
 * Similar to abstrackr have the 'starting screens' for de-dupe and screening processes ask to choose either from an existing library or accept the upload of a new one.
 * Add "Output type" option to de-duplicator - "Review after processing" being default, EndNote XML download as another (for those who don't care about consolidating data)
 * Better library naming - inherit file name or use date or something
