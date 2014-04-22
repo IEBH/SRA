@@ -258,36 +258,7 @@ class Libraries extends CI_Controller {
 				));
 			}
 
-			require('lib/php-endnote/endnote.php');
-			$this->endnote = new PHPEndNote();
-
-			foreach ($_FILES as $file) {
-				if (!$file['tmp_name'] || !file_exists($file['tmp_name']))
-					continue;
-				if ($fields['debug']) {
-					$this->endnote->fixesBackup = true;
-					$this->endnote->refId = 'rec-number';
-				}
-				$this->endnote->SetXMLFile($file['tmp_name']);
-
-				foreach ($this->endnote->refs as $refno => $ref) {
-					$json_obj = $ref;
-					foreach(array('authors', 'title', 'label') as $k) // Scrap fields are are storing elsewhere anyway
-						if (isset($json_obj[$k]))
-							unset($json_obj[$k]);
-
-					if ($fields['debug'])
-						$json_obj['caption'] = $refno;
-
-					$this->Reference->Create(array(
-						'libraryid' => $libraryid,
-						'title' => $ref['title'],
-						'authors' => implode(' AND ', $ref['authors']),
-						'label' => isset($ref['label']) ? $ref['label'] : null,
-						'data' => json_encode($json_obj),
-					));
-				}
-			}
+			$this->_Importer($libraryid);
 
 			if ($fields['auto_dedupe']) {
 				$this->site->Redirect("/libraries/dedupe/$libraryid");
@@ -304,6 +275,56 @@ class Libraries extends CI_Controller {
 			));
 			$this->site->Footer();
 		}
+	}
+
+	/**
+	* Actual worker function to import incomming files
+	* @param int $libraryid The library ID to import into, if none is specified one will be created
+	* @param array $_FILES The incomming file batch to import
+	* @return int The library id created or given as $libraryid
+	*/
+	function _Importer($libraryid = null) {
+		require('lib/php-endnote/endnote.php');
+		$this->endnote = new PHPEndNote();
+		
+		if (!$_FILES) // No files to import
+			return;
+		if ( ($first = current($_FILES)) && !$first['size']) // File uploaded but its blank
+			return;
+
+		if (!$libraryid)
+			$libraryid = $this->Library->Create(array(
+				'title' => 'Imported library ' . date('D M jS g:i a'),
+			));
+
+		foreach ($_FILES as $file) {
+			if (!$file['tmp_name'] || !file_exists($file['tmp_name']))
+				continue;
+			if ($fields['debug']) {
+				$this->endnote->fixesBackup = true;
+				$this->endnote->refId = 'rec-number';
+			}
+			$this->endnote->SetXMLFile($file['tmp_name']);
+
+			foreach ($this->endnote->refs as $refno => $ref) {
+				$json_obj = $ref;
+				foreach(array('authors', 'title', 'label') as $k) // Scrap fields are are storing elsewhere anyway
+					if (isset($json_obj[$k]))
+						unset($json_obj[$k]);
+
+				if ($fields['debug'])
+					$json_obj['caption'] = $refno;
+
+				$this->Reference->Create(array(
+					'libraryid' => $libraryid,
+					'title' => $ref['title'],
+					'authors' => implode(' AND ', $ref['authors']),
+					'label' => isset($ref['label']) ? $ref['label'] : null,
+					'data' => json_encode($json_obj),
+				));
+			}
+		}
+		return $libraryid;
 	}
 
 	function Export($libraryid = null) {
@@ -373,6 +394,8 @@ class Libraries extends CI_Controller {
 	function Dedupe($libraryid = null, $force = null) {
 		$this->load->model('Reference');
 
+		if (!$libraryid)
+			$this->site->Redirect('/libraries/select/dedupe');
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
 		if (!$this->Library->CanEdit($library))
@@ -434,6 +457,52 @@ class Libraries extends CI_Controller {
 			$this->site->Error('You do not have access to this library');
 		$this->Library->Clear($libraryid);
 		$this->site->Redirect("/libraries/view/$libraryid");
+	}
+
+	/**
+	* Prompt for a library (or an upload) then redirect to the given URL
+	* @param string $tool Predefined tool profile to use
+	*/
+	function Select($tool = 'list') {
+		// Waveform config {{{
+		$this->Waveform = new Waveform();
+		$this->Waveform->Style('bootstrap');
+		
+		$libraries = array('new' => 'Upload new library');
+		foreach ($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')) as $lib)
+			$libraries[$lib['libraryid']] = $lib['title'];
+
+		$this->Waveform->Define('tool')
+			->Title('Tool to use')
+			->Choice(array(
+				'list' => 'View references',
+				'dedupe' => 'Deduplicator',
+			))
+			->Default($tool);
+
+		$this->Waveform->Define('libraryid')
+			->Title('Library to use')
+			->Choice($libraries)
+			->NotRequired();
+
+		$this->Waveform->Define('file')
+			->File()
+			->NotRequired();
+		// }}}
+
+		if ($fields = $this->Waveform->OK()) {
+			if ($fields['libraryid'] != 'new') { // Use existing library
+				$libraryid = $fields['libraryid'];
+			} elseif (! $libraryid = $this->_Importer()) { // Upload new library and use that
+				$this->Waveform->Fail('file', 'Something went wrong while uploading your reference library');
+			} else {
+				die("Use {$libraryid}");
+			}
+		}
+
+		$this->site->Header('Select library');
+		$this->load->view('libraries/select');
+		$this->site->Footer();
 	}
 
 	/**

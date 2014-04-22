@@ -10,7 +10,29 @@
 			<i class="icon-search"></i>
 			<span class="menu-text"> Search</span>
 		</a>
+	</li>
+
 	<li>
+		<a href="<?=SITE_ROOT?>tools" class="dropdown-toggle">
+			<i class="icon-wrench"></i>
+			<span class="menu-text"> Tools</span>
+			<b class="arrow icon-angle-down"></b>
+		</a>
+		<ul class="submenu">
+			<li>
+				<a href="<?=SITE_ROOT?>libraries/dedupe">
+					<i class="icon-double-angle-right"></i> De-duplicate references
+				</a>
+			</li>
+			<li>
+				<a href="<?=SITE_ROOT?>libraries/collabmatrix">
+					<i class="icon-double-angle-right"></i> Collaboration Matrix
+				</a>
+			</li>
+		</ul>
+	</li>
+
+	<!-- <li>
 		<a href="<?=SITE_ROOT?>how-to" class="dropdown-toggle">
 			<i class="icon-book"></i>
 			<span class="menu-text"> How to create a review</span>
@@ -27,7 +49,7 @@
 			<? } ?>
 			<? } ?>
 		</ul>
-	</li>
+	</li> -->
 
 	<?
 	if (isset($this->Library, $this->User) && $this->User->GetActive()) {
