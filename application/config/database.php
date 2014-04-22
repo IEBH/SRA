@@ -9,7 +9,7 @@ if (preg_match('/crebp\.net\.au/', $_SERVER['SERVER_NAME'])) {
 	$db['default']['password'] = 'u35K9gxDmpdw';
 } else {
 	$db['default']['hostname'] = 'localhost';
-	$db['default']['database'] = 'crebpsearch';
+	$db['default']['database'] = 'sra';
 	$db['default']['username'] = 'mc';
 	$db['default']['password'] = '';
 }

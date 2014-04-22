@@ -1,17 +1,22 @@
-.PHONY: database
+# Config details
+DB=sra
+USER="apache"
+PASS="asdf"
+HOST="localhost"
 
-database:
-	mysql crebpsearch <../database/Clean.sql
-	mysql crebpsearch <../database/Schema.sql
+database: database-clean
+	@echo "Installing database schema..."
+	mysql ${DB} <../database/Schema.sql
 
-batt-update: batt-pull
+database-clean:
+	@echo "Cleaning database [${DB}]..."
+	mysql -e 'DROP DATABASE IF EXISTS ${DB}; CREATE DATABASE ${DB}'
 
-batt-pull:
-	cd ../lib/batt;
-		git pull;
-	git add ../lib/batt
-	git commit -m 'AUTO: Updated Batt to latest version'
+database-install:
+	@echo "Creating new database [${DB}]..."
+	mysql -u root -e "CREATE DATABASE IF NOT EXISTS ${DB}"
+	@echo "Adding user '${USER}@${HOST}' (with password)..."
+	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '${USER}'@'${HOST}' IDENTIFIED BY '${PASS}'"
 
-batt-push:
-	cd ../lib/batt;
-		git push origin master
+install: database-install database
+	@echo "All done"
