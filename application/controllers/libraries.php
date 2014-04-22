@@ -258,7 +258,7 @@ class Libraries extends CI_Controller {
 				));
 			}
 
-			$this->_Importer($libraryid);
+			$this->_Importer($libraryid, (bool) $fields['debug']);
 
 			if ($fields['auto_dedupe']) {
 				$this->site->Redirect("/libraries/dedupe/$libraryid");
@@ -280,10 +280,11 @@ class Libraries extends CI_Controller {
 	/**
 	* Actual worker function to import incomming files
 	* @param int $libraryid The library ID to import into, if none is specified one will be created
+	* @param bool $debug Enable debug mode on the given library
 	* @param array $_FILES The incomming file batch to import
 	* @return int The library id created or given as $libraryid
 	*/
-	function _Importer($libraryid = null) {
+	function _Importer($libraryid = null, $debug = FALSE) {
 		require('lib/php-endnote/endnote.php');
 		$this->endnote = new PHPEndNote();
 		
@@ -300,7 +301,7 @@ class Libraries extends CI_Controller {
 		foreach ($_FILES as $file) {
 			if (!$file['tmp_name'] || !file_exists($file['tmp_name']))
 				continue;
-			if ($fields['debug']) {
+			if ($debug) {
 				$this->endnote->fixesBackup = true;
 				$this->endnote->refId = 'rec-number';
 			}
@@ -312,7 +313,7 @@ class Libraries extends CI_Controller {
 					if (isset($json_obj[$k]))
 						unset($json_obj[$k]);
 
-				if ($fields['debug'])
+				if ($debug)
 					$json_obj['caption'] = $refno;
 
 				$this->Reference->Create(array(
@@ -496,7 +497,7 @@ class Libraries extends CI_Controller {
 			} elseif (! $libraryid = $this->_Importer()) { // Upload new library and use that
 				$this->Waveform->Fail('file', 'Something went wrong while uploading your reference library');
 			} else {
-				die("Use {$libraryid}");
+				$this->site->Redirect("/libraries/{$fields['tool']}/$libraryid");
 			}
 		}
 

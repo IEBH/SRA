@@ -103,7 +103,7 @@ $(function() {
 	<? if ($offset > 0) { ?>
 	<li class="previous"><a href="<?=$this->URLopts->Edit('page=' . ($offset/$limit-1))?>">&larr;</a></li>
 	<? } ?>
-	Page <?=$offset/$limit?> of <?=ceil($total/$limit)?>
+	Page <?=$offset/$limit+1?> of <?=round($total/$limit)?>
 	<? if ($total >= $offset + $limit) { ?>
 	<li class="next"><a href="<?=$this->URLopts->Edit('page=' . (($offset/$limit)+1))?>">&rarr;</a></li>
 	<? } ?>

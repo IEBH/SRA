@@ -63,6 +63,8 @@
 						<i class="icon-caret-down"></i>
 					</a>
 					<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+						<li><a href="<?=SITE_ROOT?>libraries"><i class="icon-tags"></i> My libraries</a></li>
+						<li class="divider"></li>
 						<li><a href="<?=SITE_ROOT?>logout"><i class="icon-off"></i> Logout</a></li>
 					</ul>
 					<? } else { ?>
