@@ -328,7 +328,13 @@ class Libraries extends CI_Controller {
 		return $libraryid;
 	}
 
-	function Export($libraryid = null) {
+	/**
+	* Export a library in the format specified by $format
+	* @param int $libraryid The ID of the library to export
+	* @param string $format The RefLib driver to use to export the file
+	* @return blob The downloadable library file
+	*/
+	function Export($libraryid = null, $format = 'endnotexml') {
 		$this->load->model('Reference');
 
 		if (!$library = $this->Library->Get($libraryid))
@@ -340,9 +346,8 @@ class Libraries extends CI_Controller {
 		if ($library['debug'] == 'inactive')
 			$where['status'] = 'active';
 
-		require('lib/php-endnote/endnote.php');
-		$this->endnote = new PHPEndNote();
-		$this->endnote->name = $library['title'] . '.enl';
+		$this->RefLib = new RefLib();
+		$this->RefLib->LoadDriver($format);
 		foreach ($this->Reference->GetAll($where) as $ref) {
 			$full = $this->Reference->Explode($ref);
 
@@ -370,10 +375,10 @@ class Libraries extends CI_Controller {
 				}
 			}
 
-			$this->endnote->Add($full);
+			$this->RefLib->Add($full);
 		}
 
-		$this->endnote->OutputXML($library['title'] . '.xml');
+		$this->RefLib->DownloadContents($this->RefLib->GetFilename($library['title']), $format);
 	}
 
 	function Delete($libraryid = null) {
