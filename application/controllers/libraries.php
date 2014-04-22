@@ -20,14 +20,29 @@ class Libraries extends CI_Controller {
 		if (!$this->Library->CanEdit($library))
 			$this->site->Error('You do not have access to this library');
 
+		$offset = 0;
+		$limit = 50;
+		$where = array(
+			'libraryid' => $library['libraryid'],
+			'status !=' => 'deleted',
+		);
+
+		$this->URLopts = new URLopts();
+		$params = $this->URLopts->Get(null, 2);
+		if (isset($params['page']))
+			$offset = $limit * $params['page'];
+
 		$this->site->header($library['title'], array(
 			'breadcrumbs' => array(
 				'/libraries' => 'Libraries'
 			),
 		));
 		$this->load->view('libraries/view', array(
+			'offset' => $offset,
+			'limit' => $limit,
+			'total' => $this->Reference->Count($where),
 			'library' => $library,
-			'references' => $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted')),
+			'references' => $this->Reference->GetAll($where, 'title', $limit, $offset),
 			'tags' => $this->Library->GetAllTags($library['libraryid']),
 		));
 		$this->site->footer();

@@ -87,7 +87,6 @@ $(function() {
 						break;
 					} ?>
 					<span class="badge badge-info"><i class="icon-user"></i> <?=$author?></span>
-						[<?=$reference['authors']?>]
 				<? } ?>
 			<? } else { ?>
 			<em>none</em>
@@ -97,4 +96,16 @@ $(function() {
 	</tr>
 	<? } ?>
 </table>
+<? } ?>
+
+<? if (isset($offset) && isset($limit)) { // Display pager ?>
+<ul class="pager">
+	<? if ($offset > 0) { ?>
+	<li class="previous"><a href="<?=$this->URLopts->Edit('page=' . ($offset/$limit-1))?>">&larr;</a></li>
+	<? } ?>
+	Page <?=$offset/$limit?> of <?=ceil($total/$limit)?>
+	<? if ($total >= $offset + $limit) { ?>
+	<li class="next"><a href="<?=$this->URLopts->Edit('page=' . (($offset/$limit)+1))?>">&rarr;</a></li>
+	<? } ?>
+</ul>
 <? } ?>
