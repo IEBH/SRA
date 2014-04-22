@@ -221,7 +221,7 @@ class Libraries extends CI_Controller {
 
 		$this->Waveform->Define('new_name')
 			->Title('Name of new library')
-			->Default('Imported Library')
+			->Default('Imported library ' . date('D M jS g:i a'))
 			->NotRequired();
 
 		$this->Waveform->Define('existing_id')
