@@ -178,5 +178,52 @@
             "hashes",
             "perl"
         ]
+    },
+    {
+        "name": "hashbang/reflib",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hash-bang/RefLib.git",
+            "reference": "3f3cb165aa99d9df18106b041e1104bc85653a66"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/3f3cb165aa99d9df18106b041e1104bc85653a66",
+            "reference": "3f3cb165aa99d9df18106b041e1104bc85653a66",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0.0"
+        },
+        "time": "2014-04-22 03:07:57",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "reflib.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Matt Carter",
+                "email": "m@ttcarter.com",
+                "homepage": "https://github.com/hash-bang"
+            }
+        ],
+        "description": "PHP module for managing a variety of citation reference libraries",
+        "homepage": "https://github.com/hash-bang/RefLib",
+        "keywords": [
+            "RIS",
+            "citations",
+            "endnote",
+            "library",
+            "references"
+        ]
     }
 ]

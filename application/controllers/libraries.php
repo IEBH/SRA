@@ -201,7 +201,7 @@ class Libraries extends CI_Controller {
 	}
 
 	/**
-	* Import an EndNoteXML file
+	* Import an reference library file
 	* @param bool $_REQUEST['debug'] If set the libraries.debug flag is set and all imported references have their .caption property set to the record number
 	*/
 	function Import($libraryid = null) {
@@ -211,12 +211,13 @@ class Libraries extends CI_Controller {
 		$this->Waveform = new Waveform();
 		$this->Waveform->Style('bootstrap');
 		
-		$this->Waveform->Group('Import an EndNote file');
+		$this->Waveform->Group('Import an reference library file');
 		$this->Waveform->Define('where')
 			->Choice(array(
 				'new' => 'New library',
 				'existing' => 'Existing library',
-			));
+			))
+			->Style('data-help-block', "<a href='/help/supported-formats' target='_blank'>See list of files that can be imported</a>");
 
 		$this->Waveform->Define('new_name')
 			->Title('Name of new library')
@@ -285,8 +286,7 @@ class Libraries extends CI_Controller {
 	* @return int The library id created or given as $libraryid
 	*/
 	function _Importer($libraryid = null, $debug = FALSE) {
-		require('lib/php-endnote/endnote.php');
-		$this->endnote = new PHPEndNote();
+		$this->RefLib = new RefLib();
 		
 		if (!$_FILES) // No files to import
 			return;
@@ -302,12 +302,12 @@ class Libraries extends CI_Controller {
 			if (!$file['tmp_name'] || !file_exists($file['tmp_name']))
 				continue;
 			if ($debug) {
-				$this->endnote->fixesBackup = true;
-				$this->endnote->refId = 'rec-number';
+				$this->RefLib->fixesBackup = true;
+				$this->RefLib->refId = 'rec-number';
 			}
-			$this->endnote->SetXMLFile($file['tmp_name']);
+			$this->RefLib->SetContentsFile($file['tmp_name'], $file['type']);
 
-			foreach ($this->endnote->refs as $refno => $ref) {
+			foreach ($this->RefLib->refs as $refno => $ref) {
 				$json_obj = $ref;
 				foreach(array('authors', 'title', 'label') as $k) // Scrap fields are are storing elsewhere anyway
 					if (isset($json_obj[$k]))
@@ -488,7 +488,8 @@ class Libraries extends CI_Controller {
 
 		$this->Waveform->Define('file')
 			->File()
-			->NotRequired();
+			->NotRequired()
+			->Style('data-help-block', "<a href='/help/supported-formats' target='_blank'>See list of files that can be imported</a>");
 		// }}}
 
 		if ($fields = $this->Waveform->OK()) {

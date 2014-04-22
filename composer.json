@@ -3,6 +3,7 @@
 	"hashbang/waveform": "~1.4.0",
 	"hashbang/urlopts": "~1.2.0",
         "hashbang/joyst": "~0.1.0",
-        "hashbang/pherl": "~1.0.0"
+        "hashbang/pherl": "~1.0.0",
+        "hashbang/reflib": "~1.0.0"
     }
 }

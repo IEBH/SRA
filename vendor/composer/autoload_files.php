@@ -10,4 +10,5 @@ return array(
     $vendorDir . '/hashbang/urlopts/lib/urlopts.php',
     $vendorDir . '/hashbang/joyst/joyst.php',
     $vendorDir . '/hashbang/pherl/lib/pherl.php',
+    $vendorDir . '/hashbang/reflib/reflib.php',
 );
