@@ -54,6 +54,12 @@ class RefLib {
 	var $driver = null;
 
 	/**
+	* The currently instanced driver
+	* @var string
+	*/
+	var $_activeDriver = null;
+
+	/**
 	* Whether to apply htmlentitites() encoding during an export operation
 	* @var bool
 	*/
@@ -85,7 +91,7 @@ class RefLib {
 	* @var array
 	*/
 	var $_driverMaps = array(
-		'getdefaultfilename' => 'GetDefaultFilename',
+		'getfilename' => 'GetFilename',
 		'getcontents' => 'GetContents',
 		'setcontents' => 'SetContents',
 		'escape' => 'Escape',
@@ -104,10 +110,22 @@ class RefLib {
 	// Driver functions {{{
 	function LoadDriver($driver) {
 		$driver = strtolower($driver);
-		require(dirname(__FILE__) . "/drivers/$driver.php");
+		if ($driver == $this->_activeDriver) // Already loaded this driver
+			return;
+		require_once(dirname(__FILE__) . "/drivers/$driver.php");
 		$driverName = "RefLib_" . ucfirst($driver);
 		$this->driver = new $driverName();
 		$this->driver->parent = $this;
+		$this->_activeDriver = $driver;
+	}
+
+	/**
+	* Returns an array of known drivers
+	*/
+	function GetDrivers() {
+		return array(
+			'endnotexml' => 'EndNote XML',
+		);
 	}
 
 	/**
@@ -160,14 +178,25 @@ class RefLib {
 	/**
 	* Generate an XML file and output it to the browser
 	* This will force the user to save the file somewhere to be opened later by EndNote
-	* @param string $filename The default filename to save as, if unspecifed the driver default will be used
+	* @param string $filename The default filename to save as, if unspecifed the driver default will be used. The filename will be used with IdentifyDriver() if $driver is unspecified
+	* @param string $driver The driver to use when outputting the file, if this setting is omitted the $filename will be used to compute the correct driver to use
+	* @return blob The raw file contents streamed directly to the browser
 	*/
-	function DownloadContents($filename = null) {
-		if (!$filename)
-			$filename = $this->driver->GetDefaultFilename();
+	function DownloadContents($filename = null, $driver = null) {
+		if ($filename && $driver) {
+			$this->LoadDriver($driver);
+		} elseif ($filename) { // $filename but no $driver - identify it from the filename
+			if (! $driver = $this->IdentifyDriver($filename)) {
+				trigger_error("Unknown reference driver to use with filename '$filename'");
+			} else {
+				$this->LoadDriver($driver);
+			}
+		} else {
+			$filename = $this->driver->GetFilename();
+		}
 		header('Content-type: text/plain');
 		header('Content-Disposition: attachment; filename="' . $filename . '"');
-		echo $this->GetXML();
+		echo $this->driver->GetContents();
 	}
 
 	/**

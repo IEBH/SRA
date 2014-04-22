@@ -42,8 +42,13 @@ class RefLib_endnotexml {
 		return $this->escapeExport ? $this->Escape($string) : $string;
 	}
 
-	function GetDefaultFilename() {
-		return 'EndNote.xml';
+	/**
+	* Computes the default filename if given a $salt
+	* @param string $salt The basic part of the filename to use
+	* @return string The filename including extension to use as default
+	*/
+	function GetFilename($salt = 'EndNote') {
+		return "$salt.xml";
 	}
 
 	/**
