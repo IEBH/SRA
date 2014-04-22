@@ -53,8 +53,8 @@ TODO
 * TECHNICAL: Upgrade to Bootstrap 3
 * TECHNICAL: Replace views with Angular
 * Welcome email
-* Better library naming - inherit file name or use date or something
 * Test sharing system via email
 * Test sharing system via URL
 * Add "Unfiled" tab to screening process
 * Add facility to edit references
+* Convert from one format to another - e.g. Import RIS, output EndNoteXML
