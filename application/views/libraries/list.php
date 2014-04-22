@@ -41,8 +41,6 @@
 				<ul class="dropdown-menu">
 					<li><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><i class="icon-tags"></i> View</a></li>
 					<? $this->load->view('libraries/verbs', array('library' => $library)) ?>
-					<li class="divider"></li>
-					<li><a href="<?=SITE_ROOT?>libraries/delete/<?=$library['libraryid']?>"><i class="icon-trash"></i> Delete</a></li>
 				</ul>
 			</div>
 		</td>
