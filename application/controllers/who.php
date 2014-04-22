@@ -18,43 +18,44 @@ class Who extends CI_Controller {
 		if (!$paper = $this->Searchwho->Get($ref))
 			$this->Site->Error("Cannot find paper with reference $ref");
 		// Waveform config {{{
-		$this->load->spark('waveform/1.0.0');
+		$this->Waveform = new Waveform();
+		$this->Waveform->Style('bootstrap');
 
-		$this->waveform->Define('title-public')
+		$this->Waveform->Define('title-public')
 			->Title('Public Title');
-		$this->waveform->Define('title-scientific')
+		$this->Waveform->Define('title-scientific')
 			->Title('Scientific Title');
-		$this->waveform->Define('url-who')
+		$this->Waveform->Define('url-who')
 			->Title('URL (WHO site)');
-		$this->waveform->Define('url-real')
+		$this->Waveform->Define('url-real')
 			->Title('URL');
-		$this->waveform->Define('contact-name')
+		$this->Waveform->Define('contact-name')
 			->Title('Contact Name');
-		$this->waveform->Define('contact-email')
+		$this->Waveform->Define('contact-email')
 			->Title('Contact Email');
-		$this->waveform->Define('register');
-		$this->waveform->Define('date-refresh')
+		$this->Waveform->Define('register');
+		$this->Waveform->Define('date-refresh')
 			->Title('Last refreshed on');
-		$this->waveform->Define('date-reg')
+		$this->Waveform->Define('date-reg')
 			->Title('Date of registration');
-		$this->waveform->Define('date-enrolment')
+		$this->Waveform->Define('date-enrolment')
 			->Title('Date of first enrolment');
-		$this->waveform->Define('sponsor')
+		$this->Waveform->Define('sponsor')
 			->Title('Primary Sponsor');
-		$this->waveform->Define('target-size')
+		$this->Waveform->Define('target-size')
 			->Title('Target sample size');
-		$this->waveform->Define('recruitment-status')
+		$this->Waveform->Define('recruitment-status')
 			->Title('Recruitment status');
-		$this->waveform->Define('study-type')
+		$this->Waveform->Define('study-type')
 			->Title('Study type');
-		$this->waveform->Define('study-design')
+		$this->Waveform->Define('study-design')
 			->Title('Study design');
-		$this->waveform->Define('primary-outcomes')
+		$this->Waveform->Define('primary-outcomes')
 			->Title('Primary Outcomes');
 
-		$this->waveform->Set($paper);
-		$this->waveform->Apply('readonly');
-		$this->waveform->Apply('link', 'url-who, url-real');
+		$this->Waveform->Set($paper);
+		$this->Waveform->Apply('readonly');
+		$this->Waveform->Apply('link', 'url-who, url-real');
 		// }}}
 
 		if (preg_match('/(search\?q=.*)$/', $_SERVER['HTTP_REFERER'], $matches)) {

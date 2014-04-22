@@ -86,11 +86,12 @@ class Users extends CI_Controller {
 	* Provide a simple signup form (with optional Facebook signup system)
 	*/
 	function Signup() {
-		$this->load->spark('waveform/1.0.0');
 		$this->load->model('Email');
 		$this->load->model('Page');
 		$errs = array();
 		if ($_POST) {
+			$this->Waveform = new Waveform();
+
 			foreach (array(
 				'email' => 'Email',
 				'fname' => 'First name',
@@ -104,7 +105,7 @@ class Users extends CI_Controller {
 			if ($_POST['password'] != $_POST['password2'])
 				$errs[] = 'Passwords must match';
 
-			if ($emailer = $this->User->GetByEmail($this->waveform->Fields['email'])) // Check email is not used by anyone
+			if ($emailer = $this->User->GetByEmail($this->Waveform->Fields['email'])) // Check email is not used by anyone
 				$errs[] = 'That email already seems to be registered to someone else';
 
 			if (!isset($_POST['agree']))
@@ -113,11 +114,11 @@ class Users extends CI_Controller {
 			if (!$errs) {
 				if ($userid = $this->User->Create($_POST)) {
 					$this->Log->Add('user', "User signup: " . $this->Log->NiceArray($_POST));
-					// $this->Email->Send('email/signup', $userid, array('user.password' => $this->waveform->Fields['password']));
+					// $this->Email->Send('email/signup', $userid, array('user.password' => $this->Waveform->Fields['password']));
 					$this->User->Login($userid);
 				} else {
 					$this->site->Error('Problem creating user account');
-					$this->Log->Add('user', "Problem saving new signup info: " . $this->Log->NiceArray($this->waveform->Fields));
+					$this->Log->Add('user', "Problem saving new signup info: " . $this->Log->NiceArray($this->Waveform->Fields));
 				}
 			}
 		}

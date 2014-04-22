@@ -98,7 +98,7 @@ $(function() {
 </table>
 <? } ?>
 
-<? if (isset($offset) && isset($limit)) { // Display pager ?>
+<? if ($total && isset($offset) && isset($limit)) { // Display pager ?>
 <ul class="pager">
 	<? if ($offset > 0) { ?>
 	<li class="previous"><a href="<?=$this->URLopts->Edit('page=' . ($offset/$limit-1))?>">&larr;</a></li>
