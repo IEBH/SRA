@@ -15,4 +15,5 @@ $(function() {
 });
 </script>
 
+<legend>Select reference library</legend>
 <?=$this->Waveform->Form()?>
