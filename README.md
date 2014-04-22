@@ -46,3 +46,16 @@ Goals
 * Multiple-user abstract / full-text screening process
 * Automated Abstract and Method section creation tools
 * Tools useful to Systematic Reviews - Forest Plots and various other outputs
+
+
+TODO
+====
+* Welcome email
+* Co-occurance diagram for cross referencing tool - http://bost.ocks.org/mike/miserables/
+* Similar to abstrackr have the 'starting screens' for de-dupe and screening processes ask to choose either from an existing library or accept the upload of a new one.
+* Add "Output type" option to de-duplicator - "Review after processing" being default, EndNote XML download as another (for those who don't care about consolidating data)
+* Better library naming - inherit file name or use date or something
+* Test sharing system via email
+* Test sharing system via URL
+* Add "Unfiled" tab to screening process
+* Add facility to edit references
