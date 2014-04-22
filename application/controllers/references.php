@@ -6,10 +6,6 @@ class References extends CI_Controller {
 	}
 
 	function Index() {
-		$this->All();
-	}
-
-	function All() {
 		$this->site->Header('References');
 		$this->site->view('references/list', array(
 			'papers' => $this->Basket->GetAll(),

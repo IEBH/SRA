@@ -7,10 +7,6 @@ class Libraries extends CI_Controller {
 	}
 
 	function Index() {
-		$this->All();
-	}
-
-	function All() {
 		$this->site->header('Manage your libraries');
 		$this->load->view('libraries/list', array(
 			'libraries' => $this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')),

@@ -26,6 +26,6 @@ $route['go/(:any)'] = 'tinyurls/view/$1';
 $route['api/(:any)/(:any)'] = '$1/JSON$2';
 
 // Work around PHP's stupid stipulation that List() is a reserved word
-// */list -> #/all
-$route['(:any)/list'] = '$1/all';
-$route['(:any)/list/(:any)'] = '$1/all/$2';
+// */list -> #/index
+$route['(:any)/list'] = '$1/index';
+$route['(:any)/list/(:any)'] = '$1/index/$2';
