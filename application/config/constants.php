@@ -40,7 +40,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('VERSION', '0.1.0');
 
 define('SITE_ROOT', preg_match('/^local/', $_SERVER['SERVER_NAME']) ? '/' : '/sra/');
-define('SITE_TITLE', 'CREBP Systematic Review Creator');
+define('SITE_TITLE', 'CREBP Systematic Review Assistant');
 define('SITE_DOMAIN', 'crebp.net.au');
 define('SITE_URL', 'http://crebp.net.au/sra');
 
