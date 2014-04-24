@@ -41,7 +41,7 @@ class RefLib {
 	* If the ID does not exist for this reference an error will be raised
 	* Meta types:
 	*		NULL - Use next index offset (i.e. $this->refs will be an indexed array)
-	*		rec-number - Use EndNotes own record number as a reference (only set this if you need to maintain EndNotes own record numbering against this libraries indexing)
+	*		rec-number - This usually corresponds to the drivers own ID (for example EndNotes own record number as a reference - only set this if you need to maintain EndNotes own record numbering against this libraries indexing), but is often just the number of the reference in the file
 	*
 	* @var string|null
 	*/
@@ -125,6 +125,7 @@ class RefLib {
 	function GetDrivers() {
 		return array(
 			'endnotexml' => 'EndNote XML',
+			'ris' => 'RIS',
 		);
 	}
 
@@ -140,6 +141,8 @@ class RefLib {
 				case 'xml':
 				case 'text/xml':
 					return 'endnotexml';
+				case 'ris':
+					return 'ris';
 			}
 		}
 	}
