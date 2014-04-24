@@ -14,6 +14,47 @@ class RefLib_ris {
 	var $parent;
 
 	/**
+	* Simple key/val mappings
+	* Each key is the RIS format name, each Val is the RifLib version
+	* Place preferencial keys for output at the top if multiple incomming keys match
+	* @var array
+	*/
+	var $_mapHash = array(
+		'CA' => 'caption',
+		'J2' => 'title-secondary',
+		'C1' => 'custom1',
+		'C2' => 'custom2',
+		'C3' => 'custom3',
+		'C4' => 'custom4',
+		'C5' => 'custom5',
+		'C6' => 'custom6',
+		'C7' => 'custom7',
+		'C8' => 'custom8',
+		'LA' => 'language',
+		'LB' => 'label',
+		'N1' => 'notes',
+		'SE' => 'section',
+		'SN' => 'isbn',
+		'ST' => 'title-short',
+		'TI' => 'title',
+		'VL' => 'volume',
+	);
+
+	/**
+	* Similar to $_mapHash but this time each value is an array
+	* Place preferencial keys for output at the top if multiple incomming keys match
+	* @var array
+	*/
+	var $_mapHashArray = array(
+		// Prefered keys
+		'AU' => 'authors',
+		'DO' => 'urls',
+
+		// Regular keys
+		'UR' => 'urls',
+	);
+
+	/**
 	* Escpe a string in an EndNote compatible way
 	* @param string $string The string to be escaped
 	* @return string The escaped string
@@ -32,6 +73,41 @@ class RefLib_ris {
 	}
 
 	function GetContents() {
+		$out = '';
+		foreach ($this->parent->refs as $refraw) {
+			$ref = $refraw;
+			$out .= "TY  - " . (isset($ref['type']) ? strtoupper($ref['type']) : 'ELEC') . "\n";
+			foreach ($this->_mapHashArray as $k => $v)
+				if (isset($ref[$v])) {
+					foreach ((array) $ref[$v] as $val)
+						$out .= "$k  - $val\n";
+					unset($ref[$v]); // Remove it from the reference copy so we dont process it twice
+				}
+			foreach ($this->_mapHash as $k => $v)
+				if (isset($ref[$v])) {
+					$out .= "$k  - {$ref[$v]}\n";
+					unset($ref[$v]); // Remove it from the reference copy so we dont process it twice
+				}
+			if (isset($ref['pages'])) {
+				if (preg_match('!(.*?)-(.*)$!', $ref['pages'], $pages)) {
+					$out .= "SP  - {$pages[1]}\n";
+					$out .= "EP  - {$pages[2]}\n";
+				} else {
+					$out .= "SP  - {$ref['pages']}\n";
+				}
+			}
+			if (isset($ref['date'])) {
+				$day = date('d', $ref['date']);
+				if (date('m', $ref['date']) == '01' && $day == '01') { // Year only format
+					$out .= "PY  - " . date('Y', $ref['date']) . "///\n";
+				} elseif ($day == '01') { // Month only format
+					$out .= "PY  - " . date('Y/m', $ref['date']) . "//\n";
+				} else // Entire date format
+					$out .= "PY  - " . date('Y/m/d', $ref['date']) . "/\n";
+			}
+			$out .= "ER  - \n";
+		}
+		return $out;
 	}
 
 	function SetContents($blob) {
@@ -47,42 +123,13 @@ class RefLib_ris {
 			foreach ($rawrefextracted as $rawrefbit)
 				$rawref[$rawrefbit[1]] = $rawrefbit[2];
 
-			// Authors {{{
-			$ref['authors'] = array();
-			foreach (array('AU', 'A2', 'A3', 'A4') as $k)
-				if (isset($rawref[$k]))
-					$ref['authors'][] = $rawref[$k];
-			$ref['authors'] = implode(' AND ', $ref['authors']);
-			// }}}
 			// Simple key/val mappings {{{
-			foreach (array(
-				'CA' => 'caption',
-				'J2' => 'title-secondary',
-				'C1' => 'custom1',
-				'C2' => 'custom2',
-				'C3' => 'custom3',
-				'C4' => 'custom4',
-				'C5' => 'custom5',
-				'C6' => 'custom6',
-				'C7' => 'custom7',
-				'C8' => 'custom8',
-				'LA' => 'language',
-				'LB' => 'label',
-				'N1' => 'notes',
-				'SE' => 'section',
-				'SN' => 'isbn',
-				'ST' => 'title-short',
-				'TI' => 'title',
-				'VL' => 'volume',
-			) as $ris => $reflib)
+			foreach ($this->_mapHash as $ris => $reflib)
 				if (isset($rawref[$ris]))
 					$ref[$reflib] = $rawref[$ris];
 			// }}}
 			// Simple key/val(array) mappings {{{
-			foreach (array(
-				'DO' => 'urls',
-				'UR' => 'urls',
-			) as $ris => $reflib) {
+			foreach ($this->_mapHashArray as $ris => $reflib) {
 				if (isset($rawref[$ris])) {
 					if (!isset($ref[$reflib]))
 						$ref[$reflib] = array();
@@ -98,13 +145,17 @@ class RefLib_ris {
 			// }}}
 			// Dates {{{
 			if (isset($rawref['PY']))
-				if (preg_match('!([0-9]{4})///!', $rawref['PY'], $date)) { // Just year
+				if (substr($rawref['PY'], 0, 10) == 'undefined/') {
+					// Pass
+				} elseif (preg_match('!([0-9]{4})///!', $rawref['PY'], $date)) { // Just year
 					$ref['year'] = $date[1];
 				} elseif (preg_match('!([0-9]{4})/([0-9]{1,2})//!', $rawref['PY'], $date)) { // Just month
 					$ref['date'] = strtotime("{$date[1]}-{$date[2]}-01");
 				} elseif (preg_match('!([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/!', $rawref['PY'], $date)) // Full date
 					$ref['date'] = strtotime("{$date[1]}-{$date[2]}-{$date[1]}");
 			// }}}
+			if (isset($ref['authors']))
+				$ref['authors'] = implode(' AND ', $ref['authors']);
 
 			// Append to $this->parent->refs {{{
 			if (!$this->parent->refId) { // Use indexed array

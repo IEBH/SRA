@@ -181,23 +181,23 @@
     },
     {
         "name": "hashbang/reflib",
-        "version": "v1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "v1.1.1",
+        "version_normalized": "1.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/hash-bang/RefLib.git",
-            "reference": "d347b74ecd5f985e400719b02d5ba007eba8f8b2"
+            "reference": "ff4255a4b531a0716886520790ea9cbe12b7a748"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/d347b74ecd5f985e400719b02d5ba007eba8f8b2",
-            "reference": "d347b74ecd5f985e400719b02d5ba007eba8f8b2",
+            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/ff4255a4b531a0716886520790ea9cbe12b7a748",
+            "reference": "ff4255a4b531a0716886520790ea9cbe12b7a748",
             "shasum": ""
         },
         "require": {
             "php": ">=5.0.0"
         },
-        "time": "2014-04-24 01:43:01",
+        "time": "2014-04-24 03:12:34",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
