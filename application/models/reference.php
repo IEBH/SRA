@@ -135,27 +135,22 @@ class Reference extends CI_Model {
 		$alts = array(); // Alternate values we found
 		$save = array(); // Data we should just save to A
 
-		// Simple field comparison - only one of these has to match
-		$match_exact = qw('title authors');
-		$match_exact_count = 0;
-		$match_exact_debug = array();
-		foreach ($match_exact as $f) {
-			if ($a[$f] == $b[$f]) { // Exact match
-				$match_exact_count++;
-				if ($debug)
-					$match_exact_debug[] = "$f matches exactly - '{$a[$f]}' == '{$b[$f]}'";
-			} elseif ($this->StringCompare($a[$f], $b[$f])) {
-				$match_exact_count++;
-				if ($debug)
-					$match_exact_debug[] = "$f matches roughly - '{$a[$f]}' =~ '{$b[$f]}'";
-				if (!isset($alts[$f]))
-					$alts[$f] = array();
-				$alts[$f][$b['referenceid']] = $b[$f];
-			}
+		if ( // Simple field comparison - if author AND title match (or fuzzy match) then count it as an overall match
+			$this->StringCompare($a['title'], $b['title']) &&
+			(
+				$this->StringCompare($a['authors'], $b['authors']) ||
+				$this->CompareAuthors($a['authors'], $b['authors'])
+			)
+		) {
+			foreach (array('title', 'authors') as $f) // Not an exact match - store alternate
+				if ($a[$f] != $b[$f]) {
+					if (!isset($alts[$f]))
+						$alts[$f] = array();
+					$alts[$f][$b['referenceid']] = $b[$f];
+				}
+			$isdupe = true;
 		}
-		if ($match_exact_count == count($match_exact)) // All of the above match exactly / fuzzily
-			$isdupe = $debug ? implode('/', $match_exact) . ' all match - ' . implode(', ', $match_exact_debug) : true;
-
+		
 		// We've determined the data is a duplicate - now decide what to merge before we delete $b
 		if ($isdupe) {
 			$adata = json_decode($a['data'], true);
@@ -207,6 +202,9 @@ class Reference extends CI_Model {
 	* @return bool Whether the two strings are similar
 	*/
 	function StringCompare($a, $b) {
+		if ($a == $b) // Direct match
+			return true;
+
 		$as = $this->StripNoise($a);
 		if (strlen($as) > 255)
 			$as = substr($as, 0, 255);
