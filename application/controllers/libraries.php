@@ -856,7 +856,7 @@ class Libraries extends CI_Controller {
 				break;
 		}
 
-		$done = $library['dedupe_refid'] ? $this->Reference->Count(array('referenceid <=' => $library['dedupe_refid'])) + 1 : 0;
+		$done = $library['dedupe_refid'] ? $this->Reference->Count(array('libraryid' => $library['libraryid'], 'referenceid <=' => $library['dedupe_refid'])) + 1 : 0;
 		$total = $this->Reference->Count(array('libraryid' => $library['libraryid']));
 		if ($done >= $total)
 			$this->Library->SetStatus($library['libraryid'], 'deduped');
