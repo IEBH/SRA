@@ -60,7 +60,9 @@ class RefLib_ris {
 	* @return string The escaped string
 	*/
 	function Escape($string) {
-		return $string;
+		return strtr($string, array(
+			"\r" => '\n',
+		));
 	}
 
 	/**
@@ -80,12 +82,12 @@ class RefLib_ris {
 			foreach ($this->_mapHashArray as $k => $v)
 				if (isset($ref[$v])) {
 					foreach ((array) $ref[$v] as $val)
-						$out .= "$k  - $val\n";
+						$out .= "$k  - " . $this->Escape($val) . "\n";
 					unset($ref[$v]); // Remove it from the reference copy so we dont process it twice
 				}
 			foreach ($this->_mapHash as $k => $v)
 				if (isset($ref[$v])) {
-					$out .= "$k  - {$ref[$v]}\n";
+					$out .= "$k  - " . $this->Escape($ref[$v]) . "\n";
 					unset($ref[$v]); // Remove it from the reference copy so we dont process it twice
 				}
 			if (isset($ref['pages'])) {
@@ -93,18 +95,11 @@ class RefLib_ris {
 					$out .= "SP  - {$pages[1]}\n";
 					$out .= "EP  - {$pages[2]}\n";
 				} else {
-					$out .= "SP  - {$ref['pages']}\n";
+					$out .= "SP  - " . $this->Escape($ref['pages']) . "\n";
 				}
 			}
-			if (isset($ref['date'])) {
-				$day = date('d', $ref['date']);
-				if (date('m', $ref['date']) == '01' && $day == '01') { // Year only format
-					$out .= "PY  - " . date('Y', $ref['date']) . "///\n";
-				} elseif ($day == '01') { // Month only format
-					$out .= "PY  - " . date('Y/m', $ref['date']) . "//\n";
-				} else // Entire date format
-					$out .= "PY  - " . date('Y/m/d', $ref['date']) . "/\n";
-			}
+			if (isset($ref['date']) && $date = $this->parent->ToDate($ref['date'], '/', true))
+				$out .= "PY  - $date/\n";
 			$out .= "ER  - \n";
 		}
 		return $out;

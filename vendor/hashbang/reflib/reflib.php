@@ -20,8 +20,8 @@ class RefLib {
 	*	* volume - String (optional)
 	*	* number - String (optional)
 	*	* section - String (optional)
-	*	* year - String (optional) - FIXME: Explain format
-	*	* date - String (optional) - FIXME: Explain format
+	*	* year - String (optional) - Four digit year number e.g. '2014'
+	*	* date - String (optional) - Unix epoc
 	*	* abstract - String (optional)
 	*	* urls - Array
 	*	* notes - String (optional)
@@ -58,12 +58,6 @@ class RefLib {
 	* @var string
 	*/
 	var $_activeDriver = null;
-
-	/**
-	* Whether to apply htmlentitites() encoding during an export operation
-	* @var bool
-	*/
-	var $escapeExport = true;
 
 	/**
 	* Whenever a fix is applied (See $applyFix*) any data that gets rewritten should be stored in $ref[]['RAW']
@@ -181,6 +175,10 @@ class RefLib {
 				$ref[$plural] = array($ref[$single]);
 				unset($ref[$single]);
 			}
+	
+		if (isset($ref['date']))
+			$ref['date'] = $this->ToEpoc($ref['date']);
+
 		$this->refs[] = $ref;
 	}
 	// }}}
@@ -291,6 +289,52 @@ class RefLib {
 		}
 		$ref['TEST'] = array();
 		return $ref;
+	}
+	// }}}
+
+	// Helper functions {{{
+	/**
+	* Converts an incomming string to an epoc value suitable for use later on
+	* @param string $date The raw string to be converted to an epoc
+	* @param array|null $ref Optional additional reference information. This is used when the date needs more context e.g. 'Aug'
+	* @return int An epoc value
+	*/
+	function ToEpoc($date, $ref = null) {
+		if (preg_match('!^[0-9]{10,}$!', $date)) { // Unix time stamp
+			return $date;
+		} else if (preg_match('!^[0-9]{4}$!', $date)) { // Just year
+			return strtotime("$date-01-01");
+		} else if (preg_match('!^[0-9]{4}-[0-9]{2}$!', $date)) { // Year + month
+			return strtotime("$date-01");
+		} elseif ($month = array_search($date, $months = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) ) {
+			if ($ref && isset($ref['year'])) { // We have a year to glue it to
+				return strtotime("{$ref['year']}-{$months[$month]}-01");
+			} else
+				return false; // We have the month but don't know anything else
+		} else
+			return strtotime($date);
+	}
+
+	/**
+	* Returns the date in big-endian (year first) format
+	* If the month or day are '01' they are omitted to form the smallest date string possible e.g. '2014-01-01' =~ '2014'
+	* @param int $epoc The epoc to return as a string
+	* @param string $seperator The seperator to use
+	* @param bool $empty If true blanks are still used when no data is available (e.g. no specific date or month)
+	* @return date A prototype date format
+	*/
+	function ToDate($epoc, $seperator = '-', $empty = FALSE) {
+		if (!$epoc)
+			return FALSE;
+
+		$day = date('d', $epoc);
+		if (date('m', $epoc) == '01' && $day == '01') { // Year only format
+			return date('Y', $epoc) . ($empty ? "$seperator$seperator" : '');
+		} elseif ($day == '01') { // Month only format
+			return date('Y/m', $epoc) . ($empty ? $seperator : '');
+		} else // Entire date format
+			return date('Y/m/d', $epoc);
+		return FALSE;
 	}
 	// }}}
 }

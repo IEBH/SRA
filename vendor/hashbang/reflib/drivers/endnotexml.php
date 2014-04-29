@@ -12,6 +12,12 @@ class RefLib_endnotexml {
 	var $parent;
 
 	/**
+	* Whether to apply htmlentitites() encoding during an export operation
+	* @var bool
+	*/
+	var $escapeExport = true;
+
+	/**
 	* The internal name to call the file
 	* As far as I am aware this does not actually serve a purpose but EndNote refuses to import the file unless its specified
 	* @var string
@@ -58,7 +64,7 @@ class RefLib_endnotexml {
 	function GetContents() {
 		$out = '<' . '?xml version="1.0" encoding="UTF-8"?' . '><xml><records>';
 		$number = 0;
-		foreach ($this->refs as $id => $ref) {
+		foreach ($this->parent->refs as $id => $ref) {
 			$out .= '<record>';
 			$out .= '<database name="' . $this->endNoteFile . '" path="C:\\' . $this->endNoteFile . '">' . $this->_export($this->endNoteFile) . '</database>';
 			$out .= '<source-app name="EndNote" version="16.0">EndNote</source-app>';
@@ -107,7 +113,7 @@ class RefLib_endnotexml {
 
 			$out .= '<dates>';
 				$out .= '<year><style face="normal" font="default" size="100%">' . (isset($ref['year']) && $ref['year'] ? $this->_export($ref['year']) : '') . '</style></year>';
-				$out .= '<pub-dates><date><style face="normal" font="default" size="100%">' . (isset($ref['date']) && $ref['date'] ? $this->_export($ref['date']) : '') . '</style></date></pub-dates>';
+				$out .= '<pub-dates><date><style face="normal" font="default" size="100%">' . (isset($ref['date']) && $ref['date'] ? $this->_export($this->parent->ToDate($ref['date'])) : '') . '</style></date></pub-dates>';
 			$out .= '</dates>';
 
 			if (isset($ref['urls']) && $ref['urls']) {
@@ -149,7 +155,7 @@ class RefLib_endnotexml {
 			if ($find = $record->xpath("dates/year/style/text()"))
 				$ref['year'] = end(current($find));
 			if ($find = $record->xpath("dates/pub-dates/date/style/text()"))
-				$ref['date'] = end(current($find));
+				$ref['date'] = $this->parent->ToEpoc(end(current($find)), $ref);
 
 			// Simple key=>vals
 			foreach (array(
