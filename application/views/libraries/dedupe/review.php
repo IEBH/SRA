@@ -185,6 +185,17 @@ $(function() {
 
 <hr/>
 
+<div class="alert alert-info">
+	<h3><i class="icon-tags"></i> Review duplicates</h3>
+	<p>The deduplicator has resolved as many possible duplicates as it can.</p>
+	<p>However, the below duplicates have different posibile fields to choose from. This can often occur where two papers are detected as duplicates but this software doesn't know which set of data to use.</p>
+	<p>You can highlight the data you want to use below and press save or just skip this process to use the most likely entry.</p>
+	<div class="pull-center">
+		<a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>" class="btn" data-tip="End the de-duplicate review stage and accept all recommendations" data-tip-placement="bottom"><i class="icon-remove-sign"></i> Skip review stage</a>
+		<a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>" class="btn" data-tip="Retain all the unmerged data below and continue this process at a later date" data-tip-placement="bottom"><i class="icon-forward"></i> Come back to this later</a>
+	</div>
+</div>
+
 <? foreach ($dupes as $ref) {
 	if ($ref['data'])
 		$ref = array_merge($ref, json_decode($ref['data'], TRUE));
@@ -242,13 +253,9 @@ $(function() {
 		</table>
 		<div class="pull-center pad-bottom">
 			<div class="btn-group">
-				<a class="btn" href="#" data-action="dupe-save"><i class="icon-ok"></i> Save</a>
-				<a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-				<ul class="dropdown-menu pull-reset">
-					<li><a href="#" data-action="dupe-save"><i class="icon-ok"></i> Save</a></li>
-					<li><a href="#" data-action="dupe-break"><i class="icon-remove"></i> Mark as non-duplicates</a></li>
-					<li><a href="#" data-action="dupe-delete"><i class="icon-trash"></i> Delete both references</a></li>
-				</ul>
+				<a class="btn btn-default" href="#" data-action="dupe-break"><i class="icon-resize-full"></i> Not duplicates</a>
+				<a class="btn btn-success" href="#" data-action="dupe-save"><i class="icon-resize-small"></i> Merge</a>
+				<a class="btn btn-default" href="#" data-action="dupe-delete"><i class="icon-trash"></i> Delete both</a>
 			</div>
 		</div>
 	</div>
@@ -257,7 +264,7 @@ $(function() {
 </div></div>
 <div class="alert alert-info">
 	<h3><i class="icon-smile"></i> End of duplicate list</h3>
-	<p>There are now more duplicates to review - yey!</p>
+	<p>There are now more duplicates to review.</p>
 	<div class="pull-center">
 		<a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
 	</div>
