@@ -210,12 +210,20 @@ $(function() {
 		</div>
 	</legend>
 	<div class="row-fluid pad-top">
+		<?
+		if (count($altrefs) == 1) {
+			$width = '50%';
+		} elseif (count($altrefs) == 2) {
+			$width = '33%';
+		} else
+			$width = 'auto';
+		?>
 		<table class="table table-bordered table-striped table-hover table-dupes">
 			<thead>
 				<th>Field</th>
-				<th><a href="<?=SITE_ROOT?>references/view/<?=$ref['referenceid']?>">Reference #<?=$ref['referenceid']?></a></th>
+				<th width="<?=$width?>"><a href="<?=SITE_ROOT?>references/view/<?=$ref['referenceid']?>">Reference #<?=$ref['referenceid']?></a></th>
 				<? foreach ($altrefs as $altrefid => $junk) { ?>
-				<th><a href="<?=SITE_ROOT?>references/view/<?=$altrefid?>">Reference #<?=$altrefid?></a></th>
+				<th width="<?=$width?>"><a href="<?=SITE_ROOT?>references/view/<?=$altrefid?>">Reference #<?=$altrefid?></a></th>
 				<? } ?>
 			</thead>
 			<? foreach ($alts as $field => $val) { ?>
