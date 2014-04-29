@@ -709,7 +709,7 @@ class Waveform {
 				), $params);
 				$content = '';
 				foreach ($this->_fields[$field]->choices as $key => $val) {
-					if (!is_string($key) || !is_string($val)) {
+					if (is_array($val)) {
 						trigger_error("Wavform requires a simple key/val hash when using Choice() but you passed:" . print_r($this->_fields[$field]->choices,1));
 					} else
 						$content .= "<option value=\"$key\"" . ($this->_fields[$field]->value == $key ? ' selected="selected">' : '>') . "$val</option>";

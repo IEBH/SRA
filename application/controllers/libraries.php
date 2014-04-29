@@ -334,20 +334,47 @@ class Libraries extends CI_Controller {
 	* @param string $format The RefLib driver to use to export the file
 	* @return blob The downloadable library file
 	*/
-	function Export($libraryid = null, $format = 'endnotexml') {
-		$this->load->model('Reference');
+	function Export($libraryid = null, $format = null) {
 
+		if (isset($_REQUEST['format']))
+			$format = $_REQUEST['format'];
+
+		if (!$libraryid)
+			$this->site->Redirect('/libraries/select/export');
 		if (!$library = $this->Library->Get($libraryid))
 			$this->site->Error('Invalid library');
 		if (!$this->Library->CanEdit($library))
 			$this->site->Error('You do not have access to this library');
+
+		if (!$format) {
+			$this->RefLib = new RefLib();
+			// Waveform config {{{
+			$this->Waveform = new Waveform();
+			$this->Waveform->Style('bootstrap');
+			
+			$this->Waveform->Define('libraryid')
+				->Title('Library to use')
+				->Choice($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')), 'libraryid', 'title')
+				->NotRequired()
+				->Style('data-help-block', "Or <a href='/libraries/import'>import a library</a>");
+
+			$this->Waveform->Define('format')
+				->Choice($this->RefLib->GetDrivers());
+			// }}}
+			$this->site->Header('Export library');
+			$this->load->view('libraries/export');
+			$this->site->Footer();
+			return;
+		}
+
 
 		$where = array('libraryid' => $libraryid);
 		if ($library['debug'] == 'inactive')
 			$where['status'] = 'active';
 
 		$this->RefLib = new RefLib();
-		$this->RefLib->LoadDriver($format);
+		if (!$this->RefLib->LoadDriver($format))
+			$this->site->Error("Invalid output format: $format");
 		foreach ($this->Reference->GetAll($where) as $ref) {
 			$full = $this->Reference->Explode($ref);
 
@@ -483,6 +510,7 @@ class Libraries extends CI_Controller {
 			->Choice(array(
 				'list' => 'View references',
 				'dedupe' => 'Deduplicator',
+				'export' => 'Export the library file',
 			))
 			->Default($tool);
 

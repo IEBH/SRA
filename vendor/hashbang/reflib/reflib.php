@@ -108,15 +108,23 @@ class RefLib {
 	// }}}
 
 	// Driver functions {{{
+	/**
+	* Load a specific driver
+	* @param string $driver The name of the driver to load. This should correspond to the driver name in drivers/*.php
+	* @return bool TRUE if the driver is valid OR already loaded, FALSE if the driver cannot be loaded
+	*/
 	function LoadDriver($driver) {
 		$driver = strtolower($driver);
 		if ($driver == $this->_activeDriver) // Already loaded this driver
+			return TRUE;
+		if (!file_exists($file = dirname(__FILE__) . "/drivers/$driver.php"))
 			return;
-		require_once(dirname(__FILE__) . "/drivers/$driver.php");
+		require_once($file);
 		$driverName = "RefLib_" . ucfirst($driver);
 		$this->driver = new $driverName();
 		$this->driver->parent = $this;
 		$this->_activeDriver = $driver;
+		return TRUE;
 	}
 
 	/**
