@@ -18,9 +18,9 @@
 <div class="alert alert-info">
 	<div class="alert alert-info">
 		<h3><i class="icon-info-sign"></i> No libraries found</h3>
-		<p>You dont appear to have any reference libraries. You can import an existing EndNote library or create new library manually.</p>
+		<p>You dont appear to have any reference libraries. You can import an existing library file or create new library manually.</p>
 		<div class="pull-center">
-			<a href="<?=SITE_ROOT?>libraries/import" class="btn"><i class="icon-cloud-upload"></i> Import EndNote XML file</a>
+			<a href="<?=SITE_ROOT?>libraries/import" class="btn"><i class="icon-cloud-upload"></i> Import file</a>
 			&nbsp;
 			<a href="<?=SITE_ROOT?>libraries/create" class="btn"><i class="icon-plus"></i> Manually create library</a>
 		</div>
