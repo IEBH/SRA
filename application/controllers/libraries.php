@@ -159,7 +159,8 @@ class Libraries extends CI_Controller {
 		$this->Waveform->Define('libraryid')
 			->Title('Reference library')
 			->Choice($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')), 'libraryid', 'title')
-			->Default($library ? $library : null);
+			->Default($library ? $library : null)
+			->Style('data-help-block', "or <a href='/libraries/import'>import a new library file</a>");
 
 		$this->Waveform->Define('method')
 			->Title('Screening method')
@@ -201,7 +202,7 @@ class Libraries extends CI_Controller {
 	}
 
 	/**
-	* Import an reference library file
+	* Import a reference library file
 	* @param bool $_REQUEST['debug'] If set the libraries.debug flag is set and all imported references have their .caption property set to the record number
 	*/
 	function Import($libraryid = null) {
@@ -211,7 +212,7 @@ class Libraries extends CI_Controller {
 		$this->Waveform = new Waveform();
 		$this->Waveform->Style('bootstrap');
 		
-		$this->Waveform->Group('Import an reference library file');
+		$this->Waveform->Group('Import a reference library file');
 		$this->Waveform->Define('where')
 			->Choice(array(
 				'new' => 'New library',
@@ -569,7 +570,8 @@ class Libraries extends CI_Controller {
 			$this->Waveform->Define('libraryid')
 				->Title('Library')
 				->Choice($this->Library->GetAll(array('status !=' => 'deleted', 'userid' => $this->User->GetActive('userid'))), 'libraryid', 'title')
-				->Default($libraryid);
+				->Default($libraryid)
+				->Style('data-help-block', "or <a href='/libraries/import'>import a new library file</a>");
 
 			$this->Waveform->Define('threshold')
 				->Int()
