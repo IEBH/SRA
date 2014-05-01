@@ -319,7 +319,7 @@ class Libraries extends CI_Controller {
 				$this->Reference->Create(array(
 					'libraryid' => $libraryid,
 					'title' => $ref['title'],
-					'authors' => implode(' AND ', $ref['authors']),
+					'authors' => isset($ref['authors']) ? $ref['authors'] : '',
 					'label' => isset($ref['label']) ? $ref['label'] : null,
 					'data' => json_encode($json_obj),
 				));

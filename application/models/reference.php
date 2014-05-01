@@ -32,6 +32,9 @@ class Reference extends CI_Model {
 			if (isset($data[$field]))
 				$fields[$field] = $data[$field];
 
+		if (is_array($fields['authors']))
+			$fields['authors'] = implode(' AND ', $fields['authors']);
+
 		if ($fields) {
 			if (isset($fields['data']) && is_array($fields['data'])) // Convert data back into JSON if its an array
 				$fields['data'] = json_encode($fields['data']);
