@@ -25,6 +25,11 @@
 				</a>
 			</li>
 			<li>
+				<a href="<?=SITE_ROOT?>libraries/screen">
+					<i class="icon-double-angle-right"></i> Screen references
+				</a>
+			</li>
+			<li>
 				<a href="<?=SITE_ROOT?>libraries/collabmatrix">
 					<i class="icon-double-angle-right"></i> Collaboration Matrix
 				</a>
