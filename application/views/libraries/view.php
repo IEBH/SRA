@@ -53,6 +53,7 @@ $(function() {
 	<? foreach ($tags as $tag) { ?>
 	<li><a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?></a></li>
 	<? } ?>
+	<li class="pull-right"><a href="<?=SITE_ROOT?>libraries/tags/<?=$library['libraryid']?>" data-tip="Manage library tags" data-tip-placement="left"><i class="icon-tags"></i></a></li>
 </ul>
 <? } ?>
 <table class="table table-striped table-bordered" id="reference-table">

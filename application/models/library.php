@@ -58,6 +58,41 @@ class Library extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 
+	function DeleteTag($libraryid, $tagid) {
+		// Remove tag from references that point to it
+		$this->db->where('libraryid', $libraryid);
+		$this->db->where('referencetagid', $tagid);
+		$this->db->update('references', array(
+			'referencetagid' => null,
+		));
+
+		// Delete the tag record
+		$this->db->where('libraryid', $libraryid);
+		$this->db->where('referencetagid', $tagid);
+		$this->db->delete('referencetags');
+	}
+
+	/**
+	* Attempt to add a tag to a reference library
+	* @param int $libraryid The library to add the tag to
+	* @param string $name The name of the tag to create
+	* @return int Eiher the created or existing tag id
+	*/
+	function AddTag($libraryid, $name) {
+		$this->db->from('referencetags');
+		$this->db->where('libraryid', $libraryid);
+		$this->db->where('title', $name);
+		$row = $this->db->get()->row_array();
+		if ($row) // Already exists
+			return $row['referencetagid'];
+
+		$this->db->insert('referencetags', array(
+			'libraryid' => $libraryid,
+			'title' => $name,
+		));
+		return $this->db->insert_id();
+	}
+
 	/**
 	* Returns true if the given library has the reference matching references.yourref
 	* @param string $yourref The string to match against references.yourref

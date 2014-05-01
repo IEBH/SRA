@@ -115,6 +115,18 @@ input[type=checkbox] {
 	width: 100%;
 }
 /* }}} */
+/* FIXES: Theme {{{ */
+/* FIX: Make right aligned tabs not have a style {{{ */
+.nav-tabs li.pull-right {
+	margin-right: 1px;
+}
+
+.nav-tabs li.pull-right a {
+	border: none;
+	background: none;
+}
+/* }}} */
+/* }}} */
 /* FIXES: Waveform {{{ */
 .waveform-readonly {
 	padding-top: 5px;
