@@ -409,6 +409,30 @@ class Libraries extends CI_Controller {
 		$this->RefLib->DownloadContents($this->RefLib->GetFilename($library['title']), $format);
 	}
 
+
+	function Tags($libraryid = null) {
+		$this->load->model('Reference');
+
+		if (!$libraryid)
+			$this->site->Redirect('/libraries/select/tags');
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+
+		$this->site->header('Manage Tags', array(
+			'breadcrumbs' => array(
+				'/libraries' => 'Libraries',
+				"/libraries/view/{$library['libraryid']}" => $library['title'],
+			),
+		));
+		$this->load->view('libraries/tags', array(
+			'library' => $library,
+			'tags' => $this->Library->GetAllTags($library['libraryid']),
+		));
+		$this->site->footer();
+	}
+
 	function Delete($libraryid = null) {
 		if (!$libraryid)
 			$this->site->redirect('/');
@@ -511,6 +535,7 @@ class Libraries extends CI_Controller {
 			->Choice(array(
 				'list' => 'View references',
 				'dedupe' => 'Deduplicator',
+				'tags' => 'Manage library tags',
 				'export' => 'Export the library file',
 			))
 			->Default($tool);
@@ -760,6 +785,32 @@ class Libraries extends CI_Controller {
 			default:
 				$this->site->Error('Unknown collaboration matrix output format');
 		}
+	}
+
+	function TagDelete($libraryid = null, $tagid = null) {
+		if (!$libraryid)
+			$this->site->Redirect('/libraries/select/tags');
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+
+		$this->Library->DeleteTag($libraryid, $tagid);
+		$this->site->Redirect("/libraries/tags/$libraryid");
+	}
+
+	function TagAdd($libraryid = null) {
+		if (!$libraryid)
+			$this->site->Redirect('/libraries/select/tags');
+		if (!$library = $this->Library->Get($libraryid))
+			$this->site->Error('Invalid library');
+		if (!$this->Library->CanEdit($library))
+			$this->site->Error('You do not have access to this library');
+		if (!isset($_REQUEST['name']) || !$_REQUEST['name'])
+			$this->site->Error('No name specified');
+
+		$this->Library->AddTag($libraryid, $_REQUEST['name']);
+		$this->site->Redirect("/libraries/tags/$libraryid");
 	}
 
 	/**
