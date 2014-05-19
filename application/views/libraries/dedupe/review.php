@@ -75,9 +75,11 @@ $(function() {
 	De-duplication review
 	<div class="btn-group pull-right">
 		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-			<i class="icon-cog"></i> <span class="caret"></span>
+			<i class="icon-cog"></i> Tools <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
+			<li><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><i class="icon-arrow-left"></i> Return to library</a></li>
+			<li class="divider"></li>
 			<li><a href="<?=SITE_ROOT?>libraries/export/<?=$library['libraryid']?>"><i class="icon-cloud-download"></i> Export references</a></li>
 			<li class="divider"></li>
 			<li><a href="<?=SITE_ROOT?>libraries/share/<?=$library['libraryid']?>"><i class="icon-share-alt"></i> Share library</a></li>

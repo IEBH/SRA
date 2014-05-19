@@ -1,6 +1,7 @@
 <li><a href="<?=SITE_ROOT?>libraries/import/<?=$library['libraryid']?>"><i class="icon-cloud-upload"></i> Import references</a></li>
 <li><a href="<?=SITE_ROOT?>libraries/export/<?=$library['libraryid']?>"><i class="icon-cloud-download"></i> Export references</a></li>
 <li class="divider"></li>
+<li><a href="<?=SITE_ROOT?>libraries/tags/<?=$library['libraryid']?>"><i class="icon-tags"></i> Manage tags</a></li>
 <li><a href="<?=SITE_ROOT?>libraries/share/<?=$library['libraryid']?>"><i class="icon-share-alt"></i> Share library</a></li>
 <li class="divider"></li>
 <li><a href="<?=SITE_ROOT?>libraries/collabmatrix/<?=$library['libraryid']?>"><i class="icon-group"></i> Author collaboration</a></li>
