@@ -31,8 +31,8 @@ $(function() {
 	<h3><i class="icon-bell-alt icon-animated-bell"></i> De-duplication in progress</h3>
 	<p>This library is still marked as having duplicate references.</p>
 	<div class="pull-center pad-top">
-		<a class="btn" href="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Examine duplicates</a>
-		<a class="btn" href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>"><i class="icon-stop-sign"></i> Stop de-duping</a>
+		<a class="btn" href="/libraries/dedupe/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Examine duplicates</a>
+		<a class="btn" href="/libraries/finish/<?=$library['libraryid']?>"><i class="icon-stop-sign"></i> Stop de-duping</a>
 		<a class="btn" href="#" data-dismiss="alert"><i class="icon-remove-sign"></i> Not right now</a>
 	</div>
 </div>
@@ -43,7 +43,7 @@ $(function() {
 	<h3><i class="icon-info-sign"></i> No references in this library</h3>
 	<p>This library is empty. You can import references from a file or create new references manually.</p>
 	<div class="pull-center">
-		<a href="<?=SITE_ROOT?>libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import library file</a>
+		<a href="/libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import library file</a>
 	</div>
 </div>
 <? } else { ?>
@@ -53,7 +53,7 @@ $(function() {
 	<? foreach ($tags as $tag) { ?>
 	<li><a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?></a></li>
 	<? } ?>
-	<li class="pull-right"><a href="<?=SITE_ROOT?>libraries/tags/<?=$library['libraryid']?>" data-tip="Manage library tags" data-tip-placement="left"><i class="icon-tags"></i></a></li>
+	<li class="pull-right"><a href="/libraries/tags/<?=$library['libraryid']?>" data-tip="Manage library tags" data-tip-placement="left"><i class="icon-tags"></i></a></li>
 </ul>
 <? } ?>
 <table class="table table-striped table-bordered" id="reference-table">
@@ -68,15 +68,15 @@ $(function() {
 			<div class="dropdown">
 				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>
 				<ul class="dropdown-menu">
-					<li><a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>"><i class="icon-pencil"></i> Edit</a></li>
+					<li><a href="/references/edit/<?=$reference['referenceid']?>"><i class="icon-pencil"></i> Edit</a></li>
 					<li class="divider"></li>
-					<li><a href="<?=SITE_ROOT?>references/delete/<?=$reference['referenceid']?>"><i class="icon-trash"></i> Delete</a></li>
+					<li><a href="/references/delete/<?=$reference['referenceid']?>"><i class="icon-trash"></i> Delete</a></li>
 				</ul>
 			</div>
 		</td>
-		<td><a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>"><?=$reference['title']?></a></td>
+		<td><a href="/references/edit/<?=$reference['referenceid']?>"><?=$reference['title']?></a></td>
 		<td>
-			<a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>">
+			<a href="/references/edit/<?=$reference['referenceid']?>">
 			<?
 			$authorno = 0;
 			if ($reference['authors']) {

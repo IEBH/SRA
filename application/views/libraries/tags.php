@@ -30,18 +30,18 @@
 			<div class="dropdown">
 				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>
 				<ul class="dropdown-menu">
-					<li><a href="<?=SITE_ROOT?>libraries/tagdelete/<?=$library['libraryid']?>/<?=$tag['referencetagid']?>" data-confirm="Are you sure you want to delete this tag?"><i class="icon-trash"></i> Delete Tag</a></li>
+					<li><a href="/libraries/tagdelete/<?=$library['libraryid']?>/<?=$tag['referencetagid']?>" data-confirm="Are you sure you want to delete this tag?"><i class="icon-trash"></i> Delete Tag</a></li>
 				</ul>
 			</div>
 		</td>
-		<td><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><?=$tag['title']?></a></td>
-		<td class="pull-center"><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>" class="badge badge-info"><i class="icon-tag"></i> <?=$this->Format->Number($tag['count'])?></a></td>
+		<td><a href="/libraries/view/<?=$library['libraryid']?>"><?=$tag['title']?></a></td>
+		<td class="pull-center"><a href="/libraries/view/<?=$library['libraryid']?>" class="badge badge-info"><i class="icon-tag"></i> <?=$this->Format->Number($tag['count'])?></a></td>
 	</tr>
 	<? } ?>
 </table>
 <? } ?>
 <div class="pull-center">
-	<form class="form-inline" action="<?=SITE_ROOT?>libraries/tagadd/<?=$library['libraryid']?>" method="POST">
+	<form class="form-inline" action="/libraries/tagadd/<?=$library['libraryid']?>" method="POST">
 		<div class="input-append">
 			<input type="text" name="name"/>
 			<button class="btn" type="submit">Add tag</button>

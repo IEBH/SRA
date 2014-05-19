@@ -130,7 +130,7 @@ class Libraries extends CI_Controller {
 			$this->config->load('pagination', TRUE);
 			$total = $this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'));
 			$this->load->library('pagination', array_merge($this->config->item('pagination'), array(
-				'base_url' => SITE_ROOT . "libraries/screen/{$library['libraryid']}/$method",
+				'base_url' => "/libraries/screen/{$library['libraryid']}/$method",
 				'total_rows' => $total,
 				'per_page' => SCREEN_LIMIT,
 				'uri_segment' => 5,

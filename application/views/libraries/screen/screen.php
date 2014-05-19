@@ -9,7 +9,7 @@ $(function() {
 			me.removeClass('btn-default').addClass(me.data('action-tag') == 0 ? 'btn-danger' : 'btn-primary');
 
 			$.ajax({
-				url: '<?=SITE_ROOT?>api/libraries/settag',
+				url: '/api/libraries/settag',
 				data: {
 					referenceid: tr.data('id'),
 					tagid: $(this).data('action-tag')
@@ -68,7 +68,7 @@ $(function() {
 	<h3><i class="icon-info-sign"></i> No references in this library</h3>
 	<p>This library is empty. You can import references from a file or create new references manually.</p>
 	<div class="pull-center">
-		<a href="<?=SITE_ROOT?>libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import library file</a>
+		<a href="/libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import library file</a>
 	</div>
 </div>
 <? } else { ?>
@@ -99,15 +99,15 @@ $(function() {
 			<div class="dropdown">
 				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>
 				<ul class="dropdown-menu">
-					<li><a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>"><i class="icon-pencil"></i> Edit</a></li>
+					<li><a href="/references/edit/<?=$reference['referenceid']?>"><i class="icon-pencil"></i> Edit</a></li>
 					<li class="divider"></li>
-					<li><a href="<?=SITE_ROOT?>references/delete/<?=$reference['referenceid']?>"><i class="icon-trash"></i> Delete</a></li>
+					<li><a href="/references/delete/<?=$reference['referenceid']?>"><i class="icon-trash"></i> Delete</a></li>
 				</ul>
 			</div>
 		</td>
-		<td><a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>"><?=$reference['title']?></a></td>
+		<td><a href="/references/edit/<?=$reference['referenceid']?>"><?=$reference['title']?></a></td>
 		<td>
-			<a href="<?=SITE_ROOT?>references/edit/<?=$reference['referenceid']?>">
+			<a href="/references/edit/<?=$reference['referenceid']?>">
 			<?
 			$authorno = 0;
 			$authors = explode(' AND ', $reference['authors']);

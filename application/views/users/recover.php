@@ -36,7 +36,7 @@ $(function() {
 												Enter your email and to receive instructions
 											</p>
 
-											<form action="<?=SITE_ROOT?>recover/password" method="post">
+											<form action="/recover/password" method="post">
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">
@@ -56,7 +56,7 @@ $(function() {
 										</div><!--/widget-main-->
 
 										<div class="toolbar center">
-											<a href="<?=SITE_ROOT?>login" class="back-to-login-link">
+											<a href="/login" class="back-to-login-link">
 												Back to login
 												<i class="icon-arrow-right"></i>
 											</a>

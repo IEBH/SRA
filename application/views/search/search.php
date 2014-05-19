@@ -33,13 +33,13 @@ $(document)
 		event.preventDefault();
 		var button = $(this);
 		button.html('<i class="icon-spinner icon-spin"></i>');
-		$('#search-outer').load('<?=SITE_ROOT?>who/add/' + button.data('ref') + ' #search-inner');
+		$('#search-outer').load('/who/add/' + button.data('ref') + ' #search-inner');
 	})
 	.on('click', '[data-action=remove]', function(event) {
 		event.preventDefault();
 		var button = $(this);
 		button.html('<i class="icon-spinner icon-spin"></i>');
-		$('#search-outer').load('<?=SITE_ROOT?>who/remove/' + button.data('ref') + ' #search-inner');
+		$('#search-outer').load('/who/remove/' + button.data('ref') + ' #search-inner');
 	})
 	.on('click', '[data-action=add-all]', function(event) {
 		event.preventDefault();
@@ -49,7 +49,7 @@ $(document)
 		$('#search-inner [data-ref]').each(function() {
 			allRefs.push($(this).data('ref'));
 		});
-		$('#search-outer').load('<?=SITE_ROOT?>who/add #search-inner', {refs: allRefs});
+		$('#search-outer').load('/who/add #search-inner', {refs: allRefs});
 	})
 	.on('click', '[data-action=remove-all]', function(event) {
 		event.preventDefault();
@@ -59,12 +59,12 @@ $(document)
 		$('#search-inner [data-ref]').each(function() {
 			allRefs.push($(this).data('ref'));
 		});
-		$('#search-outer').load('<?=SITE_ROOT?>who/remove #search-inner', {refs: allRefs});
+		$('#search-outer').load('/who/remove #search-inner', {refs: allRefs});
 	});
 
 });
 </script>
-<form action="<?=SITE_ROOT?>search" method="GET" class="row">
+<form action="/search" method="GET" class="row">
 	<div id="searchform" class="pull-center">
 		<? if ($papers === null) { ?>
 		<h1 class="pad-top">Search for research papers</h1>
@@ -102,9 +102,9 @@ foreach ($papers as $id => $paper)
 	<? foreach ($papers as $paper) { ?>
 	<tr>
 		<? if ($paper['has']) { ?>
-		<td><a href="<?=SITE_ROOT?>who/remove/<?=$paper['paperid']?>" class="btn btn-success" data-action="remove" data-ref="<?=$paper['paperid']?>"><i class="icon-check"></i></td>
+		<td><a href="/who/remove/<?=$paper['paperid']?>" class="btn btn-success" data-action="remove" data-ref="<?=$paper['paperid']?>"><i class="icon-check"></i></td>
 		<? } else { ?>
-		<td><a href="<?=SITE_ROOT?>who/add/<?=$paper['paperid']?>" class="btn" data-action="add" data-ref="<?=$paper['paperid']?>"><i class="icon-check-empty"></i></td>
+		<td><a href="/who/add/<?=$paper['paperid']?>" class="btn" data-action="add" data-ref="<?=$paper['paperid']?>"><i class="icon-check-empty"></i></td>
 		<? } ?>
 		<td><a href="<?=$paper['url']?>"><?=$paper['paperid']?></a></td>
 		<td><a href="<?=$paper['url']?>"><?=$paper['name']?></a></td>

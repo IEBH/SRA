@@ -38,7 +38,7 @@ $(function() {
 	*/
 	$.actionDupe = function(data, refresh) {
 		$.ajax({
-			url: '<?=SITE_ROOT?>api/libraries/dupeaction',
+			url: '/api/libraries/dupeaction',
 			data: data,
 			type: 'POST',
 			dataType: 'json',
@@ -78,19 +78,19 @@ $(function() {
 			<i class="icon-cog"></i> Tools <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><i class="icon-arrow-left"></i> Return to library</a></li>
+			<li><a href="/libraries/view/<?=$library['libraryid']?>"><i class="icon-arrow-left"></i> Return to library</a></li>
 			<li class="divider"></li>
-			<li><a href="<?=SITE_ROOT?>libraries/export/<?=$library['libraryid']?>"><i class="icon-cloud-download"></i> Export references</a></li>
+			<li><a href="/libraries/export/<?=$library['libraryid']?>"><i class="icon-cloud-download"></i> Export references</a></li>
 			<li class="divider"></li>
-			<li><a href="<?=SITE_ROOT?>libraries/share/<?=$library['libraryid']?>"><i class="icon-share-alt"></i> Share library</a></li>
+			<li><a href="/libraries/share/<?=$library['libraryid']?>"><i class="icon-share-alt"></i> Share library</a></li>
 			<li class="divider"></li>
-			<li><a href="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
-			<li><a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>/force"><i class="icon-remove"></i> Cancel de-duplication</a></li>
+			<li><a href="/libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
+			<li><a href="/libraries/finish/<?=$library['libraryid']?>/force"><i class="icon-remove"></i> Cancel de-duplication</a></li>
 		</ul>
 	</div>
 </legend>
 
-<div id="dupes-outer" data-url="<?=SITE_ROOT?>libraries/dedupe/<?=$library['libraryid']?>"><div id="dupes-inner">
+<div id="dupes-outer" data-url="/libraries/dedupe/<?=$library['libraryid']?>"><div id="dupes-inner">
 
 <div class="infobox-container">
 	<div class="infobox infobox-green infobox-medium infobox-dark">
@@ -193,8 +193,8 @@ $(function() {
 	<p>However, the below duplicates have different posibile fields to choose from. This can often occur where two papers are detected as duplicates but this software doesn't know which set of data to use.</p>
 	<p>You can highlight the data you want to use below and press save or just skip this process to use the most likely entry.</p>
 	<div class="pull-center">
-		<a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>" class="btn" data-tip="End the de-duplicate review stage and accept all recommendations" data-tip-placement="bottom"><i class="icon-remove-sign"></i> Skip review stage</a>
-		<a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>" class="btn" data-tip="Retain all the unmerged data below and continue this process at a later date" data-tip-placement="bottom"><i class="icon-forward"></i> Come back to this later</a>
+		<a href="/libraries/finish/<?=$library['libraryid']?>" class="btn" data-tip="End the de-duplicate review stage and accept all recommendations" data-tip-placement="bottom"><i class="icon-remove-sign"></i> Skip review stage</a>
+		<a href="/libraries/view/<?=$library['libraryid']?>" class="btn" data-tip="Retain all the unmerged data below and continue this process at a later date" data-tip-placement="bottom"><i class="icon-forward"></i> Come back to this later</a>
 	</div>
 </div>
 
@@ -216,9 +216,9 @@ $(function() {
 				<i class="icon-tag"></i> <span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="<?=SITE_ROOT?>references/edit/<?=$ref['referenceid']?>"><i class="icon-pencil"></i> Edit reference </a></li>
+				<li><a href="/references/edit/<?=$ref['referenceid']?>"><i class="icon-pencil"></i> Edit reference </a></li>
 				<li class="divider"></li>
-				<li><a href="<?=SITE_ROOT?>references/delete/<?=$ref['referenceid']?>"><i class="icon-trash"></i> Delete reference</a></li>
+				<li><a href="/references/delete/<?=$ref['referenceid']?>"><i class="icon-trash"></i> Delete reference</a></li>
 			</ul>
 		</div>
 	</legend>
@@ -234,9 +234,9 @@ $(function() {
 		<table class="table table-bordered table-striped table-hover table-dupes">
 			<thead>
 				<th>Field</th>
-				<th width="<?=$width?>"><a href="<?=SITE_ROOT?>references/view/<?=$ref['referenceid']?>">Reference #<?=$ref['referenceid']?></a></th>
+				<th width="<?=$width?>"><a href="/references/view/<?=$ref['referenceid']?>">Reference #<?=$ref['referenceid']?></a></th>
 				<? foreach ($altrefs as $altrefid => $junk) { ?>
-				<th width="<?=$width?>"><a href="<?=SITE_ROOT?>references/view/<?=$altrefid?>">Reference #<?=$altrefid?></a></th>
+				<th width="<?=$width?>"><a href="/references/view/<?=$altrefid?>">Reference #<?=$altrefid?></a></th>
 				<? } ?>
 			</thead>
 			<? foreach ($alts as $field => $val) { ?>
@@ -268,6 +268,6 @@ $(function() {
 	<h3><i class="icon-smile"></i> End of duplicate list</h3>
 	<p>There are now more duplicates to review.</p>
 	<div class="pull-center">
-		<a href="<?=SITE_ROOT?>libraries/finish/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
+		<a href="/libraries/finish/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
 	</div>
 </div>

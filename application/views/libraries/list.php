@@ -5,11 +5,11 @@
 			<i class="icon-cog"></i> Tools <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="<?=SITE_ROOT?>libraries/import"><i class="icon-cloud-upload"></i> Import references</a></li>
-			<li><a href="<?=SITE_ROOT?>libraries/export"><i class="icon-cloud-download"></i> Export references</a></li>
+			<li><a href="/libraries/import"><i class="icon-cloud-upload"></i> Import references</a></li>
+			<li><a href="/libraries/export"><i class="icon-cloud-download"></i> Export references</a></li>
 			<li class="divider"></li>
-			<li><a href="<?=SITE_ROOT?>libraries/dedupe"><i class="icon-resize-small"></i> Eliminate Duplicates</a></li>
-			<li><a href="<?=SITE_ROOT?>libraries/screen"><i class="icon-filter"></i> Screen references</a></li>
+			<li><a href="/libraries/dedupe"><i class="icon-resize-small"></i> Eliminate Duplicates</a></li>
+			<li><a href="/libraries/screen"><i class="icon-filter"></i> Screen references</a></li>
 		</ul>
 	</div>
 </legend>
@@ -20,9 +20,9 @@
 		<h3><i class="icon-info-sign"></i> No libraries found</h3>
 		<p>You dont appear to have any reference libraries. You can import an existing library file or create new library manually.</p>
 		<div class="pull-center">
-			<a href="<?=SITE_ROOT?>libraries/import" class="btn"><i class="icon-cloud-upload"></i> Import file</a>
+			<a href="/libraries/import" class="btn"><i class="icon-cloud-upload"></i> Import file</a>
 			&nbsp;
-			<a href="<?=SITE_ROOT?>libraries/create" class="btn"><i class="icon-plus"></i> Manually create library</a>
+			<a href="/libraries/create" class="btn"><i class="icon-plus"></i> Manually create library</a>
 		</div>
 	</div>
 </div>
@@ -39,13 +39,13 @@
 			<div class="dropdown">
 				<a class="btn" data-toggle="dropdown"><i class="icon-tags"></i></a>
 				<ul class="dropdown-menu">
-					<li><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><i class="icon-tags"></i> View</a></li>
+					<li><a href="/libraries/view/<?=$library['libraryid']?>"><i class="icon-tags"></i> View</a></li>
 					<? $this->load->view('libraries/verbs', array('library' => $library)) ?>
 				</ul>
 			</div>
 		</td>
-		<td><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><?=$library['title']?></a></td>
-		<td><a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>"><span class="badge badge-info"><i class="icon-tag"></i> <?=$this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'))?></span></a></td>
+		<td><a href="/libraries/view/<?=$library['libraryid']?>"><?=$library['title']?></a></td>
+		<td><a href="/libraries/view/<?=$library['libraryid']?>"><span class="badge badge-info"><i class="icon-tag"></i> <?=$this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'))?></span></a></td>
 	</tr>
 	<? } ?>
 </table>

@@ -177,9 +177,6 @@ class Site {
 	* @return void This function is always fatal
 	*/
 	function Redirect($url, $text = null) {
-		if (substr($url, 0, 1) == '/' && SITE_ROOT != '/') // Absolute path && SITE_ROOT is not just '/'
-			$url = SITE_ROOT . substr($url, 1);
-
 		if (!$text && !headers_sent()) { // Hard redirect
 			header("Location: $url");
 			exit;

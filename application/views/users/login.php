@@ -37,7 +37,7 @@ $(function() {
 
 											<div class="space-6"></div>
 
-											<form action="<?=SITE_ROOT?>login" method="post">
+											<form action="/login" method="post">
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">
@@ -69,14 +69,14 @@ $(function() {
 
 										<div class="toolbar clearfix">
 											<div>
-												<a href="<?=SITE_ROOT?>recover/password" return false;" class="forgot-password-link">
+												<a href="/recover/password" return false;" class="forgot-password-link">
 													<i class="icon-arrow-left"></i>
 													I forgot my password
 												</a>
 											</div>
 
 											<div>
-												<a href="<?=SITE_ROOT?>signup" onclick="show_box('signup-box'); return false;" class="user-signup-link">
+												<a href="/signup" onclick="show_box('signup-box'); return false;" class="user-signup-link">
 													I want to register
 													<i class="icon-arrow-right"></i>
 												</a>

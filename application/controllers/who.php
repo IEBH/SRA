@@ -59,7 +59,7 @@ class Who extends CI_Controller {
 		// }}}
 
 		if (preg_match('/(search\?q=.*)$/', $_SERVER['HTTP_REFERER'], $matches)) {
-			$breadcrumbs = array(SITE_ROOT . $matches[1] => 'Search');
+			$breadcrumbs = array('/' . $matches[1] => 'Search');
 		} else {
 			$breadcrumbs = array('/search' => 'Search');
 		}

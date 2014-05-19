@@ -8,7 +8,7 @@
 	For example if two people have worked on multiple papers together each will get one point of collaboration.
 </div>
 
-<form action="<?=SITE_ROOT?>tools/collabmatrix" method="post" class="form-horizontal" enctype="multipart/form-data">
+<form action="/tools/collabmatrix" method="post" class="form-horizontal" enctype="multipart/form-data">
 	<?=$this->Waveform->Table()?>
 	<div class="pull-center">
 		<button class="btn btn-success" action="submit"><i class="icon-ok"></i> Calculate</button>

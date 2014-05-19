@@ -3,6 +3,6 @@
 	<p>A link to share your library has now been sent to <a href="mailto:<?=$email?>"><?=$email?></a>.</p>
 
 	<div class="pull-center">
-		<a href="<?=SITE_ROOT?>libraries/view/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> Return to <?=$library['title']?></a>
+		<a href="/libraries/view/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> Return to <?=$library['title']?></a>
 	</div>
 </div>

@@ -56,7 +56,7 @@ $(function() {
 											<? } else { ?>
 											<p> Enter your details to begin: </p>
 											<? } ?>
-											<form method="POST" action="<?=SITE_ROOT?>signup">
+											<form method="POST" action="/signup">
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">
@@ -119,7 +119,7 @@ $(function() {
 										</div>
 
 										<div class="toolbar center">
-											<a href="<?=SITE_ROOT?>login" class="back-to-login-link">
+											<a href="/login" class="back-to-login-link">
 												<i class="icon-arrow-left"></i>
 												Back to login
 											</a>
