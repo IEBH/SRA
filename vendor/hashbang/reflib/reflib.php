@@ -150,9 +150,11 @@ class RefLib {
 				case 'text/csv':
 					return 'csv';
 				default: // General file
-					if (is_file($type) && $mime = mime_content_type($type)) {
-						if ($type == 'text/csv')
-							return 'csv';
+					if (is_file($type)) {
+						if ( function_exists('mime_content_type') && $mime = mime_content_type($type) ) {
+							if ($type == 'text/csv')
+								return 'csv';
+						}
 						// Still no idea - try internal tests
 						$preview = $this->_SlurpPeek($type);
 						if (preg_match('/^TY  - /ms', $preview))
