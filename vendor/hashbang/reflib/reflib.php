@@ -149,8 +149,37 @@ class RefLib {
 				case 'csv':
 				case 'text/csv':
 					return 'csv';
+				default: // General file
+					if (is_file($type) && $mime = mime_content_type($type)) {
+						if ($type == 'text/csv')
+							return 'csv';
+						// Still no idea - try internal tests
+						$preview = $this->_SlurpPeek($type);
+						if (preg_match('/^TY  - /ms', $preview))
+							return 'ris';
+					}
 			}
 		}
+	}
+
+	/**
+	* Examine the first $lines number of lines from a given file
+	* This is used to help identify the file type in IdentifyDriver
+	* @param string $file The file to open
+	* @param int $lines The number of lines to read
+	* @return string The content lines requested
+	* @access private
+	*/
+	function _SlurpPeek($file, $lines = 10) {
+		$fh = fopen($file, 'r');
+
+		$i = 0;
+		$out = '';
+		while ($i < $lines && $line = fgets($fh))
+			$out .= $line;
+
+		fclose($fh);
+		return $out;
 	}
 	// }}}
 
@@ -227,7 +256,7 @@ class RefLib {
 	* @param string $mime Optional mime type informaton if the filename doesnt provide anything helpful (such as it originating from $_FILE)
 	*/
 	function SetContentsFile($filename, $mime = null) {
-		if ($driver = $this->IdentifyDriver(pathinfo($filename, PATHINFO_EXTENSION), $mime)) {
+		if ($driver = $this->IdentifyDriver(pathinfo($filename, PATHINFO_EXTENSION), $mime, $filename)) {
 			$this->LoadDriver($driver);
 			$this->driver->SetContents(file_get_contents($filename));
 		} else {

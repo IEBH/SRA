@@ -6,6 +6,7 @@ At present this library can read/write the following citation library formats:
 
 * EndNote (XML)
 * [RIS](https://en.wikipedia.org/wiki/RIS_(file_format))
+* CSV files
 
 
 Installation
