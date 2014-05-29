@@ -1,5 +1,7 @@
 Options -Indexes
 
+SetEnv PHPRC /home/crebp/public_html/crebp-sra.com/php.ini
+
 # Rewrite fun
 RewriteEngine on
 # RewriteBase /
