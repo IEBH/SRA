@@ -127,64 +127,6 @@ $(function() {
 	</div>
 </div>
 
-<? if ($library['debug'] == 'active') { ?>
-<hr/>
-
-<div class="infobox-container">
-	<div class="infobox infobox-green infobox-medium infobox-dark">
-		<div class="infobox-icon">
-			<i class="icon-ok-sign"></i>
-		</div>
-
-		<div class="infobox-data">
-			<div class="infobox-content">Marked as OK</div>
-			<div class="infobox-content">
-				<?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'OK')))?>
-			</div>
-		</div>
-	</div>
-	<div class="infobox infobox-blue infobox-medium infobox-dark">
-		<div class="infobox-icon">
-			<i class="icon-remove-sign"></i>
-		</div>
-
-		<div class="infobox-data">
-			<div class="infobox-content">Marked as DUPE</div>
-			<div class="infobox-content"><?=$debugdupes = $this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE')))?></div>
-		</div>
-	</div>
-	<div class="infobox infobox-orange infobox-large infobox-dark" data-tip="Should be Dupe, Marked as OK">
-		<div class="infobox-icon">
-			<i class="icon-warning-sign"></i>
-		</div>
-		<div class="infobox-data">
-			<div class="infobox-content">False Negatives</div>
-			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'DUPE', 'status' => 'active')))?></div>
-		</div>
-	</div>
-	<div class="infobox infobox-red infobox-large infobox-dark" data-tip="Should be OK, Marked as Dupe">
-		<div class="infobox-icon">
-			<i class="icon-exclamation-sign"></i>
-		</div>
-		<div class="infobox-data">
-			<div class="infobox-content">False Positives</div>
-			<div class="infobox-content"><?=$this->Format->Number($this->Reference->Count(array('libraryid' => $library['libraryid'], 'label' => 'OK', 'status' => 'dupe')))?></div>
-		</div>
-	</div>
-</div>
-<div class="infobox-container">
-	<div class="infobox infobox-green infobox-large infobox-dark">
-		<div class="infobox-icon">
-			<i class="icon-trophy"></i>
-		</div>
-		<div class="infobox-data">
-			<div class="infobox-content">Overall success</div>
-			<div class="infobox-content"><?=$this->Format->Percent($markeddupes / $debugdupes)?>%</div>
-		</div>
-	</div>
-</div>
-<? } ?>
-
 <hr/>
 
 <div class="alert alert-info">
