@@ -41,15 +41,15 @@ $(function() {
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">
-															Username
-															<input type="text" class="span12" value="<?=isset($_POST['username']) ? $_POST['username'] : ''?>" name="username">
+															Email address
+															<input type="email" class="span12" value="<?=isset($_POST['username']) ? $_POST['username'] : ''?>" name="username" placeholder="someone@somewhere.com">
 														</span>
 													</label>
 
 													<label>
 														<span class="block input-icon input-icon-right">
 															Password
-															<input type="password" name="password" class="span12">
+															<input type="password" name="password" class="span12" placeholder="Your Password">
 														</span>
 													</label>
 
