@@ -37,7 +37,7 @@ $(function() {
 
 											<div class="space-6"></div>
 
-											<form action="/login" method="post">
+											<form action="/login" method="post" novalidate>
 												<fieldset>
 													<label>
 														<span class="block input-icon input-icon-right">
