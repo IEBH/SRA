@@ -314,9 +314,6 @@ class Libraries extends CI_Controller {
 					if (isset($json_obj[$k]))
 						unset($json_obj[$k]);
 
-				if ($debug)
-					$json_obj['caption'] = $refno;
-
 				$this->Reference->Create(array(
 					'libraryid' => $libraryid,
 					'title' => $ref['title'],
