@@ -130,6 +130,16 @@ class RefLib_endnotexml {
 		return $out;
 	}
 
+	/**
+	* Return the text content of a SimpleXMLElement
+	* @param SimpleXMLELement $xmlnode The node to return the content of
+	* @return string The content of $xmlnode
+	* @access private
+	*/
+	function _GetText($xmlnode) {
+		return (string) $xmlnode[0][0];
+	}
+
 	function SetContents($xml) {
 		$dom = new SimpleXMLElement($xml);
 		foreach ($dom->records->record as $record) {
@@ -139,23 +149,23 @@ class RefLib_endnotexml {
 				'title' => '',
 			);
 			foreach ($record->xpath('contributors/authors/author/style/text()') as $authors) 
-				$ref['authors'][] = end($authors);
+				$ref['authors'][] = $this->_GetText($authors);
 
 			foreach ($record->xpath('urls/related-urls/url/style/text()') as $url) 
-				$ref['urls'][] = end($url);
+				$ref['urls'][] = $this->_GetText($url);
 
 			if ($find = $record->xpath("titles/title/style/text()"))
-				$ref['title'] = end(current($find));
+				$ref['title'] = $this->_GetText($find);
 			if ($find = $record->xpath("titles/secondary-title/style/text()"))
-				$ref['title-secondary'] = end(current($find));
+				$ref['title-secondary'] = $this->_GetText($find);
 			if ($find = $record->xpath("titles/short-title/style/text()"))
-				$ref['title-short'] = end(current($find));
+				$ref['title-short'] = $this->_GetText($find);
 			if ($find = $record->xpath("periodical/full-title/style/text()"))
-				$ref['periodical-title'] = end(current($find));
+				$ref['periodical-title'] = $this->_GetText($find);
 			if ($find = $record->xpath("dates/year/style/text()"))
-				$ref['year'] = end(current($find));
+				$ref['year'] = $this->_GetText($find);
 			if ($find = $record->xpath("dates/pub-dates/date/style/text()"))
-				$ref['date'] = $this->parent->ToEpoc(end(current($find)), $ref);
+				$ref['date'] = $this->parent->ToEpoc($this->_GetText($find), $ref);
 
 			// Simple key=>vals
 			foreach (array(
@@ -181,7 +191,7 @@ class RefLib_endnotexml {
 			) as $enkey => $ourkey) {
 				if (! $find = $record->xpath("$enkey/style/text()") )
 					continue;
-				$ref[$ourkey] = end(current($find));
+				$ref[$ourkey] = $this->_GetText($find);
 			}
 			$ref = $this->parent->ApplyFixes($ref);
 
