@@ -1,5 +1,5 @@
 <?
-$this->Waveform->Style('form_submit', array('TAG' => 'button', 'type' => 'submit', 'class' => 'btn btn-success', 'CONTENT' => '<i class="icon-ok"></i> Process library', 'LEADIN' => '<div class="pull-center">', 'LEADOUT' => '</div>'));
+$this->Waveform->Style('form_submit', array('TAG' => 'button', 'type' => 'submit', 'class' => 'btn btn-success', 'CONTENT' => '<i class="fa fa-check"></i> Process library', 'LEADIN' => '<div class="pull-center">', 'LEADOUT' => '</div>'));
 ?>
 <script>
 $(function() {

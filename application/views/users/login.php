@@ -17,7 +17,7 @@ $(function() {
 						<div class="row-fluid">
 							<div class="center">
 								<h4>
-									<i class="icon-leaf green"></i>
+									<i class="fa fa-leaf green"></i>
 									<span class="white"><?=SITE_TITLE?></span>
 								</h4>
 							</div>
@@ -31,7 +31,7 @@ $(function() {
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header blue lighter bigger">
-												<i class="icon-coffee green"></i>
+												<i class="fa fa-coffee green"></i>
 												Please Enter Your Information
 											</h4>
 
@@ -57,7 +57,7 @@ $(function() {
 
 													<div class="clearfix pull-center">
 														<button type="submit" class="width-35 btn btn-small btn-primary">
-															<i class="icon-key"></i>
+															<i class="fa fa-key"></i>
 															Login
 														</button>
 													</div>
@@ -70,7 +70,7 @@ $(function() {
 										<div class="toolbar clearfix">
 											<div>
 												<a href="/recover/password" return false;" class="forgot-password-link">
-													<i class="icon-arrow-left"></i>
+													<i class="fa fa-arrow-left"></i>
 													I forgot my password
 												</a>
 											</div>
@@ -78,7 +78,7 @@ $(function() {
 											<div>
 												<a href="/signup" onclick="show_box('signup-box'); return false;" class="user-signup-link">
 													I want to register
-													<i class="icon-arrow-right"></i>
+													<i class="fa fa-arrow-right"></i>
 												</a>
 											</div>
 										</div>

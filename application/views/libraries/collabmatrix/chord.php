@@ -125,6 +125,6 @@ function drawChords (matrix, mmap) {
 	<form action="/libraries/collabmatrix/<?=$library['libraryid']?>/chord" class="form-inline pull-center" method="GET">
 		<label class="control-label">Threshold</label>
 		<input type="number" name="threshold" class="form-control" value="<?=isset($_REQUEST['threshold']) ? $_REQUEST['threshold'] : 0?>"/>
-		<button type="submit" class="btn btn-success btn-small"><i class="icon-refresh"></i> Refresh</button>
+		<button type="submit" class="btn btn-success btn-small"><i class="fa fa-refresh"></i> Refresh</button>
 	</form>
 </div>

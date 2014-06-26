@@ -55,7 +55,7 @@ $(function() {
 	<?=$library['title']?>
 	<div class="btn-group pull-right">
 		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-			<i class="icon-cog"></i> Tools <span class="caret"></span>
+			<i class="fa fa-cog"></i> Tools <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
 			<? $this->load->view('libraries/verbs', array('library' => $library)) ?>
@@ -65,16 +65,16 @@ $(function() {
 
 <? if (!$references) { ?>
 <div class="alert alert-info">
-	<h3><i class="icon-info-sign"></i> No references in this library</h3>
+	<h3><i class="fa fa-info-circle"></i> No references in this library</h3>
 	<p>This library is empty. You can import references from a file or create new references manually.</p>
 	<div class="pull-center">
-		<a href="/libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import library file</a>
+		<a href="/libraries/import/<?=$library['libraryid']?>" class="btn"><i class="fa fa-cloud-upload"></i> Import library file</a>
 	</div>
 </div>
 <? } else { ?>
 <? if ($tags) { ?>
 <ul class="nav nav-tabs" id="tag-filter">
-	<li class="active"><a href="#" data-filterid="0"><i class="icon-asterisk"></i> All <span class="badge badge-info"><?=$this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'))?></span></a></li>
+	<li class="active"><a href="#" data-filterid="0"><i class="fa fa-asterisk"></i> All <span class="badge badge-info"><?=$this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'))?></span></a></li>
 	<? foreach ($tags as $tag) { ?>
 	<li>
 		<a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?>
@@ -97,11 +97,11 @@ $(function() {
 	<tr data-id="<?=$reference['referenceid']?>" rel="<?=$reference['referencetagid']?>">
 		<td>
 			<div class="dropdown">
-				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>
+				<a class="btn" data-toggle="dropdown"><i class="fa fa-tag"></i></a>
 				<ul class="dropdown-menu">
-					<li><a href="/references/edit/<?=$reference['referenceid']?>"><i class="icon-pencil"></i> Edit</a></li>
+					<li><a href="/references/edit/<?=$reference['referenceid']?>"><i class="fa fa-pencil"></i> Edit</a></li>
 					<li class="divider"></li>
-					<li><a href="/references/delete/<?=$reference['referenceid']?>"><i class="icon-trash"></i> Delete</a></li>
+					<li><a href="/references/delete/<?=$reference['referenceid']?>"><i class="fa fa-trash-o"></i> Delete</a></li>
 				</ul>
 			</div>
 		</td>
@@ -113,11 +113,11 @@ $(function() {
 			$authors = explode(' AND ', $reference['authors']);
 			foreach ($authors as $author) {
 				if ($authorno++ > 2) { ?>
-					<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?> more</span>
+					<span class="badge"><i class="fa fa-group"></i> + <?=count($authors) + 1 - $authorno?> more</span>
 				<?
 					break;
 				} ?>
-				<span class="badge badge-info"><i class="icon-user"></i> <?=$author?></span>
+				<span class="badge badge-info"><i class="fa fa-user"></i> <?=$author?></span>
 			<? } ?>
 			</a>
 		</td>

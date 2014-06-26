@@ -11,6 +11,6 @@
 <form action="/tools/collabmatrix" method="post" class="form-horizontal" enctype="multipart/form-data">
 	<?=$this->Waveform->Table()?>
 	<div class="pull-center">
-		<button class="btn btn-success" action="submit"><i class="icon-ok"></i> Calculate</button>
+		<button class="btn btn-success" action="submit"><i class="fa fa-check"></i> Calculate</button>
 	</div>
 </form>

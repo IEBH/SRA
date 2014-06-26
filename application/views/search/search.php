@@ -32,19 +32,19 @@ $(document)
 	.on('click', '[data-action=add]', function(event) {
 		event.preventDefault();
 		var button = $(this);
-		button.html('<i class="icon-spinner icon-spin"></i>');
+		button.html('<i class="fa-spinner fa-spin"></i>');
 		$('#search-outer').load('/who/add/' + button.data('ref') + ' #search-inner');
 	})
 	.on('click', '[data-action=remove]', function(event) {
 		event.preventDefault();
 		var button = $(this);
-		button.html('<i class="icon-spinner icon-spin"></i>');
+		button.html('<i class="fa-spinner fa-spin"></i>');
 		$('#search-outer').load('/who/remove/' + button.data('ref') + ' #search-inner');
 	})
 	.on('click', '[data-action=add-all]', function(event) {
 		event.preventDefault();
 		var button = $(this);
-		button.html('<i class="icon-spinner icon-spin"></i>');
+		button.html('<i class="fa-spinner fa-spin"></i>');
 		var allRefs = [];
 		$('#search-inner [data-ref]').each(function() {
 			allRefs.push($(this).data('ref'));
@@ -54,7 +54,7 @@ $(document)
 	.on('click', '[data-action=remove-all]', function(event) {
 		event.preventDefault();
 		var button = $(this);
-		button.html('<i class="icon-spinner icon-spin"></i>');
+		button.html('<i class="fa-spinner fa-spin"></i>');
 		var allRefs = [];
 		$('#search-inner [data-ref]').each(function() {
 			allRefs.push($(this).data('ref'));
@@ -71,7 +71,7 @@ $(document)
 		<? } ?>
 		<div class="btn-group">
 			<input data-focus="1" id="q" name="q" type="search" value="<?=$_REQUEST['q']?>"/>
-			<button class="btn" type="submit"><i class="icon-search"></i></button>
+			<button class="btn" type="submit"><i class="fa fa-search"></i></button>
 		</div>
 	</div>
 </form>
@@ -90,9 +90,9 @@ foreach ($papers as $id => $paper)
 		<th width="50px">
 			<div class="pull-center">
 			<? if ($hasall) { ?>
-				<a href="#" class="btn btn-mini btn-success" data-action="remove-all"><i class="icon-check"></i></a>
+				<a href="#" class="btn btn-mini btn-success" data-action="remove-all"><i class="fa fa-check-square-o"></i></a>
 			<? } else { ?>
-				<a href="#" class="btn btn-mini" data-action="add-all"><i class="icon-check-empty"></i></a>
+				<a href="#" class="btn btn-mini" data-action="add-all"><i class="fa fa-square-o"></i></a>
 			<? } ?>
 			</div>
 		</th>
@@ -102,9 +102,9 @@ foreach ($papers as $id => $paper)
 	<? foreach ($papers as $paper) { ?>
 	<tr>
 		<? if ($paper['has']) { ?>
-		<td><a href="/who/remove/<?=$paper['paperid']?>" class="btn btn-success" data-action="remove" data-ref="<?=$paper['paperid']?>"><i class="icon-check"></i></td>
+		<td><a href="/who/remove/<?=$paper['paperid']?>" class="btn btn-success" data-action="remove" data-ref="<?=$paper['paperid']?>"><i class="fa fa-check-square-o"></i></td>
 		<? } else { ?>
-		<td><a href="/who/add/<?=$paper['paperid']?>" class="btn" data-action="add" data-ref="<?=$paper['paperid']?>"><i class="icon-check-empty"></i></td>
+		<td><a href="/who/add/<?=$paper['paperid']?>" class="btn" data-action="add" data-ref="<?=$paper['paperid']?>"><i class="fa fa-square-o"></i></td>
 		<? } ?>
 		<td><a href="<?=$paper['url']?>"><?=$paper['paperid']?></a></td>
 		<td><a href="<?=$paper['url']?>"><?=$paper['name']?></a></td>

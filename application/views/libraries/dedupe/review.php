@@ -75,17 +75,17 @@ $(function() {
 	De-duplication review
 	<div class="btn-group pull-right">
 		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-			<i class="icon-cog"></i> Tools <span class="caret"></span>
+			<i class="fa fa-cog"></i> Tools <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="/libraries/view/<?=$library['libraryid']?>"><i class="icon-arrow-left"></i> Return to library</a></li>
+			<li><a href="/libraries/view/<?=$library['libraryid']?>"><i class="fa fa-arrow-left"></i> Return to library</a></li>
 			<li class="divider"></li>
-			<li><a href="/libraries/export/<?=$library['libraryid']?>"><i class="icon-cloud-download"></i> Export references</a></li>
+			<li><a href="/libraries/export/<?=$library['libraryid']?>"><i class="fa fa-cloud-download"></i> Export references</a></li>
 			<li class="divider"></li>
-			<li><a href="/libraries/share/<?=$library['libraryid']?>"><i class="icon-share-alt"></i> Share library</a></li>
+			<li><a href="/libraries/share/<?=$library['libraryid']?>"><i class="fa fa-share-square-o"></i> Share library</a></li>
 			<li class="divider"></li>
-			<li><a href="/libraries/dedupe/<?=$library['libraryid']?>/force"><i class="icon-resize-small"></i> Force reprocessing</a></li>
-			<li><a href="/libraries/finish/<?=$library['libraryid']?>/force"><i class="icon-remove"></i> Cancel de-duplication</a></li>
+			<li><a href="/libraries/dedupe/<?=$library['libraryid']?>/force"><i class="fa fa-compress"></i> Force reprocessing</a></li>
+			<li><a href="/libraries/finish/<?=$library['libraryid']?>/force"><i class="fa fa-times"></i> Cancel de-duplication</a></li>
 		</ul>
 	</div>
 </legend>
@@ -95,7 +95,7 @@ $(function() {
 <div class="infobox-container">
 	<div class="infobox infobox-green infobox-medium infobox-dark">
 		<div class="infobox-icon">
-			<i class="icon-tag"></i>
+			<i class="fa fa-tag"></i>
 		</div>
 
 		<div class="infobox-data">
@@ -106,7 +106,7 @@ $(function() {
 
 	<div class="infobox infobox-blue infobox-medium infobox-dark">
 		<div class="infobox-icon">
-			<i class="icon-resize-small"></i>
+			<i class="fa fa-compress"></i>
 		</div>
 
 		<div class="infobox-data">
@@ -117,7 +117,7 @@ $(function() {
 
 	<div class="infobox infobox-grey infobox-medium infobox-dark">
 		<div class="infobox-icon">
-			<i class="icon-trash"></i>
+			<i class="fa fa-trash-o"></i>
 		</div>
 
 		<div class="infobox-data">
@@ -130,13 +130,13 @@ $(function() {
 <hr/>
 
 <div class="alert alert-info">
-	<h3><i class="icon-tags"></i> Review duplicates</h3>
+	<h3><i class="fa fa-tags"></i> Review duplicates</h3>
 	<p>The deduplicator has resolved as many possible duplicates as it can.</p>
 	<p>However, the below duplicates have different posibile fields to choose from. This can often occur where two papers are detected as duplicates but this software doesn't know which set of data to use.</p>
 	<p>You can highlight the data you want to use below and press save or just skip this process to use the most likely entry.</p>
 	<div class="pull-center">
-		<a href="/libraries/finish/<?=$library['libraryid']?>" class="btn" data-tip="End the de-duplicate review stage and accept all recommendations" data-tip-placement="bottom"><i class="icon-remove-sign"></i> Skip review stage</a>
-		<a href="/libraries/view/<?=$library['libraryid']?>" class="btn" data-tip="Retain all the unmerged data below and continue this process at a later date" data-tip-placement="bottom"><i class="icon-forward"></i> Come back to this later</a>
+		<a href="/libraries/finish/<?=$library['libraryid']?>" class="btn" data-tip="End the de-duplicate review stage and accept all recommendations" data-tip-placement="bottom"><i class="fa fa-times-sign"></i> Skip review stage</a>
+		<a href="/libraries/view/<?=$library['libraryid']?>" class="btn" data-tip="Retain all the unmerged data below and continue this process at a later date" data-tip-placement="bottom"><i class="fa fa-mail-forward"></i> Come back to this later</a>
 	</div>
 </div>
 
@@ -155,12 +155,12 @@ $(function() {
 		<?=$ref['title']?>
 		<div class="btn-group pull-right">
 			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-				<i class="icon-tag"></i> <span class="caret"></span>
+				<i class="fa fa-tag"></i> <span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="/references/edit/<?=$ref['referenceid']?>"><i class="icon-pencil"></i> Edit reference </a></li>
+				<li><a href="/references/edit/<?=$ref['referenceid']?>"><i class="fa fa-pencil"></i> Edit reference </a></li>
 				<li class="divider"></li>
-				<li><a href="/references/delete/<?=$ref['referenceid']?>"><i class="icon-trash"></i> Delete reference</a></li>
+				<li><a href="/references/delete/<?=$ref['referenceid']?>"><i class="fa fa-trash-o"></i> Delete reference</a></li>
 			</ul>
 		</div>
 	</legend>
@@ -197,9 +197,9 @@ $(function() {
 		</table>
 		<div class="pull-center pad-bottom">
 			<div class="btn-group">
-				<a class="btn btn-default" href="#" data-action="dupe-break"><i class="icon-resize-full"></i> Not duplicates</a>
-				<a class="btn btn-success" href="#" data-action="dupe-save"><i class="icon-resize-small"></i> Merge</a>
-				<a class="btn btn-default" href="#" data-action="dupe-delete"><i class="icon-trash"></i> Delete both</a>
+				<a class="btn btn-default" href="#" data-action="dupe-break"><i class="fa fa-expand"></i> Not duplicates</a>
+				<a class="btn btn-success" href="#" data-action="dupe-save"><i class="fa fa-compress"></i> Merge</a>
+				<a class="btn btn-default" href="#" data-action="dupe-delete"><i class="fa fa-trash-o"></i> Delete both</a>
 			</div>
 		</div>
 	</div>
@@ -207,9 +207,9 @@ $(function() {
 <? } ?>
 </div></div>
 <div class="alert alert-info">
-	<h3><i class="icon-smile"></i> End of duplicate list</h3>
+	<h3><i class="fa-smile"></i> End of duplicate list</h3>
 	<p>There are now more duplicates to review.</p>
 	<div class="pull-center">
-		<a href="/libraries/finish/<?=$library['libraryid']?>" class="btn"><i class="icon-tags"></i> View <?=$library['title']?></a>
+		<a href="/libraries/finish/<?=$library['libraryid']?>" class="btn"><i class="fa fa-tags"></i> View <?=$library['title']?></a>
 	</div>
 </div>

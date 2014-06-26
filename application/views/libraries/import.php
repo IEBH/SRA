@@ -22,6 +22,6 @@ $(function() {
 <form action="/libraries/import" method="post" class="form-horizontal" enctype="multipart/form-data">
 	<?=$this->Waveform->Table()?>
 	<div class="pull-center">
-		<button class="btn btn-success" action="submit"><i class="icon-ok"></i> Import file</button>
+		<button class="btn btn-success" action="submit"><i class="fa fa-check"></i> Import file</button>
 	</div>
 </form>

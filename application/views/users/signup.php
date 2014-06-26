@@ -26,7 +26,7 @@ $(function() {
 						<div class="row-fluid">
 							<div class="center">
 								<h4>
-									<i class="icon-leaf green"></i>
+									<i class="fa fa-leaf green"></i>
 									<span class="white"><?=SITE_TITLE?></span>
 								</h4>
 							</div>
@@ -40,7 +40,7 @@ $(function() {
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header green lighter bigger">
-												<i class="icon-group blue"></i>
+												<i class="fa fa-group blue"></i>
 												New User Registration
 											</h4>
 
@@ -105,13 +105,13 @@ $(function() {
 
 													<div class="clearfix">
 														<button type="reset" class="width-30 pull-left btn btn-small">
-															<i class="icon-refresh"></i>
+															<i class="fa fa-refresh"></i>
 															Reset
 														</button>
 
 														<button type="submit" class="width-65 pull-right btn btn-small btn-success">
 															Register
-															<i class="icon-arrow-right icon-on-right"></i>
+															<i class="fa fa-arrow-right icon-on-right"></i>
 														</button>
 													</div>
 												</fieldset>
@@ -120,7 +120,7 @@ $(function() {
 
 										<div class="toolbar center">
 											<a href="/login" class="back-to-login-link">
-												<i class="icon-arrow-left"></i>
+												<i class="fa fa-arrow-left"></i>
 												Back to login
 											</a>
 										</div>

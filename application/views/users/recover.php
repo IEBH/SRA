@@ -12,7 +12,7 @@ $(function() {
 						<div class="row-fluid">
 							<div class="center">
 								<h4>
-									<i class="icon-leaf green"></i>
+									<i class="fa fa-leaf green"></i>
 									<span class="white"><?=SITE_TITLE?></span>
 								</h4>
 							</div>
@@ -27,7 +27,7 @@ $(function() {
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header red lighter bigger">
-												<i class="icon-key"></i>
+												<i class="fa fa-key"></i>
 												Retrieve Password
 											</h4>
 
@@ -47,7 +47,7 @@ $(function() {
 
 													<div class="clearfix">
 														<button type="submit" class="width-35 pull-right btn btn-small btn-danger">
-															<i class="icon-lightbulb"></i>
+															<i class="fa fa-lightbulb-o"></i>
 															Send Me!
 														</button>
 													</div>
@@ -58,7 +58,7 @@ $(function() {
 										<div class="toolbar center">
 											<a href="/login" class="back-to-login-link">
 												Back to login
-												<i class="icon-arrow-right"></i>
+												<i class="fa fa-arrow-right"></i>
 											</a>
 										</div>
 									</div><!--/widget-body-->

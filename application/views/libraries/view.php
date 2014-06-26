@@ -17,7 +17,7 @@ $(function() {
 	<?=$library['title']?>
 	<div class="btn-group pull-right">
 		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-			<i class="icon-cog"></i> Tools <span class="caret"></span>
+			<i class="fa fa-cog"></i> Tools <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
 			<? $this->load->view('libraries/verbs', array('library' => $library)) ?>
@@ -27,33 +27,33 @@ $(function() {
 
 <? if (in_array($library['status'], qw('dedupe deduped'))) { ?>
 <div class="alert alert-info alert-block">
-	<a href="#" data-dismiss="alert" class="close"><i class="icon-remove-sign"></i></a>
-	<h3><i class="icon-bell-alt icon-animated-bell"></i> De-duplication in progress</h3>
+	<a href="#" data-dismiss="alert" class="close"><i class="fa fa-times-sign"></i></a>
+	<h3><i class="fa fa-bell-o icon-animated-bell"></i> De-duplication in progress</h3>
 	<p>This library is still marked as having duplicate references.</p>
 	<div class="pull-center pad-top">
-		<a class="btn" href="/libraries/dedupe/<?=$library['libraryid']?>"><i class="icon-resize-small"></i> Examine duplicates</a>
-		<a class="btn" href="/libraries/finish/<?=$library['libraryid']?>"><i class="icon-stop-sign"></i> Stop de-duping</a>
-		<a class="btn" href="#" data-dismiss="alert"><i class="icon-remove-sign"></i> Not right now</a>
+		<a class="btn" href="/libraries/dedupe/<?=$library['libraryid']?>"><i class="fa fa-compress"></i> Examine duplicates</a>
+		<a class="btn" href="/libraries/finish/<?=$library['libraryid']?>"><i class="fa fa-stop"></i> Stop de-duping</a>
+		<a class="btn" href="#" data-dismiss="alert"><i class="fa fa-times-sign"></i> Not right now</a>
 	</div>
 </div>
 <? } ?>
 
 <? if (!$references) { ?>
 <div class="alert alert-info">
-	<h3><i class="icon-info-sign"></i> No references in this library</h3>
+	<h3><i class="fa fa-info-circle"></i> No references in this library</h3>
 	<p>This library is empty. You can import references from a file or create new references manually.</p>
 	<div class="pull-center">
-		<a href="/libraries/import/<?=$library['libraryid']?>" class="btn"><i class="icon-cloud-upload"></i> Import library file</a>
+		<a href="/libraries/import/<?=$library['libraryid']?>" class="btn"><i class="fa fa-cloud-upload"></i> Import library file</a>
 	</div>
 </div>
 <? } else { ?>
 <? if ($tags) { ?>
 <ul class="nav nav-tabs" id="tag-filter">
-	<li class="active"><a href="#" data-filterid="0"><i class="icon-asterisk"></i> All</a></li>
+	<li class="active"><a href="#" data-filterid="0"><i class="fa fa-asterisk"></i> All</a></li>
 	<? foreach ($tags as $tag) { ?>
 	<li><a href="#" data-filterid="<?=$tag['referencetagid']?>"><?=$tag['title']?></a></li>
 	<? } ?>
-	<li class="pull-right"><a href="/libraries/tags/<?=$library['libraryid']?>" data-tip="Manage library tags" data-tip-placement="left"><i class="icon-tags"></i></a></li>
+	<li class="pull-right"><a href="/libraries/tags/<?=$library['libraryid']?>" data-tip="Manage library tags" data-tip-placement="left"><i class="fa fa-tags"></i></a></li>
 </ul>
 <? } ?>
 <table class="table table-striped table-bordered" id="reference-table">
@@ -66,11 +66,11 @@ $(function() {
 	<tr rel="<?=$reference['referencetagid']?>">
 		<td>
 			<div class="dropdown">
-				<a class="btn" data-toggle="dropdown"><i class="icon-tag"></i></a>
+				<a class="btn" data-toggle="dropdown"><i class="fa fa-tag"></i></a>
 				<ul class="dropdown-menu">
-					<li><a href="/references/edit/<?=$reference['referenceid']?>"><i class="icon-pencil"></i> Edit</a></li>
+					<li><a href="/references/edit/<?=$reference['referenceid']?>"><i class="fa fa-pencil"></i> Edit</a></li>
 					<li class="divider"></li>
-					<li><a href="/references/delete/<?=$reference['referenceid']?>"><i class="icon-trash"></i> Delete</a></li>
+					<li><a href="/references/delete/<?=$reference['referenceid']?>"><i class="fa fa-trash-o"></i> Delete</a></li>
 				</ul>
 			</div>
 		</td>
@@ -83,11 +83,11 @@ $(function() {
 				$authors = explode(' AND ', $reference['authors']);
 				foreach ($authors as $author) {
 					if ($authorno++ > 2) { ?>
-						<span class="badge"><i class="icon-group"></i> + <?=count($authors) + 1 - $authorno?></span>
+						<span class="badge"><i class="fa fa-group"></i> + <?=count($authors) + 1 - $authorno?></span>
 					<?
 						break;
 					} ?>
-					<span class="badge badge-info"><i class="icon-user"></i> <?=$author?></span>
+					<span class="badge badge-info"><i class="fa fa-user"></i> <?=$author?></span>
 				<? } ?>
 			<? } else { ?>
 			<em>none</em>

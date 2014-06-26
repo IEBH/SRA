@@ -13,7 +13,7 @@
 	<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- FontAwesome -->
-	<link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/bower_components/fontawesome/css/font-awesome.min.css">
 
 	<!-- Livicons -->
 	<script src="/lib/livicons/raphael-min.js"></script>
