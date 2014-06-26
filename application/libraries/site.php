@@ -20,6 +20,12 @@ class Site {
 	var $Theme;
 
 	/**
+	* Output JSON options
+	* @type int
+	*/
+	var $_jsonoptions;
+
+	/**
 	* CodeIgniter reference
 	* @type CodeIgniter
 	*/
@@ -92,7 +98,7 @@ class Site {
 	*/
 	function Text($text, $close = TRUE) {
 		if ($close && !$this->_spewed_headers)
-			$this->Header('BAPS');
+			$this->Header(SITE_TITLE);
 		$this->CI->load->view('text', array(
 			'text' => $text,
 		));
@@ -120,7 +126,8 @@ class Site {
 					$out[$key] = $bit[$val];
 			$json = $out;
 		}
-		echo json_encode($json);
+		echo json_encode($json, $this->_jsonoptions);
+		exit;
 	}
 
 	/**
@@ -327,13 +334,57 @@ class Site {
 		return $url;
 	}
 
+	/**
+	* Cycle though all files in the Angular directory and include all script files found there
+	* @param string $path The root path to search
+	* @param string $prefix Optional prefix to include before each included file
+	*/
+	function IncludeNG($root = 'js/ng', $prefix = '/') {
+		$out = "<!-- NG Include -->\n";
+		$loadOrder = array(
+			'app.js',
+			'models/*',
+			'directives/*',
+			'filters/*',
+			'controllers/*',
+		);
+
+		foreach ($loadOrder as $load) {
+			$out .= $this->_IncludeNGLoader("$root/$load", $prefix == '/' ? '' : $prefix);
+		}
+		$out .= "<!-- END NG Include -->\n";
+		return $out;
+	}
+
+	/**
+	* IncludeNG worker
+	* Recurses though all directories and includes all files
+	* @param string $root The starting path to scan
+	* @param string $prefix Optional prefix to include before each included file
+	*/
+	function _IncludeNGLoader($root, $prefix) {
+		$out = '';
+		foreach (glob($root) as $file) {
+			$base = basename($file);
+			if ($base == '.' || $base == '..')
+				continue;
+			if (is_dir($file)) {
+				$out .= $this->_IncludeNGLoader($file);
+			} elseif (is_file($file)) {
+				$out .= "<script src=\"$prefix/$file\"></script>\n";
+			}
+		}
+		return $out;
+	}
+
 	// Simple JSON returns {{{
 	/**
 	* Fatally exit with a JSON error message
 	* @param string $message The error to raise
 	*/
 	function JSONError($message) {
-		return json_encode(array('header' => array('error' => $message)));
+		echo json_encode(array('header' => array('error' => $message)), $this->_jsonoptions);
+		exit;
 	}
 
 	/**
@@ -341,7 +392,17 @@ class Site {
 	* @param string $message The text to trasmit
 	*/
 	function JSONInfo($message = null) {
-		return json_encode($message ? array('header' => array('info' => $message)) : array('header' => array()));
+		echo json_encode($message ? array('header' => array('info' => $message)) : array('header' => array()), $this->_jsonoptions);
+		exit;
+	}
+
+	/**
+	* Send a message to the user on success
+	* @param string $message The text to trasmit
+	*/
+	function JSONSuccess($message = null) {
+		echo json_encode($message ? array('header' => array('message' => $message)) : array('header' => array()), $this->_jsonoptions);
+		exit;
 	}
 	// }}}
 }
