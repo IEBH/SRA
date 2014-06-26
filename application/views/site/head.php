@@ -44,6 +44,9 @@
 	<script src="/js/ace-elements.min.js"></script>
 	<script src="/js/ace.min.js"></script>
 
+	<!-- Angular app -->
+	<?=$this->site->includeNG()?>
+
 	<!--[if lte IE 8]>
 		<link rel="stylesheet" href="//css/ace-ie.min.css" />
 	<![endif]-->

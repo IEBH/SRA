@@ -2,7 +2,7 @@
 <html lang="en">
 <? include('application/views/site/head.php') ?>
 
-<body class="navbar-fixed">
+<body class="navbar-fixed" ng-app="app" ng-controller="globalController">
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container-fluid">

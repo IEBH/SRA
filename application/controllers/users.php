@@ -1,5 +1,5 @@
 <?
-class Users extends CI_Controller {
+class Users extends Joyst_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('User');
@@ -129,6 +129,21 @@ class Users extends CI_Controller {
 			'errs' => $errs,
 		));
 		$this->site->Footer();
+	}
+
+	function Profile() {
+		$this->Security->EnsureLogin();
+		if (!$this->RequesterWants('json'))
+			$this->site->Error('Method only responds to JSON requests');
+
+		if ($this->RequesterWants('put-json')) { // Save back profile details
+			$this->User->Save($this->User->GetActive('userid'), $_POST);
+		}
+
+		$user = $this->User->Get($this->User->GetActive('userid'));
+		$user['isAdmin'] = $this->User->IsAdmin();
+		$user['isRoot'] = $this->User->IsRoot();
+		$this->JSON($user);
 	}
 }
 ?>
