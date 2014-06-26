@@ -101,6 +101,31 @@ input[type=checkbox] {
 	color: #424242 !important;
 	border-color: #DBDBDB;
 }
+
+.page-screening .screen-preview {
+	display: none;
+}
+
+/* Preview mode: .page-screening.enable-preview {{{ */
+.page-screening.enable-preview {
+	margin: 0;
+	height: 300px;
+	overflow: hidden;
+	display: block;
+}
+
+.page-screening.enable-preview .screen-list {
+	padding: 8px 10px 0 10px;
+	height: calc(100% - 200px);
+	overflow: auto;
+}
+
+.page-screening.enable-preview .screen-preview {
+	display: block;
+	height: 200px;
+	border-top: 3px solid #ccc;
+}
+/* }}} */
 /* }}} */
 /* Widget: Search basket {{{ */
 #basket > ul {
