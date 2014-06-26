@@ -23,8 +23,8 @@
 	<![endif]-->
 
 	<!-- Shoelace -->
-	<link href="/lib/shoelace/shoelace.css" rel="stylesheet" type="text/css"/>
-	<script src="/lib/shoelace/shoelace.js"></script>
+	<link href="/bower_components/shoelace/shoelace.css" rel="stylesheet" type="text/css"/>
+	<script src="/bower_components/shoelace/shoelace.js"></script>
 
 	<!-- Site style -->
 	<link href="/css/global.css" rel="stylesheet">

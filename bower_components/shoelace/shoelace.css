@@ -5,6 +5,11 @@
 	text-align: center;
 }
 
+td.pull-center, th.pull-center {
+	text-align: center !important;
+	display: table-cell;
+}
+
 .pull-reset {
 	text-align: left;
 }
@@ -48,3 +53,7 @@
 .font-huge {font-size: 20pt;}
 
 .input-stretch {width: 100%;}
+
+.dropdown-fix-clipping.open {
+	display: block;
+}

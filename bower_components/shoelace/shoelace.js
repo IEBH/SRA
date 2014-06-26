@@ -2,9 +2,11 @@
 * Shoelace Javascript file
 * @author Matt Carter <m@ttcarter.com>
 */
-$(function() {
+$.fn.shoelace = function() {
+	var me = $(this);
+
 /* data-tip {{{ */
-$('[data-tip]').each(function() {
+me.find('[data-tip]').each(function() {
 	var root = $(this);
 	var addto = root;
 	var tag = root[0].nodeName.toLowerCase();
@@ -13,11 +15,13 @@ $('[data-tip]').each(function() {
 	settings = {title: root.data('tip')};
 	if (root.data('tip-placement'))
 		settings['placement'] = root.data('tip-placement');
-	addto.tooltip(settings);
+	addto
+		.tooltip('destroy')
+		.tooltip(settings);
 });
 /* }}} */
 /* data-prefix, data-suffix {{{ */
-$('[data-prefix], [data-suffix]').each(function() {
+me.find('[data-prefix], [data-suffix]').each(function() {
 	var me = $(this);
 	me.wrap('<div class="' + (me.data('prefix') ? 'input-prepend ' : '') + (me.data('suffix') ? 'input-append' : '') + '"></div>');
 	if (me.data('prefix'))
@@ -27,25 +31,25 @@ $('[data-prefix], [data-suffix]').each(function() {
 });
 /* }}} */
 /* data-help-inline, data-help-block {{{ */
-$('[data-help-inline]').each(function() {
+me.find('[data-help-inline]').each(function() {
 	$(this).after('<span class="help-inline">' + $(this).data('help-inline') + '</span>');
 });
-$('[data-help-block]').each(function() {
+me.find('[data-help-block]').each(function() {
 	$(this).after('<span class="help-block">' + $(this).data('help-block') + '</span>');
 });
 /* }}} */
 /* data-focus {{{ */
-$('[data-focus]').each(function() {
+me.find('[data-focus]').each(function() {
 	if (!$(this).closest('.modal').length && $(this).is(':visible')) // Not within a modal && is visible
 		$(this).trigger('focus');
 	return false; // Only focus the first one
 });
-$('.modal').on('shown', function() {
+me.find('.modal').on('shown', function() {
 	$(this).find('[data-focus]').trigger('focus');
 });
 /* }}} */
 /* data-selected {{{ */
-$('.nav-tabs[data-selected]').each(function() {
+me.find('.nav-tabs[data-selected]').each(function() {
 	var hash;
 	if ($(this).data('selected') == 'auto' && location.hash) {
 		hash = location.hash.substr(1);
@@ -53,7 +57,6 @@ $('.nav-tabs[data-selected]').each(function() {
 		hash = $(this).data('selected');
 	}
 	var selected = $(this).find('a[href="#' + hash + '"]');
-	console.log(selected);
 	if (selected.length) { // Found something - select it
 		selected.tab('show');
 	} else { // Nothing found - fallback to first found tab
@@ -70,24 +73,32 @@ $('.nav-tabs[data-selected]').each(function() {
 * This upshot is that we highlight the correct (usually) link in a Bootstrap .nav-list whenever the page loads
 * @author Matt Carter <m@ttcarter.com>
 */
-$('[data-selectbyurl]').each(function() {
-	var path = window.location.pathname;
+me.find('[data-selectbyurl]').each(function() {
 	var children = $(this).find($(this).data('selectbyurl') || 'li');
 	var parents = $(this).find($(this).data('selectbyurl-parents') || '');
+	var myLocation = $(this).data('selectbyurl-url') || window.location.pathname;
+	var useRough = $(this).data('selectbyurl-rough') || 0;
 	var selected;
 	var selectedlink;
-	if (path == '/' && children.find('a[href="/"]').length) { // Root item selected
+
+	if (myLocation == '/' && children.find('a[href="/"]').length) { // Root item selected
 		selected = children.find('a[href="/"]').closest('li');
 	} else
 		children.each(function() {
 			var href = $(this).find('a').attr('href');
-			if (href && href == window.location.pathname) { // Exact matches get caught immediately
+			if (href && href == myLocation) { // Exact matches get caught immediately
 				selected = $(this);
 				return false;
 			} else if ( // Imprecise (fuzzy) matches need to be examined
 				href // Has a href
-				&& (href.substr(0, window.location.pathname.length) == window.location.pathname) // beginning of href matches beginning of window.location.pathname
+				&& (href.substr(0, myLocation.length) == myLocation) // beginning of href matches beginning of myLocation
 				&& (!selectedlink || $(this).attr('href').length > selectedlink.length) // Its longer than the last match
+			) {
+				selected = $(this);
+				selectedlink = selected.attr('href');
+			} else if ( // Even more rough matching
+				useRough
+				&& myLocation.substr(0, href.length) == href
 			) {
 				selected = $(this);
 				selectedlink = selected.attr('href');
@@ -101,11 +112,38 @@ $('[data-selectbyurl]').each(function() {
 	}
 });
 /* }}} */
-	// [data-confirm] {{{
-	$('a[data-confirm]').click(function(event) {
-		var message = $(this).data('confirm') || 'Are you really sure you wish to do this?';
-		if (!confirm(message))
-			event.preventDefault();
-	});
-	// }}}
+// data-confirm {{{
+me.find('a[data-confirm]').click(function(event) {
+	var message = $(this).data('confirm') || 'Are you really sure you wish to do this?';
+	if (!confirm(message))
+		event.preventDefault();
+});
+// }}}
+// .dropdown-fix-clipping {{{
+me.find('.dropdown-fix-clipping').each(function() {
+	var sibling = $(this).prev('[data-toggle=dropdown]');
+
+	var ddno = 1;
+	var ddid = 'dropdown1';
+	while ($('#' + ddid).length) {
+		ddno++;
+		ddid = 'dropdown' + ddno;
+	}
+
+	if (sibling.attr('href') == '#') {
+		sibling
+			.attr('href', '#' + ddid)
+			.addClass('dropdown-toggle');
+		$(this)
+			.attr('id', ddid)
+			.appendTo($('body'))
+			.css({left: sibling.offset().left, top: sibling.offset().top + sibling.height() + 10});
+	}
+});
+// }}}
+
+};
+
+$(function() {
+	$(document).shoelace();
 });

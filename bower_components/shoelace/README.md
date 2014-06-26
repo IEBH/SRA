@@ -21,6 +21,10 @@ Now add the following to your main HTML page somewhere after the Bootstrap secti
 
 ... and you're done!
 
+Shoelace will automatically apply itself when the page loads. If you use AJAX elements and wish to reinvoke Shoelace's behaviour just do:
+
+	$(this).shoelace();
+
 
 Features
 ========
@@ -94,6 +98,15 @@ A collection of various useful CSS classes in the bootstrap style.
 		<td>
 <pre>
 &lt;input class="input-stretch"/&gt;
+</pre>
+		</td>
+	</tr>
+	<tr>
+		<th>no-wrap</th>
+		<td>Keep all text on one line</td>
+		<td>
+<pre>
+&lt;span class="no-wrap"&gt;A very long line&lt;/&gt;
 </pre>
 		</td>
 	</tr>
@@ -178,20 +191,31 @@ To select an item based on the page URL you can attach the `data-selectbyurl` at
 		</ul>
 	</div>
 
-In the above scenario the parent `li` item will be selected if the page URL is `/`, `/foo', `/bar` and so on.
-
-You can also specify `data-selectbyurl-parents="li"` to select all parents up the tree. This is useful if your theme requires all branches to be marked as 'active'.
+In the above scenario the parent `li` item will be selected if the page URL is `/`, `/foo`, `/bar` and so on.
 
 
-Link clicking confirmation
---------------------------
-Make a confirmation box appear when a user clicks a link.
+Addtional parameters:
 
-	<a href="/something/dangerous" data-confirm="Are you REALLY sure you want to do this?">Danger will Robinson!</a>
+| Parameter             | Default | Description |
+|-----------------------|---------|-------------|
+|data-selectbyurl-rough | `0`     | Specifies that 'extra rough' matching should be enabled. Use this option if your tabs only return the first section of the URL of the current page |
 
-If the user cancels the confirm box the link click will be canceled.
 
-TODO list & ideas
-=================
-* Confirm buttons (possibly `<a href="/somewhere" data-confirm="Are you sure">`) will popup a small tooltip with Yes/No buttons when clicking a link - useful for delete buttons and other things that require two-factor checks
-* Auto focus first elements in modal dialog boxes (possibly `<input data-focus="1">`)
+Confirming clicks
+-----------------
+Prompts the user with a message before allowing a link click to pass though to the normal event handler.
+
+	<a href="/somewhere/dangerous" data-confirm="Are you sure you want to go there?">Go somewhere dangerous</a>
+
+
+FIX: Dropdowns clipping within parent divs
+------------------------------------------
+Sometimes dropdowns can clip if they are positioned at the very bottom of a parent item where `overflow: hidden` is present. Applying the `dropdown-fix-clipping` style fixes this by rebinding the button that opens the dropdown by a set ID and moving the dropdown into the root body element. This means its placed at the top of the z-order stack and shouldn't overlap any other element on screen.
+.
+
+	<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"> Open dropdown <span class="caret"></span></a>
+	<ul class="dropdown-menu dropdown-fix-clipping">
+		<li><a href="#">Item foo</li>
+		<li><a href="#">Item bar</li>
+		<li><a href="#">Item baz</li>
+	</ul>
