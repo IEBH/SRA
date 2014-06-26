@@ -46,17 +46,3 @@ Goals
 * Multiple-user abstract / full-text screening process
 * Automated Abstract and Method section creation tools
 * Tools useful to Systematic Reviews - Forest Plots and various other outputs
-
-
-TODO
-====
-* TECHNICAL: Upgrade to Bootstrap 3
-* TECHNICAL: Replace views with Angular
-* Welcome email
-* Test sharing system via email
-* Test sharing system via URL
-* Add "Unfiled" tab to screening process
-* Add ability to change tags afterwards
-* Add facility to edit references
-* Convert from one format to another - e.g. Import RIS, output EndNoteXML
-* Add abstract creator tool
