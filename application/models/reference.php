@@ -1,10 +1,80 @@
 <?
-class Reference extends CI_Model {
-	function Get($referenceid) {
-		$this->db->from('references');
-		$this->db->where('referenceid', $referenceid);
-		$this->db->limit(1);
-		return $this->db->get()->row_array();
+class Reference extends Joyst_Model {
+	function __construct() {
+		parent::__construct();
+		$this->load->Model('Library');
+	}
+
+	function DefineSchema() {
+		$this->On('access', function(&$row) {
+			if (!$this->User->GetActive('userid'))
+				return $this->Deny('You are not logged in');
+
+			if (!isset($row['libraryid']))
+				return $this->Deny('Libraryid must be specified');
+
+			if (!$this->Library->CanEdit($row['libraryid']))
+				return $this->Deny('You do not have permission to access that library');
+		});
+		$this->On('create', function(&$row) {
+			$row['created'] = time();
+		});
+		$this->On('getall', function(&$where) {
+			if (!isset($where['status'])) // If status not explicit - assume active
+				$where['status'] = 'active';
+		});
+		return array(
+			'_model' => 'Reference',
+			'_table' => 'references',
+			'_id' => 'referenceid',
+			'referenceid' => array(
+				'type' => 'pk',
+			),
+			'libraryid' => array(
+				'type' => 'fk',
+				'hide' => true,
+			),
+			'referencetagid' => array(
+				'type' => 'fk'
+			),
+			'status' => array(
+				'type' => 'enum',
+				'options' => array(
+					'active' => 'Active',
+					'dupe' => 'Duplicate',
+					'deleted' => 'Deleted',
+				),
+			),
+			'title' => array(
+				'type' => 'varchar',
+				'length' => 100,
+			),
+			'authors' => array(
+				'type' => 'text',
+			),
+			'yourref' => array(
+				'type' => 'varchar',
+				'length' => 200,
+			),
+			'label' => array(
+				'type' => 'varchar',
+				'length' => 100,
+			),
+			'data' => array(
+				'type' => 'json-import',
+			),
+			'altdata' => array(
+				'type' => 'json',
+			),
+			'created' => array(
+				'type' => 'int',
+				'readonly' => true,
+			),
+			'edited' => array(
+				'type' => 'int',
+				'readonly' => true,
+			),
+		);
 	}
 
 	function GetByYourRef($yourref, $libraryid = null) {
@@ -15,82 +85,6 @@ class Reference extends CI_Model {
 			$this->db->where('libraryid', $libraryid);
 		$this->db->limit(1);
 		return $this->db->get()->row_array();
-	}
-
-	function Count($where = null) {
-		$this->db->select('COUNT(*) AS count');
-		$this->db->from('references');
-		if ($where)
-			$this->db->where($where);
-		$row = $this->db->get()->row_array();
-		return $row['count'];
-	}
-
-	function Create($data) {
-		$fields = array();
-		foreach (qw('libraryid title authors yourref label data') as $field)
-			if (isset($data[$field]))
-				$fields[$field] = $data[$field];
-
-		if (is_array($fields['authors']))
-			$fields['authors'] = implode(' AND ', $fields['authors']);
-
-		if ($fields) {
-			if (isset($fields['data']) && is_array($fields['data'])) // Convert data back into JSON if its an array
-				$fields['data'] = json_encode($fields['data']);
-			$fields['created'] = time();
-			$this->db->insert('references', $fields);
-			return $this->db->insert_id();
-		}
-	}
-
-	/**
-	* Save a reference
-	* NOTE: If $data['data'] is an array it will be converted back into JSON before saving - making it safe to pass complex arrays
-	* NOTE: If any unknown field is passed as a key for $data it will be saved inside $data['data'] (as JSON)
-	* @param int $referenceid The referenceID to save
-	* @param array $data The data to save back to the object
-	*/
-	function Save($referenceid, $data) {
-		$fields = array();
-		foreach (qw('libraryid title authors data altdata label status referencetagid') as $field)
-			if (isset($data[$field])) {
-				$fields[$field] = $data[$field];
-				unset($data[$field]);
-			}
-
-		if ($data) { // Still have unknown fields to save
-			if (isset($fields['data'])) { // Incomming (possible) JSON
-				if (is_string($fields['data'])) // Not already an array - convert
-					$fields['data'] = json_decode($fields['data'], TRUE);
-			} else { // Dont have any JSON to work with - fetch it
-				$record = $this->Get($referenceid);
-				$fields['data'] = json_decode($record['data'], TRUE);
-			}
-
-			foreach ($data as $key => $value) // Save unknown fields
-				$fields['data'][$key] = $value;
-		}
-
-		if ($fields) {
-			$fields['edited'] = time();
-			if (isset($fields['data']) && is_array($fields['data'])) // Convert data back into JSON if its an array
-				$fields['data'] = json_encode($fields['data']);
-			$this->db->where('referenceid', $referenceid);
-			$this->db->update('references', $fields);
-			return true;
-		}
-	}
-
-	function GetAll($where = null, $orderby = 'referenceid', $limit = null, $offset = null) {
-		$this->db->from('references');
-		if ($where)
-			$this->db->where($where);
-		if ($orderby)
-			$this->db->order_by($orderby);
-		if ($limit || $offset)
-			$this->db->limit($limit,$offset);
-		return $this->db->get()->result_array();
 	}
 
 	function SetStatus($referenceid, $status) {

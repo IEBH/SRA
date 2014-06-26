@@ -1,11 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class References extends CI_Controller {
+class References extends Joyst_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('Reference');
+		$this->JoystModel('Reference');
 	}
 
 	function Index() {
+		$this->load->model('Basket');
 		$this->site->Header('References');
 		$this->site->view('references/list', array(
 			'papers' => $this->Basket->GetAll(),
