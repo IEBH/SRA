@@ -88,52 +88,6 @@
         ]
     },
     {
-        "name": "hashbang/joyst",
-        "version": "v0.1.0",
-        "version_normalized": "0.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hash-bang/Joyst.git",
-            "reference": "95307e680b7f9ab07e0d8538f785a37c7b307970"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hash-bang/Joyst/zipball/95307e680b7f9ab07e0d8538f785a37c7b307970",
-            "reference": "95307e680b7f9ab07e0d8538f785a37c7b307970",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2014-04-10 01:57:30",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "joyst.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Matt Carter",
-                "email": "m@ttcarter.com",
-                "homepage": "https://github.com/hash-bang"
-            }
-        ],
-        "description": "CodeIgniter extension providing automated model functionality based on a DB schema",
-        "homepage": "https://github.com/hash-bang/Joyst",
-        "keywords": [
-            "codeigniter",
-            "database",
-            "model",
-            "schema"
-        ]
-    },
-    {
         "name": "hashbang/pherl",
         "version": "v1.0.0",
         "version_normalized": "1.0.0.0",
@@ -180,24 +134,71 @@
         ]
     },
     {
-        "name": "hashbang/reflib",
-        "version": "v1.1.4",
-        "version_normalized": "1.1.4.0",
+        "name": "hashbang/joyst",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/hash-bang/RefLib.git",
-            "reference": "83629d6a7808e3a6f9776833741362236d06e510"
+            "url": "https://github.com/hash-bang/Joyst.git",
+            "reference": "33f3ee4f0c7b49f257c7f3b8b20beed9def711f5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/83629d6a7808e3a6f9776833741362236d06e510",
-            "reference": "83629d6a7808e3a6f9776833741362236d06e510",
+            "url": "https://api.github.com/repos/hash-bang/Joyst/zipball/33f3ee4f0c7b49f257c7f3b8b20beed9def711f5",
+            "reference": "33f3ee4f0c7b49f257c7f3b8b20beed9def711f5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2014-06-24 03:36:41",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "Joyst_Model.php",
+                "Joyst_Controller.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Matt Carter",
+                "email": "m@ttcarter.com",
+                "homepage": "https://github.com/hash-bang"
+            }
+        ],
+        "description": "CodeIgniter extension providing automated model functionality based on a DB schema",
+        "homepage": "https://github.com/hash-bang/Joyst",
+        "keywords": [
+            "codeigniter",
+            "database",
+            "model",
+            "schema"
+        ]
+    },
+    {
+        "name": "hashbang/reflib",
+        "version": "v1.1.5",
+        "version_normalized": "1.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hash-bang/RefLib.git",
+            "reference": "4ce68e156ec67c29dbfcaa7fcafa330fa42df370"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/4ce68e156ec67c29dbfcaa7fcafa330fa42df370",
+            "reference": "4ce68e156ec67c29dbfcaa7fcafa330fa42df370",
             "shasum": ""
         },
         "require": {
             "php": ">=5.0.0"
         },
-        "time": "2014-05-29 00:48:34",
+        "time": "2014-06-25 00:43:20",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
