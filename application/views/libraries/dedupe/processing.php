@@ -33,7 +33,7 @@ $(function() {
 <div class="row-fluid pad-top">
 	<div class="span8 offset2">
 		<div class="alert alert-info alert-block">
-			<h1 class="pull-center"><i class="fa-spinner fa-spin"></i> De-duplicating references...</h1>
+			<h1 class="pull-center"><i class="fa fa-spinner fa-spin"></i> De-duplicating references...</h1>
 			<div class="row-fluid pad-top">
 				<div class="span8 offset2">
 					<div id="progress" class="progress progress-striped active">

@@ -32,19 +32,19 @@ $(document)
 	.on('click', '[data-action=add]', function(event) {
 		event.preventDefault();
 		var button = $(this);
-		button.html('<i class="fa-spinner fa-spin"></i>');
+		button.html('<i class="fa fa-spinner fa-spin"></i>');
 		$('#search-outer').load('/who/add/' + button.data('ref') + ' #search-inner');
 	})
 	.on('click', '[data-action=remove]', function(event) {
 		event.preventDefault();
 		var button = $(this);
-		button.html('<i class="fa-spinner fa-spin"></i>');
+		button.html('<i class="fa fa-spinner fa-spin"></i>');
 		$('#search-outer').load('/who/remove/' + button.data('ref') + ' #search-inner');
 	})
 	.on('click', '[data-action=add-all]', function(event) {
 		event.preventDefault();
 		var button = $(this);
-		button.html('<i class="fa-spinner fa-spin"></i>');
+		button.html('<i class="fa fa-spinner fa-spin"></i>');
 		var allRefs = [];
 		$('#search-inner [data-ref]').each(function() {
 			allRefs.push($(this).data('ref'));
@@ -54,7 +54,7 @@ $(document)
 	.on('click', '[data-action=remove-all]', function(event) {
 		event.preventDefault();
 		var button = $(this);
-		button.html('<i class="fa-spinner fa-spin"></i>');
+		button.html('<i class="fa fa-spinner fa-spin"></i>');
 		var allRefs = [];
 		$('#search-inner [data-ref]').each(function() {
 			allRefs.push($(this).data('ref'));
