@@ -18,6 +18,13 @@ class Reference extends Joyst_Model {
 		});
 		$this->On('create', function(&$row) {
 			$row['created'] = time();
+			if (isset($row['authors']) && is_array($row['authors']))
+				$row['authors'] = implode(' AND ', $row['authors']);
+		});
+		$this->On('save', function(&$id, &$row) {
+			$row['edited'] = time();
+			if (isset($row['authors']) && is_array($row['authors']))
+				$row['authors'] = implode(' AND ', $row['authors']);
 		});
 		$this->On('getall', function(&$where) {
 			if (!isset($where['status'])) // If status not explicit - assume active
