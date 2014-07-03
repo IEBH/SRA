@@ -20,6 +20,7 @@ $(function() {
 				}
 			},
 			error: function(e, err) {
+				var now = new Date();
 				$('#progress').addClass('progress-danger');
 				$('#progress-text').text('Error while getting de-duplication update: ' + err);
 				$('#progress-updated').text('Last updated: ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds());
