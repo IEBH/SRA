@@ -158,37 +158,36 @@ class Reference extends Joyst_Model {
 		
 		// We've determined the data is a duplicate - now decide what to merge before we delete $b
 		if ($isdupe) {
-			$adata = json_decode($a['data'], true);
-			$bdata = json_decode($b['data'], true);
-
 			// Basic sanity checks - not a match if year, page, volume, isbn or number is present BUT mismatch exactly
-			if (isset($adata['year'], $bdata['year']) && $adata['year'] != $bdata['year'])
-				return $debug ? "Year mismatch '{$adata['year']}' != '{$bdata['year']}'" : false;
-			if (isset($adata['pages'], $bdata['pages']) && $adata['pages'] != $bdata['pages'])
-				return $debug ? "Pages mismatch '{$adata['pages']}' != '{$bdata['pages']}'" : false;
-			if (isset($adata['volume'], $bdata['volume']) && $adata['volume'] != $bdata['volume'])
-				return $debug ? "Volume mismatch '{$adata['volume']}' != '{$bdata['volume']}'" : false;
-			if (isset($adata['isbn'], $bdata['isbn']) && $adata['isbn'] != $bdata['isbn'])
-				return $debug ? "ISBN mismatch '{$adata['isbn']}' != '{$bdata['isbn']}'" : false;
-			if (isset($adata['number'], $bdata['number']) && $adata['number'] != $bdata['number'])
-				return $debug ? "Number mismatch '{$adata['number']}' != '{$bdata['number']}'" : false;
+			if (isset($a['year'], $b['year']) && $a['year'] != $b['year'])
+				return $debug ? "Year mismatch '{$a['year']}' != '{$b['year']}'" : false;
+			if (isset($a['pages'], $b['pages']) && $a['pages'] != $b['pages'])
+				return $debug ? "Pages mismatch '{$a['pages']}' != '{$b['pages']}'" : false;
+			if (isset($a['volume'], $b['volume']) && $a['volume'] != $b['volume'])
+				return $debug ? "Volume mismatch '{$a['volume']}' != '{$b['volume']}'" : false;
+			if (isset($a['isbn'], $b['isbn']) && $a['isbn'] != $b['isbn'])
+				return $debug ? "ISBN mismatch '{$a['isbn']}' != '{$b['isbn']}'" : false;
+			if (isset($a['number'], $b['number']) && $a['number'] != $b['number'])
+				return $debug ? "Number mismatch '{$a['number']}' != '{$b['number']}'" : false;
 
-			foreach (array_merge(array_keys($adata), array_keys($bdata)) as $key) {
-				if (isset($adata[$key]) && is_array($adata[$key]))
-					$adata[$key] = implode(' AND ', $adata[$key]);
-				if (isset($bdata[$key]) && is_array($bdata[$key]))
-					$bdata[$key] = implode(' AND ', $bdata[$key]);
+			foreach (array_merge(array_keys($a), array_keys($b)) as $key) {
+				if (substr($key, 0, 1) == '_' || in_array($key, array('referenceid', 'libraryid', 'referencetagid', 'status', 'yourref', 'data', 'altdata', 'created', 'edited'))) // Ignore meta fields or certain fields we dont care about merging
+					continue;
+				if (isset($a[$key]) && is_array($a[$key]))
+					$a[$key] = implode(' AND ', $a[$key]);
+				if (isset($b[$key]) && is_array($b[$key]))
+					$b[$key] = implode(' AND ', $b[$key]);
 
-				if (!isset($adata[$key])) { // B has data that A does not -- Assign to A
-					$save[$key] = $bdata[$key];
-				} elseif (!isset($bdata[$key])) { // A has data that B does not
+				if (!isset($a[$key])) { // B has data that A does not -- Assign to A
+					$save[$key] = $b[$key];
+				} elseif (!isset($b[$key])) { // A has data that B does not
 					// Do nothing - we dont care about B as its going to be deleted anyway
-				} elseif ($adata[$key] == $bdata[$key]) { // Direct match A==B
+				} elseif ($a[$key] == $b[$key]) { // Direct match A==B
 					// Do nothing - we dont care about exact duplicates
 				} else { // Not an exact match - store it as an alternate
 					if (!isset($alts[$key])) // Alt key not set
 						$alts[$key] = array();
-					$alts[$key][$b['referenceid']] = $bdata[$key];
+					$alts[$key][$b['referenceid']] = $b[$key];
 				}
 			}
 
