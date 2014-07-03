@@ -126,6 +126,11 @@ input[type=checkbox] {
 	background: none;
 }
 /* }}} */
+/* FIX: Icons in sidebar are too squashed {{{ */
+.nav-list i.fa {
+	margin: 0 8px;
+}
+/* }}} */
 /* }}} */
 /* FIXES: Waveform {{{ */
 .waveform-readonly {

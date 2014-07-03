@@ -86,7 +86,7 @@
 			</li>
 			<? } ?>
 			<li><a href="/libraries/import">
-				<i class="fa fa-angle-double-right"></i> <i class="fa fa-plus"></i> Import New</a>
+				<i class="fa fa-plus"></i> Import New</a>
 			</li>
 		</ul>
 	</li>
