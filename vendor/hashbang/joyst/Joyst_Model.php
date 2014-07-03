@@ -763,6 +763,7 @@ class Joyst_Model extends CI_Model {
 						unset($row[$key]);
 					}
 				}
+				$data = json_encode($data);
 				return $data;
 			default: // No idea what this is or we dont care
 				return $data;
