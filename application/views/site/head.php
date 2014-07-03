@@ -1,3 +1,4 @@
+<? if (!isset($this->site)) die('Error') ?>
 <head>
 	<meta charset="utf-8">
 	<title><?=SITE_TITLE?> | <?=$title?></title>
