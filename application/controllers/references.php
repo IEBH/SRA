@@ -24,10 +24,9 @@ class References extends Joyst_Controller {
 		$this->load->model('Library');
 
 		if (!$reference = $this->Reference->Get($referenceid))
-			$this->Site->Error('Invalid reference');
+			$this->site->Error('Invalid reference - ' . $this->Reference->joystError);
 		if (!$library = $this->Library->Get($reference['libraryid']))
-			$this->Site->Error('Invalid parent library');
-		$reference = $this->Reference->Explode($reference);
+			$this->site->Error('Invalid parent library');
 
 		// FIXME: Temporary kludge to make the reference viewer actually do something useful for WHO papers
 		if ($reference['yourref'] && preg_match('/^who-(.*)$/', $reference['yourref'], $matches))

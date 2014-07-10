@@ -11,10 +11,10 @@ class Reference extends Joyst_Model {
 				return $this->Deny('You are not logged in');
 		});
 		$this->On('pull', function(&$where) {
-			if (!isset($where['libraryid']))
+			if (!isset($where['referenceid']) && !isset($where['libraryid'])) // Not requesting direct OR not asking for libraryid
 				return $this->Deny('Libraryid must be specified - ' . json_encode($where));
 
-			if (!$this->Library->CanEdit($where['libraryid']))
+			if (isset($where['libraryid']) && !$this->Library->CanEdit($where['libraryid']))
 				return $this->Deny('You do not have permission to access that library');
 		});
 		$this->On('create', function(&$row) {
