@@ -28,8 +28,11 @@ class Reference extends Joyst_Model {
 				$row['authors'] = implode(' AND ', $row['authors']);
 		});
 		$this->On('getall', function(&$where) {
-			if (!isset($where['status'])) // If status not explicit - assume active
+			if (!isset($where['status'])) { // If status not explicit - assume active
 				$where['status'] = 'active';
+			} elseif ($where['status'] == '*') {
+				unset($where['status']);
+			}
 		});
 		return array(
 			'_model' => 'Reference',

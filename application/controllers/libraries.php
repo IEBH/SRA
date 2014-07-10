@@ -366,9 +366,10 @@ class Libraries extends CI_Controller {
 		}
 
 
-		$where = array('libraryid' => $libraryid);
-		if ($library['debug'] == 'inactive')
-			$where['status'] = 'active';
+		$where = array(
+			'libraryid' => $libraryid,
+			'status' => ($library['debug'] == 'active') ? '*' : 'active',
+		);
 
 		$this->RefLib = new RefLib();
 		if (!$this->RefLib->LoadDriver($format))
