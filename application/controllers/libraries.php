@@ -309,17 +309,17 @@ class Libraries extends CI_Controller {
 			$this->RefLib->SetContentsFile($file['tmp_name'], $file['type']);
 
 			foreach ($this->RefLib->refs as $refno => $ref) {
-				$json_obj = $ref;
+				$data = $ref;
 				foreach(array('authors', 'title', 'label') as $k) // Scrap fields are are storing elsewhere anyway
-					if (isset($json_obj[$k]))
-						unset($json_obj[$k]);
+					if (isset($data[$k]))
+						unset($data[$k]);
 
 				$this->Reference->Create(array(
 					'libraryid' => $libraryid,
 					'title' => $ref['title'],
 					'authors' => isset($ref['authors']) ? $ref['authors'] : '',
 					'label' => isset($ref['label']) ? $ref['label'] : null,
-					'data' => json_encode($json_obj),
+					'data' => $data,
 				));
 			}
 		}

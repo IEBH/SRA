@@ -43,7 +43,6 @@ class Reference extends Joyst_Model {
 			),
 			'libraryid' => array(
 				'type' => 'fk',
-				'hide' => true,
 			),
 			'referencetagid' => array(
 				'type' => 'fk'

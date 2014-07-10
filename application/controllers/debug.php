@@ -55,7 +55,6 @@ class Debug extends CI_Controller {
 		$myrefsraw = $this->Reference->GetAll();
 		$myrefs = array();
 		foreach ($myrefsraw as $ref) {
-			$ref = $this->Reference->Explode($ref);
 			$myrefs[$ref['caption']] = $ref;
 		}
 		// }}}
