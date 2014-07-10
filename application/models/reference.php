@@ -103,17 +103,6 @@ class Reference extends Joyst_Model {
 	}
 
 	/**
-	* Expands the $reference['data'] JSON blob, deletes it and returns the expanded array
-	* @param array $reference The compacted reference to expand
-	* @returns array The reference with its data JSON blob expanded
-	*/
-	function Explode($reference) {
-		$json = json_decode($reference['data'], TRUE);
-		unset($reference['data']);
-		return array_merge($reference, $json);
-	}
-
-	/**
 	* Flattens arrays or returns already flattened string values
 	* @param array|string $string Possible array or string to flatten
 	* @return string The delimetered array or the $string unedited

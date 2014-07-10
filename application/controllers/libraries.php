@@ -374,33 +374,23 @@ class Libraries extends CI_Controller {
 		if (!$this->RefLib->LoadDriver($format))
 			$this->site->Error("Invalid output format: $format");
 		foreach ($this->Reference->GetAll($where) as $ref) {
-			$full = $this->Reference->Explode($ref);
-
-			if (isset($full['RAW'])) {
-				$raw = $full['RAW'];
-				unset($full['RAW']);
-				if (is_array($raw))
-					foreach ($raw as $k => $v)
-						$full[$k] = $v;
-			}
-
-			$full['authors'] = explode(' AND ', $full['authors']);
+			$ref['authors'] = explode(' AND ', $ref['authors']);
 
 			if ($library['debug'] == 'active') {
 				switch ($ref['status']) {
 					case 'active':
-						$full['language'] = 'OK';
+						$ref['language'] = 'OK';
 						break;
 					case 'dupe':
-						$full['language'] = 'DUPE';
+						$ref['language'] = 'DUPE';
 						break;
 					case 'deleted':
-						$full['language'] = 'DELETED';
+						$ref['language'] = 'DELETED';
 						break;
 				}
 			}
 
-			$this->RefLib->Add($full);
+			$this->RefLib->Add($ref);
 		}
 
 		$this->RefLib->DownloadContents($this->RefLib->GetFilename($library['title']), $format);
