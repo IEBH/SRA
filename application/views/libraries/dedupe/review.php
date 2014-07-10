@@ -141,14 +141,15 @@ $(function() {
 </div>
 
 <? foreach ($dupes as $ref) {
-	if ($ref['data'])
-		$ref = array_merge($ref, json_decode($ref['data'], TRUE));
 	$alts = json_decode($ref['altdata'], TRUE);
 
 	$altrefs = array();
 	foreach($alts as $key => $vals) 
 		foreach ($vals as $refid => $data)
 			$altrefs[$refid] = 1;
+
+	if (!count($altrefs)) // No alternate references? Skip
+		continue;
 ?>
 <div class="duplicate" data-referenceid="<?=$ref['referenceid']?>" data-referenceid2="<?=implode(',', array_keys($altrefs))?>">
 	<legend>
