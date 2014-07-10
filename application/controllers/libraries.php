@@ -478,7 +478,7 @@ class Libraries extends CI_Controller {
 			case 'deduped': // Post dedupe - review
 				$this->load->view('libraries/dedupe/review', array(
 					'library' => $library,
-					'dupes' => $this->Reference->GetAll(array('altdata !=' => '')),
+					'dupes' => $this->Reference->GetAll(array('libraryid' => $library['libraryid'], 'altdata !=' => '')),
 				));
 				break;
 			default:
