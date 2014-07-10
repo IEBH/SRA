@@ -118,7 +118,7 @@ class RefLib_endnotexml {
 
 			if (isset($ref['urls']) && $ref['urls']) {
 				$out .= '<urls><related-urls>';
-					foreach ($ref['urls'] as $url)
+					foreach ((array) $ref['urls'] as $url)
 						$out .= '<url><style face="normal" font="default" size="100%">' . $this->_export($url) . '</style></url>';
 				$out .= '</related-urls></urls>';
 			}
