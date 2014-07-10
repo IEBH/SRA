@@ -122,6 +122,14 @@ class Joyst_Model extends CI_Model {
 	var $continue = TRUE;
 
 	/**
+	* Optional error message sent when calling Deny()
+	* @see $continue
+	* @see Deny()
+	* @var bool
+	*/
+	var $joystError = '';
+
+	/**
 	* Whether calls to Save(), Create() or SaveCreate() should return the newly created / saved object (i.e. after execution immediately do a Get())
 	* @var bool
 	*/
@@ -460,14 +468,14 @@ class Joyst_Model extends CI_Model {
 		if ($value = $this->GetCache('get', $id))
 			return $value;
 
-		$this->query = array(
+		$this->ResetQuery(array(
 			'method' => 'get',
 			'table' => $this->table,
 			'where' => array(
 				$this->schema['_id']['field'] => $id,
 			),
 			'limit' => 1,
-		);
+		));
 
 		$this->db->from($this->query['table']);
 		$this->db->where("{$this->table}.{$this->schema['_id']['field']}", $id);
@@ -500,14 +508,14 @@ class Joyst_Model extends CI_Model {
 		if ($value = $this->GetCache('getbasic', $id))
 			return $value;
 
-		$this->query = array(
+		$this->ResetQuery(array(
 			'method' => 'getbasic',
 			'table' => $this->table,
 			'where' => array(
 				$this->schema['_id']['field'] => $id,
 			),
 			'limit' => 1,
-		);
+		));
 
 		$this->db->from($this->query['table']);
 		$this->db->where("{$this->table}.{$this->schema['_id']['field']}", $id);
@@ -538,14 +546,14 @@ class Joyst_Model extends CI_Model {
 		if ($cacheval = $this->GetCache('getby', $cacheid = "$param-$value"))
 			return $cacheval;
 
-		$this->query = array(
+		$this->ResetQuery(array(
 			'method' => 'getby',
 			'table' => $this->table,
 			'where' => array(
 				$param => $value,
 			),
 			'limit' => 1,
-		);
+		));
 
 		$this->db->from($this->table);
 		$this->db->where($param, $value);
@@ -587,14 +595,14 @@ class Joyst_Model extends CI_Model {
 				return $value;
 		}
 
-		$this->query = array(
+		$this->ResetQuery(array(
 			'method' => 'getall',
 			'table' => $this->table,
 			'where' => $where,
 			'orderby' => $orderby,
 			'limit' => $limit,
 			'offset' => $offset,
-		);
+		));
 
 		$this->Trigger('access', $where);
 		if (!$this->continue)
@@ -798,11 +806,11 @@ class Joyst_Model extends CI_Model {
 				return $value;
 		}
 
-		$this->query = array(
+		$this->ResetQuery(array(
 			'method' => 'count',
 			'table' => $this->table,
 			'where' => $where,
-		);
+		));
 
 		$this->Trigger('access', $where);
 		if (!$this->continue)
@@ -866,11 +874,11 @@ class Joyst_Model extends CI_Model {
 				if (isset($data[$key]))
 					$data[$key] = $this->UnCastType($props['type'], $data[$key], $data);
 
-		$this->query = array(
+		$this->ResetQuery(array(
 			'method' => 'create',
 			'table' => $this->table,
 			'data' => $data,
-		);
+		));
 
 		$this->Trigger('access', $data);
 		if (!$this->continue)
@@ -923,14 +931,14 @@ class Joyst_Model extends CI_Model {
 				if (isset($data[$key]))
 					$data[$key] = $this->UnCastType($props['type'], $data[$key], $data);
 
-		$this->query = array(
+		$this->ResetQuery(array(
 			'method' => 'save',
 			'table' => $this->table,
 			'where' => array(
 				$this->schema['_id']['field'] => $id,
 			),
 			'data' => $data,
-		);
+		));
 
 		$this->Trigger('access', $data);
 		if (!$this->continue)
@@ -971,6 +979,14 @@ class Joyst_Model extends CI_Model {
 
 		$data = array($this->schema['_id']['field'] => $id);
 
+		$this->ResetQuery(array(
+			'method' => 'delete',
+			'table' => $this->table,
+			'where' => array(
+				$this->schema['_id']['field'] => $id,
+			),
+		));
+
 		$this->Trigger('access', $data);
 		if (!$this->continue)
 			return FALSE;
@@ -984,14 +1000,6 @@ class Joyst_Model extends CI_Model {
 			return FALSE;
 		if (!$this->continue)
 			return FALSE;
-
-		$this->query = array(
-			'method' => 'delete',
-			'table' => $this->table,
-			'where' => array(
-				$this->schema['_id']['field'] => $id,
-			),
-		);
 
 		$this->db->from($this->table);
 		$this->db->where("{$this->table}.{$this->schema['_id']['field']}", $id);
@@ -1013,11 +1021,11 @@ class Joyst_Model extends CI_Model {
 	function DeleteAll($where = null, $orderby = null) {
 		$this->LoadSchema();
 
-		$this->query = array(
+		$this->ResetQuery(array(
 			'method' => 'deleteall',
 			'table' => $this->table,
 			'where' => $where,
-		);
+		));
 
 		$this->Trigger('access', $where);
 		if (!$this->continue)
@@ -1044,6 +1052,34 @@ class Joyst_Model extends CI_Model {
 				$success++;
 
 		return (int) $success;
+	}
+
+	/**
+	* Force CI ActiveRecord + Joyst to discard any half formed AR queries
+	* @param array $query Optional query to reset Joysts internal query tracker to
+	*/
+	function ResetQuery($query = null) {
+		$this->db->ar_select = array();
+		$this->db->ar_distinct = FALSE;
+		$this->db->ar_from = array();
+		$this->db->ar_join = array();
+		$this->db->ar_where = array();
+		$this->db->ar_like = array();
+		$this->db->ar_groupby = array();
+		$this->db->ar_having = array();
+		$this->db->ar_keys = array();
+		$this->db->ar_limit = FALSE;
+		$this->db->ar_offset = FALSE;
+		$this->db->ar_order = FALSE;
+		$this->db->ar_orderby = array();
+		$this->db->ar_set = array();
+		$this->db->ar_wherein = array();
+		$this->db->ar_aliased_tables = array();
+		$this->db->ar_store_array = array();
+
+		$this->joystError = '';
+		$this->continue = TRUE;
+		$this->query = $query;
 	}
 
 	function DebugReponse() {
