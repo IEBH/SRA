@@ -12,7 +12,7 @@ class Reference extends Joyst_Model {
 		});
 		$this->On('pull', function(&$where) {
 			if (!isset($where['libraryid']))
-				return $this->Deny('Libraryid must be specified - ' . json_encode($row));
+				return $this->Deny('Libraryid must be specified - ' . json_encode($where));
 
 			if (!$this->Library->CanEdit($where['libraryid']))
 				return $this->Deny('You do not have permission to access that library');
