@@ -156,10 +156,10 @@ class Reference extends Joyst_Model {
 				return $debug ? "Pages mismatch '{$a['pages']}' != '{$b['pages']}'" : false;
 			if (isset($a['volume'], $b['volume']) && $a['volume'] != $b['volume'])
 				return $debug ? "Volume mismatch '{$a['volume']}' != '{$b['volume']}'" : false;
-			if (isset($a['isbn'], $b['isbn']) && $a['isbn'] != $b['isbn'])
-				return $debug ? "ISBN mismatch '{$a['isbn']}' != '{$b['isbn']}'" : false;
 			if (isset($a['number'], $b['number']) && $a['number'] != $b['number'])
 				return $debug ? "Number mismatch '{$a['number']}' != '{$b['number']}'" : false;
+			if (isset($a['isbn'], $b['isbn']) && !$this->CompareStringMultiple($a['isbn'], $b['isbn']))
+				return $debug ? "ISBN mismatch '{$a['isbn']}' != '{$b['isbn']}'" : false;
 
 			foreach (array_merge(array_keys($a), array_keys($b)) as $key) {
 				if (substr($key, 0, 1) == '_' || in_array($key, array('referenceid', 'libraryid', 'referencetagid', 'status', 'yourref', 'data', 'altdata', 'created', 'edited'))) // Ignore meta fields or certain fields we dont care about merging
@@ -212,6 +212,19 @@ class Reference extends Joyst_Model {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	* Attempt to compare two strings where either $a or $b can have multiple items
+	* @param string $a The A side to compare
+	* @param string $b The B side to compare
+	* @param string $splitOn The RegExp string to split $a and $b by before comparison
+	* @return bool Whether A occurs anywhere in B (or vise-versa)
+	*/
+	function CompareStringMultiple($a, $b, $splitOn = '/[a-z0-9-_]+/sm') {
+		$aBits = preg_split($splitOn, $a);
+		$bBits = preg_split($splitOn, $b);
+		return (bool) array_intersect($aBits, $bBits);
 	}
 
 	/**
