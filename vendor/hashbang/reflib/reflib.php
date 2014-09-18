@@ -8,6 +8,7 @@ class RefLib {
 	/**
 	* An indexed or hash array of references
 	* Each refernce has the following keys:
+	*	* access-date - String (optional) - Unix epoc
 	*	* authors - Array of authors
 	*	* address - String (optional)
 	*	* contact-name - String (optional)

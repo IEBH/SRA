@@ -88,6 +88,7 @@ class RefLib_endnotexml {
 
 			// Simple key values
 			foreach (array(
+				'access-date' => 'access-date',
 				'auth-address' => 'address',
 				'pages' => 'pages',
 				'volume' => 'volume',
@@ -169,6 +170,7 @@ class RefLib_endnotexml {
 
 			// Simple key=>vals
 			foreach (array(
+				'access-date' => 'access-date',
 				'auth-address' => 'address',
 				'pages' => 'pages',
 				'volume' => 'volume',
