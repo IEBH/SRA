@@ -141,10 +141,8 @@ $(function() {
 </div>
 
 <? foreach ($dupes as $ref) {
-	$alts = json_decode($ref['altdata'], TRUE);
-
 	$altrefs = array();
-	foreach($alts as $key => $vals) 
+	foreach($ref['altdata'] as $key => $vals) 
 		foreach ($vals as $refid => $data)
 			$altrefs[$refid] = 1;
 
@@ -182,13 +180,13 @@ $(function() {
 				<th width="<?=$width?>"><a href="/references/view/<?=$altrefid?>">Reference #<?=$altrefid?></a></th>
 				<? } ?>
 			</thead>
-			<? foreach ($alts as $field => $val) { ?>
+			<? foreach ($ref['altdata'] as $field => $val) { ?>
 			<tr>
 				<th><?=$field?></th>
 				<td class="selectable selected"><div><?=$this->Reference->Flatten($ref[$field], "<br/>")?></div></td>
 				<? foreach ($altrefs as $altrefid => $junk) { ?>
-				<? if (isset($alts[$field][$altrefid])) { ?>
-					<td class="selectable"><div><?=$this->Reference->Flatten($alts[$field][$altrefid])?></div></td>
+				<? if (isset($ref['altdata'][$field][$altrefid])) { ?>
+					<td class="selectable"><div><?=$this->Reference->Flatten($ref['altdata'][$field][$altrefid])?></div></td>
 				<? } else { ?>
 					<td>&nbsp;</td>
 				<? } ?>

@@ -60,7 +60,7 @@ class References extends Joyst_Controller {
 		$this->endnote = new PHPEndNote();
 
 		foreach ($references as $refno => $ref) {
-			$this->endnote->Add(array(
+			$out = array(
 				'author' => $ref['ref'],
 				'address' => $ref['contact-name'] . ($ref['contact-email'] ? ' - ' . $ref['contact-email'] : ''),
 				'title' => $ref['title'],
@@ -69,7 +69,11 @@ class References extends Joyst_Controller {
 				'abstract' => $ref['primary-outcomes'],
 				'url' => $ref['url-real'],
 				'notes' => 'STUDY TYPE' . "\n" . $ref['study-type'] . "\n\nSTUDY DESIGN\n" . $ref['study-design'],
-			));
+			);
+			foreach (array('title-secondary', 'title-short', 'periodical-title', 'pages', 'volume', 'number', 'section', 'year', 'abstract', 'notes', 'research-notes', 'isbn', 'label', 'caption', 'language', 'custom1', 'custom2', 'custom3', 'custom4', 'custom5', 'custom6', 'custom7') as $f)
+				if (isset($ref[$f]))
+					$out[$f] = $ref[$f];
+			$this->endnote->Add($out);
 		}
 		echo $this->endnote->GetXML();
 	}

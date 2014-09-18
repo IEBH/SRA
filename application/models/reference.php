@@ -183,7 +183,7 @@ class Reference extends Joyst_Model {
 			}
 
 			$save['altdata'] = json_encode($alts);
-			$this->Save($a['referenceid'], $save);
+			$this->Save($a['referenceid'], array_merge($a, $save));
 			$this->SetStatus($b['referenceid'], 'dupe');
 		}
 

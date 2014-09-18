@@ -390,7 +390,6 @@ class Libraries extends CI_Controller {
 						break;
 				}
 			}
-
 			$this->RefLib->Add($ref);
 		}
 
@@ -842,7 +841,8 @@ class Libraries extends CI_Controller {
 				$this->Reference->SetStatus($right['referenceid'], 'active');
 
 				// Remove alternative data
-				$this->Reference->Save($left['referenceid'], array('altdata' => ''));
+				$left['altdata'] = '';
+				$this->Reference->Save($left['referenceid'], $left);
 
 				break;
 			default:
@@ -932,9 +932,8 @@ class Libraries extends CI_Controller {
 			$this->site->JSONError('Invalid library');
 		if (!$this->Library->CanEdit($library))
 			$this->site->JSONError('You do not have access to this library');
-		$this->Reference->Save($reference['referenceid'], array(
-			'referencetagid' => $_REQUEST['tagid'],
-		));
+		$reference['referencetagid'] = $_REQUEST['tagid'];
+		$this->Reference->Save($reference['referenceid'], $reference);
 
 		$tags = array(
 			0 => $this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted')),
