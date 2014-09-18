@@ -20,6 +20,12 @@ class References extends Joyst_Controller {
 		$this->site->RedirectBack();
 	}
 
+	function Raw($referenceid = null) {
+		if (!$reference = $this->Reference->Get($referenceid))
+			$this->site->Error('Invalid reference - ' . $this->Reference->joystError);
+		print_r($reference);
+	}
+
 	function Edit($referenceid = null) {
 		$this->load->model('Library');
 
