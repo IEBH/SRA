@@ -142,6 +142,8 @@ $(function() {
 
 <? foreach ($dupes as $ref) {
 	$altrefs = array();
+	if (is_string($ref['altdata']))
+		$ref['altdata'] = json_decode($ref['altdata'], true);
 	foreach($ref['altdata'] as $key => $vals) 
 		foreach ($vals as $refid => $data)
 			$altrefs[$refid] = 1;
