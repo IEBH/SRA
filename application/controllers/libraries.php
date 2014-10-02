@@ -594,7 +594,8 @@ class Libraries extends CI_Controller {
 				->Choice(array(
 					'table' => 'Table',
 					'table-raw' => 'Table (no styling)',
-					'list' => 'List',
+					'list-authors' => 'list (author a -> author b)',
+					'list-count' => 'list (collaboration count)',
 					'chord' => 'Chord diagram',
 					'csv' => 'Downloadble CSV file',
 					'raw' => 'Raw data',
@@ -700,7 +701,7 @@ class Libraries extends CI_Controller {
 				));
 				$this->site->Footer();
 				break;
-			case 'list':
+			case 'list-authors':
 				$this->site->Header('List layout', array(
 					'breadcrumbs' => array(
 						'/libraries' => 'Libraries',
@@ -708,7 +709,22 @@ class Libraries extends CI_Controller {
 						"/libraries/collabmatrix/{$library['libraryid']}" => 'Collaboration Matrix',
 					),
 				));
-				$this->site->view('libraries/collabmatrix/list', array(
+				$this->site->view('libraries/collabmatrix/list-authors', array(
+					'authors' => $authors,
+					'matrix' => $matrix,
+					'sep' => $sep,
+				));
+				$this->site->Footer();
+				break;
+			case 'list-count':
+				$this->site->Header('List layout', array(
+					'breadcrumbs' => array(
+						'/libraries' => 'Libraries',
+						"/libraries/view/{$library['libraryid']}" => $library['title'],
+						"/libraries/collabmatrix/{$library['libraryid']}" => 'Collaboration Matrix',
+					),
+				));
+				$this->site->view('libraries/collabmatrix/list-count', array(
 					'authors' => $authors,
 					'matrix' => $matrix,
 					'sep' => $sep,
@@ -814,7 +830,8 @@ class Libraries extends CI_Controller {
 
 		switch ($_REQUEST['action']) {
 			case 'save': // Accept left, delete right, merge
-				die($this->site->JSONError("Not yet supported"));
+				// Temporarily removed so it shuts up about us not yet supporting this - MC 2014-09-18 (before Hyrobad conference)
+				// die($this->site->JSONError("Not yet supported"));
 				break;
 			case 'delete': // Delete both left/right sides
 				if (!isset($_REQUEST['right']))

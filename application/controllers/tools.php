@@ -27,7 +27,8 @@ class Tools extends CI_Controller {
 			->Choice(array(
 				'html' => 'HTML table',
 				'html-raw' => 'HTML table (no styling)',
-				'list' => 'List',
+				'list-authors' => 'list (author a -> author b)',
+				'list-count' => 'list (collaboration count)',
 				'csv' => 'CSV output',
 				'raw' => 'Raw output',
 			));
@@ -124,14 +125,28 @@ class Tools extends CI_Controller {
 					));
 					$this->site->Footer();
 					break;
-				case 'list':
+				case 'list-authors':
 					$this->site->Header('Results', array(
 						'breadcrumbs' => array(
 							'/tools' => 'Tools',
 							'/tools/collabmatrix' => 'Collaboration Matrix',
 						),
 					));
-					$this->site->view('tools/collabmatrix-list', array(
+					$this->site->view('tools/collabmatrix-list-authors', array(
+						'authors' => $authors,
+						'matrix' => $matrix,
+						'sep' => $sep,
+					));
+					$this->site->Footer();
+					break;
+				case 'list-count':
+					$this->site->Header('Results', array(
+						'breadcrumbs' => array(
+							'/tools' => 'Tools',
+							'/tools/collabmatrix' => 'Collaboration Matrix',
+						),
+					));
+					$this->site->view('tools/collabmatrix-list-count', array(
 						'authors' => $authors,
 						'matrix' => $matrix,
 						'sep' => $sep,
