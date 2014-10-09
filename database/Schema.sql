@@ -116,6 +116,7 @@ CREATE INDEX pages_code ON pages(code);
 -- Core
 INSERT INTO pages VALUES (null, 'core/panic', 'Site Panic', 'Something has gone horribly wrong with [site.name]\n\n[panic.text]\n\n---TRACE---\n[panic.trace]\n---END TRACE---\n', 'text', 1, null, null, 0);
 INSERT INTO pages VALUES (null, 'libraries/share', 'Share Library', '[user.name] wishes to share the library [library.name] ([library.references] references) with you.\n\nClick the link below to manage the reference library.\n\n    [share.url]\n\n\nYou have three days to click the above link before it expires.\n\nCREBP Systematic Review Creator', 'text', 1, null, null, 0);
+INSERT INTO pages VALUES (null, 'email/recover', 'Recover your password', 'Hello [user.name],\n\nSomeone has requested a new password for your account iwth [site.title]. We have generated a new password below. If you did not request this then ignore this email, your existing password will continue working.\n\nNew Password: [user.password]\n\Regards,\nThe CREBP SRA website', 'text', 1, null, null, 0);
 -- }}}
 -- URLPayloads {{{
 -- NOTE: Used to track share links to libraries

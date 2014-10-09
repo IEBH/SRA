@@ -16,7 +16,7 @@ class Email extends CI_Model {
 		$this->load->model('Page');
 		$this->load->model('User');
 		if ((!$page = $this->Page->GetByCode($code)) && $page != 'core/panic') {
-			$this->site->Panic("Cant find non-existant page code '$code' to send via email to user id #$userid");
+			$this->site->Error("Cant find non-existant page code '$code' to send via email to user id #$userid");
 			return;
 		}
 		$users = ($userid == 0) ? $this->User->GetAll(array('role' => 'admin')) : array($this->User->Get($userid)); // Get a list of who to send to
