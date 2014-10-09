@@ -212,7 +212,6 @@ class User extends CI_Model {
 		$this->db->where('userid', $userid);
 		$this->db->update('users', array(
 			'passhash2' => $this->HashSet($password2),
-			'passhash2_created' => time(),
 		));
 		$this->Log->Add('user', 'Setup secondary password recovery for user', null, $userid);
 		return $password2;
