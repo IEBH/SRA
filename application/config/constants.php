@@ -57,7 +57,7 @@ define('SCREEN_LIMIT', 10); // How many references per page
 // Email switches
 define('EMAIL_ADDRESS', 'noreply@' . SITE_DOMAIN);
 define('EMAIL_NAME', SITE_TITLE); // The human name of the EMAIL_ADDRESS
-define('EMAIL_OVERRIDE', 1); // If enabled all outgoing mail will sent to EMAIL_OVERRIDE_TO
+define('EMAIL_OVERRIDE', 0); // If enabled all outgoing mail will sent to EMAIL_OVERRIDE_TO
 define('EMAIL_OVERRIDE_TO', 'matt@mfdc.biz');
 define('EMAIL_OVERRIDE_NAME', 'Matt Carter');
 
