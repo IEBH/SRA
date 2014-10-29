@@ -339,7 +339,7 @@ class Site {
 	* @param string $path The root path to search
 	* @param string $prefix Optional prefix to include before each included file
 	*/
-	function IncludeNG($root = 'js/ng', $prefix = '/') {
+	function IncludeNG($root = 'app', $prefix = '/') {
 		$out = "<!-- NG Include -->\n";
 		$loadOrder = array(
 			'app.js',
