@@ -6,6 +6,7 @@ class Library extends Joyst_Model {
 			$this->db->select('COUNT(*) AS count');
 			$this->db->from('references');
 			$this->db->where('libraryid', $row['libraryid']);
+			$this->db->where('status', 'active');
 			$count = $this->db->get()->row_array();
 			$row['itemCount'] = $count['count'];
 		});
