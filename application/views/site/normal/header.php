@@ -2,7 +2,7 @@
 <html lang="en">
 <? include('application/views/site/head.php') ?>
 
-<body class="navbar-fixed" ng-app="app" ng-controller="globalController">
+<body ng-app="app" ng-controller="globalController" class="navbar-fixed">
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container-fluid">
@@ -110,7 +110,7 @@
 
 				<span class="btn btn-danger"></span>
 			</div>
-		</div><!--#sidebar-shortcuts-->
+		</div>
 
 		<? include('application/views/site/sidebar.php') ?>
 

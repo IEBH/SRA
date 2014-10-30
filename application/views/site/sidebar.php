@@ -75,16 +75,11 @@
 				</a>
 			</li>
 			<? } ?>
-			<?
-			foreach ($this->Library->GetAll(array('userid' => $this->User->GetActive('userid'), 'status !=' => 'deleted')) as $library) {
-				if ($library['libraryid'] == $basket['libraryid']) continue; // Skip the basket - which we displayed above
-			?>
-			<li>
-				<a href="/libraries/view/<?=$library['libraryid']?>">
-					<i class="fa fa-angle-double-right"></i> <?=$library['title']?>
+			<li ng-repeat="library in libraries">
+				<a href="/libraries/view/{{library.libraryid}}">
+					{{library.title}}
 				</a>
 			</li>
-			<? } ?>
 			<li><a href="/libraries/import">
 				<i class="fa fa-plus"></i> Import New</a>
 			</li>
