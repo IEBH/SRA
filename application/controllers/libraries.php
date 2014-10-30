@@ -1,9 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Libraries extends CI_Controller {
+class Libraries extends Joyst_Controller {
 	function __construct() {
 		parent::__construct();
-		$this->load->model('Library');
 		$this->Security->EnsureLogin();
+		$this->load->model('Library');
+		$this->JoystModel('Library');
 	}
 
 	function Index() {

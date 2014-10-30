@@ -1,11 +1,68 @@
 <?
-class Library extends CI_Model {
-	function Get($libraryid) {
-		$this->db->from('libraries');
-		$this->db->where('libraryid', $libraryid);
-		$this->db->limit(1);
-		return $this->db->get()->row_array();
+class Library extends Joyst_Model {
+	function DefineSchema() {
+		$this->On('row', function(&$row) {
+			// $row['itemCount'] = $this->Reference->Count(array('libraryid' => $row['libraryid']));
+			$this->db->select('COUNT(*) AS count');
+			$this->db->from('references');
+			$this->db->where('libraryid', $row['libraryid']);
+			$count = $this->db->get()->row_array();
+			$row['itemCount'] = $count['count'];
+		});
+		$this->On('getall', function(&$where) {
+			$this->db->join('user2library', 'user2library.libraryid = libraries.libraryid AND user2library.userid = ' . $this->User->GetActive('userid'));
+		});
+		$this->On('create', function(&$row) {
+			$row['created'] = time();
+			$row['creatorid'] = $this->User->GetActive('userid');
+		});
+		$this->On('created', function(&$id, &$row) {
+			$this->AddUser($this->User->GetActive('userid'), $id);
+		});
+		$this->On('save', function($id, &$row) {
+			$row['edited'] = time();
+		});
+		return array(
+			'_model' => 'Library',
+			'_table' => 'libraries',
+			'_id' => 'libraryid',
+			'libraryid' => array(
+				'type' => 'pk',
+				'readonly' => true,
+			),
+			'title' => array(
+				'type' => 'varchar',
+				'length' => 200,
+			),
+			'debug' => array(
+				'type' => 'enum',
+				'options' => array('active', 'inactive'),
+				'default' => 'inactive',
+			),
+			'created' => array(
+				'type' => 'epoc',
+				'readonly' => true,
+			),
+			'edited' => array(
+				'type' => 'int',
+				'readonly' => true,
+			),
+			'status' => array(
+				'type' => 'enum',
+				'options' => array('active', 'dedeupe', 'deduped', 'deleted'),
+				'default' => 'active',
+			),
+
+			// Dedupe specific data
+			'dedupe_refid' => array(
+				'type' => 'int',
+			),
+			'dedupe_refid2' => array(
+				'type' => 'int',
+			),
+		);
 	}
+
 
 	var $basketCache;
 	/**
@@ -34,22 +91,6 @@ class Library extends CI_Model {
 			return $this->basketCache;
 		}
 		return FALSE;
-	}
-
-	function GetAll($where = null, $orderby = 'title') {
-		$this->db->select('libraries.*');
-		$this->db->from('libraries');
-
-		if (isset($where['userid'])) {
-			$this->db->join('user2library', 'user2library.libraryid = libraries.libraryid AND user2library.userid = ' . $where['userid']);
-			unset($where['userid']);
-		}
-
-		if ($where)
-			$this->db->where($where);
-		if ($orderby)
-			$this->db->order_by($orderby);
-		return $this->db->get()->result_array();
 	}
 
 	function GetAllTags($libraryid) {
@@ -115,30 +156,6 @@ class Library extends CI_Model {
 		return $this->db->get()->row_array();
 	}
 
-	function Count($where = null) {
-		$this->db->select('COUNT(*) AS count');
-		$this->db->from('libraries');
-		if ($where)
-			$this->db->where($where);
-		$row = $this->db->get()->row_array();
-		return $row['count'];
-	}
-
-	function Create($data) {
-		$fields = array();
-		foreach (qw('title debug') as $field)
-			if (isset($data[$field]))
-				$fields[$field] = $data[$field];
-
-		if ($fields) {
-			$fields['created'] = time();
-			$this->db->insert('libraries', $fields);
-			$lid = $this->db->insert_id();
-			$this->AddUser($this->User->GetActive('userid'), $lid);
-			return $lid;
-		}
-	}
-
 	function AddUser($userid, $libraryid) {
 		// Already linked?
 		$this->db->from('user2library');
@@ -187,20 +204,6 @@ class Library extends CI_Model {
 			return true;
 		// }}}
 		return false;
-	}
-
-	function Save($libraryid, $data) {
-		$fields = array();
-		foreach (qw('title debug') as $field)
-			if (isset($data[$field]))
-				$fields[$field] = $data[$field];
-
-		if ($fields) {
-			$fields['edited'] = time();
-			$this->db->where('libraryid', $libraryid);
-			$this->db->update('libraries', $fields);
-			return $this->db->insert_id();
-		}
 	}
 
 	function SaveDupeStatus($libraryid, $ref1, $ref2) {
