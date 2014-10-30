@@ -14,8 +14,7 @@
 	</div>
 </legend>
 
-<? if (!$libraries) { ?>
-<div class="alert alert-info">
+<div ng-show="!libraries.length" class="alert alert-info">
 	<div class="alert alert-info">
 		<h3><i class="fa fa-info-circle"></i> No libraries found</h3>
 		<p>You dont appear to have any reference libraries. You can import an existing library file or create new library manually.</p>
@@ -26,27 +25,20 @@
 		</div>
 	</div>
 </div>
-<? } else { ?>
-<table class="table table-striped table-bordered">
+<table ng-show="libraries.length" class="table table-striped table-bordered">
 	<tr>
 		<th width="60px">&nbsp;</th>
 		<th>Title</th>
 		<th width="100px">References</th>
 	</tr>
-	<? foreach ($libraries as $library) { ?>
-	<tr>
+	<tr ng-repeat="library in libraries">
 		<td>
 			<div class="dropdown">
 				<a class="btn" data-toggle="dropdown"><i class="fa fa-tags"></i></a>
-				<ul class="dropdown-menu">
-					<li><a href="/libraries/view/<?=$library['libraryid']?>"><i class="fa fa-tags"></i> View</a></li>
-					<? $this->load->view('libraries/verbs', array('library' => $library)) ?>
-				</ul>
+				<ul class="dropdown-menu" ng-include="'/partials/library-verbs.html'"></ul>
 			</div>
 		</td>
-		<td><a href="/libraries/view/<?=$library['libraryid']?>"><?=$library['title']?></a></td>
-		<td><a href="/libraries/view/<?=$library['libraryid']?>"><span class="badge badge-info"><i class="fa fa-tag"></i> <?=$this->Reference->Count(array('libraryid' => $library['libraryid'], 'status !=' => 'deleted'))?></span></a></td>
+		<td><a href="/libraries/view/{{library.libraryid}}">{{library.title}}</a></td>
+		<td><a href="/libraries/view/{{library.libraryid}}"><span class="badge badge-info"><i class="fa fa-tag"></i> {{library.itemCount | number}}</span></a></td>
 	</tr>
-	<? } ?>
 </table>
-<? } ?>

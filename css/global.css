@@ -142,3 +142,8 @@ input[type=checkbox] {
 	padding: 5px 20px;
 }
 /* }}} */
+/* FIXMES: ng-include elements within a dropdown {{{ */
+.dropdown-menu > [ng-include] {
+	margin-left: -20px;
+}
+/* }}} */
