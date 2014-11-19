@@ -105,7 +105,7 @@ class Users extends Joyst_Controller {
 			if ($_POST['password'] != $_POST['password2'])
 				$errs[] = 'Passwords must match';
 
-			if ($emailer = $this->User->GetByEmail($this->Waveform->Fields['email'])) // Check email is not used by anyone
+			if ($emailer = $this->User->GetByEmail($_POST['email'])) // Check email is not used by anyone
 				$errs[] = 'That email already seems to be registered to someone else';
 
 			if (!isset($_POST['agree']))
