@@ -131,6 +131,31 @@ class Users extends Joyst_Controller {
 		$this->site->Footer();
 	}
 
+	function Password() {
+		$this->Security->EnsureLogin();
+
+		$this->Waveform = new Waveform();
+		$this->Waveform->Style('bootstrap');
+		
+		$this->Waveform->Define('password')
+			->Password();
+
+		if ($fields = $this->Waveform->OK()) {
+			if ($fields['password'] != $fields['password_again']) {
+				$this->Waveform->Fail('password', 'Passwords must match');
+			} else {
+				$this->User->Save($this->User->GetActive('userid'), array(
+					'password' => $fields['password']
+				));
+				$this->site->Redirect('/');
+			}
+		}
+
+		$this->site->Header('Change password');
+		$this->site->View('users/password');
+		$this->site->Footer();
+	}
+
 	function Profile() {
 		$this->Security->EnsureLogin();
 		if (!$this->RequesterWants('json'))

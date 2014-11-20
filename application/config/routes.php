@@ -9,6 +9,7 @@ $route['login/(:any)'] = 'users/login/$1';
 $route['logout'] = 'users/logout';
 $route['signup'] = 'users/signup';
 $route['recover'] = 'users/recover';
+$route['password'] = 'users/password';
 $route['recover/(:any)'] = 'users/recover';
 $route['help/(:any)'] = 'pages/show/$1';
 

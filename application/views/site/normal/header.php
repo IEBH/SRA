@@ -65,6 +65,7 @@
 					<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
 						<li><a href="/libraries"><i class="fa fa-tags"></i> My libraries</a></li>
 						<li class="divider"></li>
+						<li><a href="/password"><i class="fa fa-key"></i> Change password</a></li>
 						<li><a href="/logout"><i class="fa fa-power-off"></i> Logout</a></li>
 					</ul>
 					<? } else { ?>
