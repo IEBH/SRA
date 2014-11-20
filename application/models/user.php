@@ -65,7 +65,7 @@ class User extends CI_Model {
 		return $user;
 	}
 
-	var $cachednames;
+	var $cachednames = array();
 	/**
 	* Fast access function to simply return a user name
 	* This function uses caching and ONLY returns one item of data
@@ -74,31 +74,35 @@ class User extends CI_Model {
 	* @return string The user name of the requested user
 	*/
 	function GetName($userid = null, $short = FALSE) {
-		if (!$userid && !$userid = $this->GetActive('userid')) // Try to use logged in user, otherwise fail
+		if (!$userid && !$userid = $this->GetActive('userid')) { // Try to use logged in user, otherwise fail
 			return FALSE;
-		if (!isset($this->cachednames[$userid])) {
-			if (!is_array($userid)) { 
-				$this->db->select('fname, lname, email');
-				$this->db->from('users');
-				$this->db->where('userid', $userid);
-				$this->db->limit(1);
-				$record = $this->db->get()->row_array();
-			} else
-				$record = $userid;
-			if (!isset($record['fname'])) {
-				$this->cachednames[$userid] = 'ERROR';
-			} elseif ($record['fname'] && $short) {
-				$this->cachednames[$userid] = ucfirst($record['fname']);
-			} elseif ($record['fname'] && $record['lname']) {
-				$this->cachednames[$userid] = ucfirst($record['fname']) . ' ' . ucfirst($record['lname']);
-			} elseif ($record['fname']) {
-				$this->cachednames[$userid] = ucfirst($record['fname']);
-			} elseif ($record['lname']) {
-				$this->cachednames[$userid] = ucfirst($record['lname']);
-			} else
-				$this->cachednames[$userid] = $record['email'];
+		} else if (is_numeric($userid)) {
+			if (isset($this->cachednames[$userid])) // Dont bother pulling the record if we already have the result cached
+				return $this->cachednames[$userid];
+			$this->db->select('fname, lname, email');
+			$this->db->from('users');
+			$this->db->where('userid', $userid);
+			$this->db->limit(1);
+			$record = $this->db->get()->row_array();
+		} else {	
+			$record = $userid;
 		}
-		return $this->cachednames[$userid];
+
+		if (!isset($record['userid']) || !isset($record['fname'])) {
+			return 'User';
+		} elseif (isset($this->cachednames[$record['userid']])) {
+			return $this->cachednames[$record['userid']];
+		} elseif ($record['fname'] && $short) {
+			$this->cachednames[$record['userid']] = ucfirst($record['fname']);
+		} elseif ($record['fname'] && $record['lname']) {
+			$this->cachednames[$record['userid']] = ucfirst($record['fname']) . ' ' . ucfirst($record['lname']);
+		} elseif ($record['fname']) {
+			$this->cachednames[$record['userid']] = ucfirst($record['fname']);
+		} elseif ($record['lname']) {
+			$this->cachednames[$record['userid']] = ucfirst($record['lname']);
+		} else
+			$this->cachednames[$record['userid']] = $record['email'];
+		return $this->cachednames[$record['userid']];
 	}
 
 	/**
