@@ -55,11 +55,18 @@ define('DEDUPE_SCOOP_REFERENCES2', 50); // Number of secondary references to rea
 define('SCREEN_LIMIT', 10); // How many references per page
 
 // Email switches
-define('EMAIL_ADDRESS', 'noreply@' . SITE_DOMAIN);
-define('EMAIL_NAME', SITE_TITLE); // The human name of the EMAIL_ADDRESS
+define('EMAIL_ADDRESS', 'noreply@crebp-sra.com');
+define('EMAIL_NAME', 'CREBP-SRA'); // The human name of the EMAIL_ADDRESS
 define('EMAIL_OVERRIDE', 0); // If enabled all outgoing mail will sent to EMAIL_OVERRIDE_TO
-define('EMAIL_OVERRIDE_TO', 'matt@mfdc.biz');
+define('EMAIL_OVERRIDE_TO', 'matt_carter@bond.edu.au');
 define('EMAIL_OVERRIDE_NAME', 'Matt Carter');
+
+// Server details
+// define('EMAIL_SERVER_HOSTNAME', 'localhost');
+// define('EMAIL_SERVER_PORT', 25);
+// define('EMAIL_SERVER_USER', 'smtp@localhost');
+// define('EMAIL_SERVER_PASS', '');
+require('application/config/constants-private.php'); // Pull from private file (so its not checked in to GitHub)
 
 define('URLPAYLOAD_DEFAULT_EXPIRY', strtotime('+3 days'));
 define('URLPAYLOAD_URL', SITE_URL . '/go/[CODE]');

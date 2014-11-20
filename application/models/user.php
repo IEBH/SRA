@@ -155,12 +155,11 @@ class User extends CI_Model {
 		if ($this->HashCmp($password, $user['passhash'], $user['userid'])) { // Match primary password
 			return $user;
 		} elseif ($this->HashCmp($password, $user['passhash2'], $user['userid'])) { // Match secondary password
-			$this->log->Add('login', 'Swapped to secondary password', null, $user['userid']);
+			$this->Log->Add('login', 'Swapped to secondary password', null, $user['userid']);
 			$this->db->where('userid', $user['userid']); // Swap secondary -> primary passwords
 			$this->db->update('users', array(
 				'passhash' => $user['passhash2'],
 				'passhash2' => null,
-				'passhash2_created' => null,
 			));
 			return $user;
 		}

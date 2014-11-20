@@ -72,25 +72,33 @@ class Email extends CI_Model {
 	* @param string $html The HTML blob to send
 	*/
 	function Dispatch($format, $userid, $subject, $body) {
-		$user = $this->User->Get($userid);
-		$headers = '';
-		if ($format == 'html')
-			$headers = "MIME-Version: 1.0\r\nContent-type: text/html; charset=iso-8859-1\r\n";
+		$this->Mailer = new PHPMailer();
+		$this->Mailer->IsSMTP(); 
+		$this->Mailer->Host = EMAIL_SERVER_HOSTNAME;
+		$this->Mailer->SMTPAuth = false;
+		$this->Mailer->Port = EMAIL_SERVER_PORT;
+		$this->Mailer->Username = EMAIL_SERVER_USER;
+		$this->Mailer->Password = EMAIL_SERVER_PASS;
+		$this->Mailer->SetFrom(EMAIL_ADDRESS, EMAIL_NAME);
+		$this->Mailer->Subject = $subject;
+		$this->Mailer->isHTML($format == 'html');
+		$this->Mailer->Body = $body;
+
 		if (EMAIL_OVERRIDE) {
-			$headers .= "To: " . EMAIL_OVERRIDE_NAME . " <" . EMAIL_OVERRIDE_TO . ">\r\n";
-			$to = EMAIL_OVERRIDE_TO;
+			$this->Mailer->AddAddress(EMAIL_OVERRIDE_TO, EMAIL_OVERRIDE_NAME);
+		} else if (is_numeric($userid)) {
+			$userid = $this->User->Get($userid);
+			$this->Mailer->AddAddress($userid['email'], $this->User->GetName($userid));
+			$this->Log->Add('envelope', "Sent email with subject '$subject' to {$userid['email']}");
 		} else if (is_string($userid)) {
-			$headers .= "To: $userid\r\n";
-			$to = $userid;
+			$this->Mailer->AddAddress($userid);
 			$this->Log->Add('envelope', "Sent email with subject '$subject' to $userid");
 		} else {
-			$headers .= "To: " . $this->User->GetName($userid) . " <{$user['email']}>\r\n";
-			$to = $user['email'];
-			$this->Log->Add('envelope', "Sent email with subject '$subject' to {$user['email']}", $user['userid']);
+			$this->Mailer->AddAddress($userid['email'], $this->User->GetName($userid));
+			$this->Log->Add('envelope', "Sent email with subject '$subject' to {$user['email']}");
 		}
 
-		$headers .= 'From: ' . EMAIL_NAME . ' <' . EMAIL_ADDRESS . ">\r\n";
-		mail($to, $subject, $body, $headers);
+		return $this->Mailer->Send();
 	}
 
 	/**

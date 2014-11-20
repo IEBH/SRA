@@ -109,5 +109,25 @@ class Debug extends CI_Controller {
 
 		$this->dest->OutputXML();
 	}
+
+	function Email() {
+		$this->Mailer = new PHPMailer();
+		$this->Mailer->IsSMTP(); 
+		$this->Mailer->Host = EMAIL_SERVER_HOSTNAME;
+		$this->Mailer->SMTPAuth = false;
+		$this->Mailer->Port = EMAIL_SERVER_PORT;
+		$this->Mailer->Username = EMAIL_SERVER_USER;
+		$this->Mailer->Password = EMAIL_SERVER_PASS;
+		$this->Mailer->SetFrom(EMAIL_ADDRESS, EMAIL_NAME);
+		$this->Mailer->Subject = "Spotnic/Debug/Email";
+		$this->Mailer->Body = "Hello World!\n\nThis message was sent at " . date('d/m/Y H:i');
+		$this->Mailer->AddAddress(EMAIL_OVERRIDE_TO, EMAIL_OVERRIDE_NAME);
+
+		if(!$this->Mailer->Send()) {
+			echo "Mailer Error: " . $this->Mailer->ErrorInfo;
+		} else {
+			echo "Message sent!";
+		}
+	}
 }
 ?>
