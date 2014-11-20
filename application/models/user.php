@@ -74,8 +74,9 @@ class User extends CI_Model {
 	* @return string The user name of the requested user
 	*/
 	function GetName($userid = null, $short = FALSE) {
-		if (!$userid && !$userid = $this->GetActive('userid')) { // Try to use logged in user, otherwise fail
-			return FALSE;
+		if (!$userid) { // Try to use logged in user, otherwise fail
+			if (!$record = $this->GetActive())
+				return FALSE;
 		} else if (is_numeric($userid)) {
 			if (isset($this->cachednames[$userid])) // Dont bother pulling the record if we already have the result cached
 				return $this->cachednames[$userid];
