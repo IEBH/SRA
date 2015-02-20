@@ -79,6 +79,15 @@ class Joyst_Model extends CI_Model {
 	var $schema = array();
 
 	/**
+	* How this module is being invoked.
+	* ENUM of:
+	*	internal - via an internal API call
+	* 	controller - via a Joyst_Controller interface
+	* @var string
+	*/
+	var $source = 'internal';
+
+	/**
 	* Storage for all hooks
 	* Use the On(), Off() and Trigger() functions to manage this
 	* @see On()
@@ -285,10 +294,27 @@ class Joyst_Model extends CI_Model {
 			return;
 		$out = array();
 		foreach ($array as $field => $value) {
-			if ($operation == 'where' && preg_match('/^(.*) (.*)$/', $field, $matches)) { // special CI syntax e.g. 'status !=' => 'something' (only for 'where' operations)
+			if ($operation == 'where' && $this->source == 'internal' && preg_match('/^(.*) (.*)$/', $field, $matches)) { // special CI syntax in key e.g. 'status !=' => 'something' (only for 'where' operations)
 				$key = $matches[1];
 				$cond = $matches[2];
 				$val = $value;
+			} elseif ($operation == 'where' && $this->source == 'controller' && is_string($value) && preg_match('/^([\<\>]=?)(.*)$/', $value, $matches)) { // CI syntax in value e.g. '>=value'
+				$key = $field;
+				$cond = $matches[1];
+				$val = $matches[2];
+			} elseif ($operation == 'where' && $this->source == 'controller' && is_array($value) && preg_match('/^([\<\>]=?)(.*)$/', $value[0], $matches)) { // CI syntax in value via array (e.g. ['>=value', '<=value'])
+				// Accept an array of where conditions - this works around the fact that PHP will always accept the LAST where condition in an URL
+				// e.g. ?foo=>1&foo=<10 (foo will == '<10')
+				// Use ?foo[]=>1&foo[]=<10 to work around this
+				$key = $field;
+				$cond = $matches[1];
+				$val = $matches[2];
+
+				array_shift($value); // Remove first element - which we've already taken care of
+				foreach ($value as $valIndex => $valArray) {
+					if (preg_match('/^([\<\>]=?)(.*)$/', $value[$valIndex], $matches))
+						$out[isset($matches[1]) && $matches[1] != '=' ? "$key {$matches[1]}" : $key] = $matches[2];
+				}
 			} else {
 				$key = $field;
 				$cond = '=';
@@ -313,7 +339,7 @@ class Joyst_Model extends CI_Model {
 				continue;
 
 			// If we got this far its a valid field
-			$out[$field] = $value;
+			$out[$cond && $cond != '=' ? "$key $cond" : $key] = $val;
 		}
 		return $out;
 	}

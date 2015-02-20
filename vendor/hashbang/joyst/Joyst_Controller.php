@@ -139,64 +139,59 @@ class Joyst_Controller extends CI_Controller {
 		$segments = $this->uri->segments;
 
 		array_shift($segments); // Shift first segment - assuming its the controller name
-		if (!$segments) { // No arguments after controller name
-			if (isset($routes[''])) { // blank route exists
-				$matchingRoute = '';
-			} else
-				return; // No support for blank route is present and we have nothing to work with
-		} else {
-			$segment = array_shift($segments); // Retrieve argument if any
 
-			// Determine the route to use
-			foreach ($routes as $routeKey => $dest) {
-				$route = $routeKey;
-				if (preg_match('!^(.*)\[(.+?)\](.*)$!', $route, $matches)) { // Has a method in the form '[SOMETHING]'
-					$blockMatch = false; // Continue executing (set to false to stop)
-					foreach (preg_split('/\s*,\s*/', $matches[2]) as $block) { // Split CSV into bits
-						switch ($block) {
-							// Incomming HTTP methods
-							case 'GET':
-							case 'PUT':
-							case 'DELETE':
-							case 'POST':
-								if ($_SERVER['REQUEST_METHOD'] == $block) // Found route method does not match this one
-									$blockMatch = true;
-								break;
-							case 'JSON':
-								if ($gotJSON)
-									$blockMatch = true;
-								break;
-							default:
-								die("Joyst_Controller> Unsupported route query type: $block");
-						}
+		$segment = $segments ? array_shift($segments) : ''; // Retrieve argument if any
+
+		// Determine the route to use
+		foreach ($routes as $routeKey => $dest) {
+			$route = $routeKey;
+			if (preg_match('!^(.*)\[(.+?)\](.*)$!', $route, $matches)) { // Has a method in the form '[SOMETHING]'
+				$blockMatch = false; // Continue executing (set to false to stop)
+				foreach (preg_split('/\s*,\s*/', $matches[2]) as $block) { // Split CSV into bits
+					switch ($block) {
+						// Incomming HTTP methods
+						case 'GET':
+						case 'PUT':
+						case 'DELETE':
+						case 'POST':
+							if ($_SERVER['REQUEST_METHOD'] == $block) // Found route method does not match this one
+								$blockMatch = true;
+							break;
+						case 'JSON':
+							if ($gotJSON)
+								$blockMatch = true;
+							break;
+						default:
+							die("Joyst_Controller> Unsupported route query type: $block");
 					}
-					if (!$blockMatch)
-						continue;
-					$route = "{$matches[1]}{$matches[3]}"; // Delete from route and continue
 				}
+				if (!$blockMatch)
+					continue;
+				$route = "{$matches[1]}{$matches[3]}"; // Delete from route and continue
+			}
 
-				switch ($route) {
-					case '':
-						if (!$segment) {
-							$matchingRoute = $routeKey;
-							break 2;
-						}
-						break;
-					case ':num':
-						if (is_numeric($segment)) {
-							$matchingRoute = $routeKey;
-							array_unshift($segments, $segment); // Put the segment back
-							break 2;
-						}
-						break;
-					default:
-						if ($segment == $route) {
-							$matchingRoute = $routeKey;
-							break 2;
-						}
-				}
+			switch ($route) {
+				case '':
+					if (!$segment) {
+						$matchingRoute = $routeKey;
+						break 2;
+					}
+					break;
+				case ':num':
+					if (is_numeric($segment)) {
+						$matchingRoute = $routeKey;
+						array_unshift($segments, $segment); // Put the segment back
+						break 2;
+					}
+					break;
+				default:
+					if ($segment == $route) {
+						$matchingRoute = $routeKey;
+						break 2;
+					}
 			}
 		}
+		
 
 		if (!isset($matchingRoute)) // Didn't find anything matching in routes
 			return;
@@ -241,7 +236,8 @@ class Joyst_Controller extends CI_Controller {
 		$this->load->model($model);
 		if (!is_subclass_of($this->$model, 'Joyst_Model'))
 			die("Use of \$this->JoystModel('$model') on a model that does not extend Joyst_Model");
-		//echo "Call \$this->$model->$func(" . json_encode($args) . ")<br/>";
+		$this->$model->source = 'controller'; // Tell the model how its been invoked
+		// echo "Call \$this->$model->$func(" . json_encode($args) . ")<br/>";
 		$this->$model->returnRow = $this->returnRow; // Carry returnRow over into the Model
 		$return = call_user_func_array(array($this->$model, $func), $args);
 		// }}}

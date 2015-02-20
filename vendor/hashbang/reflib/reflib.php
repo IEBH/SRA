@@ -13,13 +13,19 @@ class RefLib {
 	*	* address - String (optional)
 	*	* contact-name - String (optional)
 	*	* contact-email - String (optional)
+	*	* database - String (optional)
+	*	* database-provier - String (optional)
+	*	* doi - String (optional)
 	*	* title - String
 	*	* title-secondary - String (optional)
+	*	* alt-journal - String (optional)
 	*	* title-short - String (optional)
+	*	* accension-num - String (optional)
 	*	* periodical-title - String (optional)
-	* 	* pages - String (optional)
+	*	* pages - String (optional)
+	*	* type - String (optional) see $refTypes
 	*	* volume - String (optional)
-	*	* number - String (optional)
+	*	* number - String (optional) - Issue #
 	*	* section - String (optional)
 	*	* year - String (optional) - Four digit year number e.g. '2014'
 	*	* date - String (optional) - Unix epoc
@@ -31,6 +37,7 @@ class RefLib {
 	*	* label - String (optional)
 	*	* caption - String (optional)
 	*	* language - String (optional)
+	*	* work-type - String (optional)
 	*	* custom{1..7} - String (optional)
 	*
 	* @var array

@@ -22,6 +22,6 @@
 	"config": {
 	},
 	"autoload": {
-		"files": ["reflib.php"]
+		"classmap": ["reflib.php"]
 	}
 }

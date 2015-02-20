@@ -10,6 +10,7 @@ return array(
     'Joyst_Model' => $vendorDir . '/hashbang/joyst/Joyst_Model.php',
     'PHPMailer' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
     'POP3' => $vendorDir . '/phpmailer/phpmailer/class.pop3.php',
+    'RefLib' => $vendorDir . '/hashbang/reflib/reflib.php',
     'SMTP' => $vendorDir . '/phpmailer/phpmailer/class.smtp.php',
     'phpmailerException' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
 );

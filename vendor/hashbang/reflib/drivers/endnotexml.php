@@ -25,6 +25,17 @@ class RefLib_endnotexml {
 	var $endNoteFile = 'EndNote.enl';
 
 	/**
+	* Reference type lookup table
+	* Key is the human EndNote string, value is the EndNote int value
+	* @var array
+	*/
+	var $refTypes = array(
+		'Electronic Article' => 43,
+		'Journal Article' => 17,
+		'Map' => 20,
+	);
+
+	/**
 	* Escpe a string in an EndNote compatible way
 	* @param string $string The string to be escaped
 	* @return string The escaped string
@@ -70,7 +81,11 @@ class RefLib_endnotexml {
 			$out .= '<source-app name="EndNote" version="16.0">EndNote</source-app>';
 			$out .= '<rec-number>' . $number . '</rec-number>';
 			$out .= '<foreign-keys><key app="EN" db-id="s55prpsswfsepue0xz25pxai2p909xtzszzv">' . $number . '</key></foreign-keys>';
-			$out .= '<ref-type name="Journal Article">17</ref-type>';
+			if ($ref['type'] && isset($this->refTypes[$ref['type']]) ) {
+				$out .= "<ref-type name=\"{$ref['type']}\">{$this->refTypes[$ref['type']]}</ref-type>";
+			} else {
+				$out .= '<ref-type name="Journal Article">17</ref-type>';
+			}
 
 			$out .= '<contributors><authors>';
 				foreach ($ref['authors'] as $author)
@@ -82,17 +97,22 @@ class RefLib_endnotexml {
 				$out .= '<secondary-title><style face="normal" font="default" size="100%">' . (isset($ref['title-secondary']) && $ref['title-secondary'] ? $this->_export($ref['title-secondary']) : '') . '</style></secondary-title>';
 				if (isset($ref['title-short']) && $ref['title-short'])
 					$out .= '<short-title><style face="normal" font="default" size="100%">' . $this->_export($ref['title-short']) . '</style></short-title>';
+				if (isset($ref['alt-journal']) && $ref['alt-journal'])
+					$out .= '<alt-title><style face="normal" font="default" size="100%">' . $this->_export($ref['alt-journal']) . '</style></alt-title>';
 			$out .= '</titles>';
 
 				$out .= '<periodical><full-title><style face="normal" font="default" size="100%">' . (isset($ref['periodical-title']) && $ref['periodical-title'] ? $this->_export($ref['periodical-title']) : '') . '</style></full-title></periodical>';
 
 			// Simple key values
+			// EndNote field on left, RefLib on right
 			foreach (array(
 				'access-date' => 'access-date',
+				'accession-num' => 'accession-num',
 				'auth-address' => 'address',
+				'electronic-resource-num' => 'doi',
 				'pages' => 'pages',
 				'volume' => 'volume',
-				'number' => 'number',
+				'number' => 'number', // issue #
 				'section' => 'section',
 				'abstract' => 'abstract',
 				'isbn' => 'isbn',
@@ -101,6 +121,9 @@ class RefLib_endnotexml {
 				'language' => 'language',
 				'notes' => 'notes',
 				'research-notes' => 'research-notes',
+				'remote-database-provider' => 'database-provider',
+				'remote-database-name' => 'database',
+				'work-type' => 'work-type',
 				'custom1' => 'custom1',
 				'custom2' => 'custom2',
 				'custom3' => 'custom3',
@@ -122,6 +145,13 @@ class RefLib_endnotexml {
 					foreach ((array) $ref['urls'] as $url)
 						$out .= '<url><style face="normal" font="default" size="100%">' . $this->_export($url) . '</style></url>';
 				$out .= '</related-urls></urls>';
+			}
+
+			if (isset($ref['keywords']) && $ref['keywords']) {
+				$out .= '<keywords>';
+					foreach ((array) $ref['keywords'] as $keyword)
+						$out .= '<keyword><style face="normal" font="default" size="100%">' . $this->_export($keyword) . '</style></keyword>';
+				$out .= '</keywords>';
 			}
 
 			$out .= '</record>';
@@ -155,23 +185,42 @@ class RefLib_endnotexml {
 			foreach ($record->xpath('urls/related-urls/url/style/text()') as $url) 
 				$ref['urls'][] = $this->_GetText($url);
 
+			if ($record->xpath('keywords')) {
+				$ref['keywords'] = array();
+				foreach ($record->xpath('keywords/keyword/style/text()') as $keyword) 
+					$ref['keywords'][] = $this->_GetText($keyword);
+			}
+
 			if ($find = $record->xpath("titles/title/style/text()"))
 				$ref['title'] = $this->_GetText($find);
 			if ($find = $record->xpath("titles/secondary-title/style/text()"))
 				$ref['title-secondary'] = $this->_GetText($find);
 			if ($find = $record->xpath("titles/short-title/style/text()"))
 				$ref['title-short'] = $this->_GetText($find);
+			if ($find = $record->xpath("titles/alt-title/style/text()"))
+				$ref['alt-journal'] = $this->_GetText($find);
 			if ($find = $record->xpath("periodical/full-title/style/text()"))
 				$ref['periodical-title'] = $this->_GetText($find);
 			if ($find = $record->xpath("dates/year/style/text()"))
 				$ref['year'] = $this->_GetText($find);
 			if ($find = $record->xpath("dates/pub-dates/date/style/text()"))
 				$ref['date'] = $this->parent->ToEpoc($this->_GetText($find), $ref);
+			if ($find = $record->xpath("ref-type/text()")) {
+				$typesFlipped = array_flip($this->refTypes);
+				if (isset($typesFlipped[$this->_GetText($find)])) {
+					$ref['type'] = $typesFlipped[$this->_GetText($find)];
+				} else {
+					die('UNKNOWN: ' . $this->_GetText($find));
+				}
+			}
 
 			// Simple key=>vals
+			// EndNote on left, RefLib on right
 			foreach (array(
 				'access-date' => 'access-date',
+				'accession-num' => 'accession-num',
 				'auth-address' => 'address',
+				'electronic-resource-num' => 'doi',
 				'pages' => 'pages',
 				'volume' => 'volume',
 				'number' => 'number',
@@ -183,6 +232,9 @@ class RefLib_endnotexml {
 				'label' => 'label',
 				'caption' => 'caption',
 				'language' => 'language',
+				'remote-database-provider' => 'database-provider',
+				'remote-database-name' => 'database',
+				'work-type' => 'work-type',
 				'custom1' => 'custom1',
 				'custom2' => 'custom2',
 				'custom3' => 'custom3',

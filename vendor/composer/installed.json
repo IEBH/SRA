@@ -134,100 +134,6 @@
         ]
     },
     {
-        "name": "hashbang/joyst",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hash-bang/Joyst.git",
-            "reference": "33f3ee4f0c7b49f257c7f3b8b20beed9def711f5"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hash-bang/Joyst/zipball/33f3ee4f0c7b49f257c7f3b8b20beed9def711f5",
-            "reference": "33f3ee4f0c7b49f257c7f3b8b20beed9def711f5",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2014-06-24 03:36:41",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "Joyst_Model.php",
-                "Joyst_Controller.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Matt Carter",
-                "email": "m@ttcarter.com",
-                "homepage": "https://github.com/hash-bang"
-            }
-        ],
-        "description": "CodeIgniter extension providing automated model functionality based on a DB schema",
-        "homepage": "https://github.com/hash-bang/Joyst",
-        "keywords": [
-            "codeigniter",
-            "database",
-            "model",
-            "schema"
-        ]
-    },
-    {
-        "name": "hashbang/reflib",
-        "version": "v1.1.5",
-        "version_normalized": "1.1.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hash-bang/RefLib.git",
-            "reference": "4ce68e156ec67c29dbfcaa7fcafa330fa42df370"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/4ce68e156ec67c29dbfcaa7fcafa330fa42df370",
-            "reference": "4ce68e156ec67c29dbfcaa7fcafa330fa42df370",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.0.0"
-        },
-        "time": "2014-06-25 00:43:20",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "reflib.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Matt Carter",
-                "email": "m@ttcarter.com",
-                "homepage": "https://github.com/hash-bang"
-            }
-        ],
-        "description": "PHP module for managing a variety of citation reference libraries",
-        "homepage": "https://github.com/hash-bang/RefLib",
-        "keywords": [
-            "RIS",
-            "citations",
-            "endnote",
-            "library",
-            "references"
-        ]
-    },
-    {
         "name": "phpmailer/phpmailer",
         "version": "v5.2.9",
         "version_normalized": "5.2.9.0",
@@ -281,5 +187,99 @@
             }
         ],
         "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
+    },
+    {
+        "name": "hashbang/reflib",
+        "version": "v1.1.6",
+        "version_normalized": "1.1.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hash-bang/RefLib.git",
+            "reference": "7b5ad6a0561d56657218aee6fcfc58099fc1f31a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/7b5ad6a0561d56657218aee6fcfc58099fc1f31a",
+            "reference": "7b5ad6a0561d56657218aee6fcfc58099fc1f31a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0.0"
+        },
+        "time": "2015-02-20 01:23:44",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "reflib.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Matt Carter",
+                "email": "m@ttcarter.com",
+                "homepage": "https://github.com/hash-bang"
+            }
+        ],
+        "description": "PHP module for managing a variety of citation reference libraries",
+        "homepage": "https://github.com/hash-bang/RefLib",
+        "keywords": [
+            "RIS",
+            "citations",
+            "endnote",
+            "library",
+            "references"
+        ]
+    },
+    {
+        "name": "hashbang/joyst",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hash-bang/Joyst.git",
+            "reference": "04712b47859ace2429dc2e1577242ebb20edff63"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hash-bang/Joyst/zipball/04712b47859ace2429dc2e1577242ebb20edff63",
+            "reference": "04712b47859ace2429dc2e1577242ebb20edff63",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2014-10-13 03:42:03",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "Joyst_Model.php",
+                "Joyst_Controller.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Matt Carter",
+                "email": "m@ttcarter.com",
+                "homepage": "https://github.com/hash-bang"
+            }
+        ],
+        "description": "CodeIgniter extension providing automated model functionality based on a DB schema",
+        "homepage": "https://github.com/hash-bang/Joyst",
+        "keywords": [
+            "codeigniter",
+            "database",
+            "model",
+            "schema"
+        ]
     }
 ]
