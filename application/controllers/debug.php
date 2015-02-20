@@ -41,11 +41,6 @@ class Debug extends CI_Controller {
 		$this->site->Footer();
 	}
 
-	function Batt() {
-		echo "<pre>";
-		$this->batt->read('application/views/libraries/share.php');
-	}
-
 	function Backport() {
 		$this->load->model('Reference');
 		require('lib/php-endnote/endnote.php');
@@ -119,7 +114,7 @@ class Debug extends CI_Controller {
 		$this->Mailer->Username = EMAIL_SERVER_USER;
 		$this->Mailer->Password = EMAIL_SERVER_PASS;
 		$this->Mailer->SetFrom(EMAIL_ADDRESS, EMAIL_NAME);
-		$this->Mailer->Subject = "Spotnic/Debug/Email";
+		$this->Mailer->Subject = "Debug Email";
 		$this->Mailer->Body = "Hello World!\n\nThis message was sent at " . date('d/m/Y H:i');
 		$this->Mailer->AddAddress(EMAIL_OVERRIDE_TO, EMAIL_OVERRIDE_NAME);
 
