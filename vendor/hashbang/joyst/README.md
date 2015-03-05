@@ -7,8 +7,6 @@ Joyst has the following aims:
 1. To automate the tedious specification for models in CodeIgniter - its does this by automatically providing common functionality like `get()`, `getAll()`, `getById()` etc.
 2. To automate the acccess to the data layer for simple tasks ([CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)) from the front end to the backend.
 
-**At present this module is HIGHLY EXPERIMENTAL and should not be used in production systems as the syntax is liable to change**
-
 
 Installation
 ------------

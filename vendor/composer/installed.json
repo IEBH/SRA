@@ -190,23 +190,23 @@
     },
     {
         "name": "hashbang/reflib",
-        "version": "v1.1.6",
-        "version_normalized": "1.1.6.0",
+        "version": "v1.1.7",
+        "version_normalized": "1.1.7.0",
         "source": {
             "type": "git",
             "url": "https://github.com/hash-bang/RefLib.git",
-            "reference": "7b5ad6a0561d56657218aee6fcfc58099fc1f31a"
+            "reference": "cf9949694207bd028206305cead6b9745f6e80c2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/7b5ad6a0561d56657218aee6fcfc58099fc1f31a",
-            "reference": "7b5ad6a0561d56657218aee6fcfc58099fc1f31a",
+            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/cf9949694207bd028206305cead6b9745f6e80c2",
+            "reference": "cf9949694207bd028206305cead6b9745f6e80c2",
             "shasum": ""
         },
         "require": {
             "php": ">=5.0.0"
         },
-        "time": "2015-02-20 01:23:44",
+        "time": "2015-03-05 04:26:42",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -242,18 +242,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/hash-bang/Joyst.git",
-            "reference": "04712b47859ace2429dc2e1577242ebb20edff63"
+            "reference": "f8bcf396120884c5c77e3e8f016b8472e2cc2fb0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/hash-bang/Joyst/zipball/04712b47859ace2429dc2e1577242ebb20edff63",
-            "reference": "04712b47859ace2429dc2e1577242ebb20edff63",
+            "url": "https://api.github.com/repos/hash-bang/Joyst/zipball/f8bcf396120884c5c77e3e8f016b8472e2cc2fb0",
+            "reference": "f8bcf396120884c5c77e3e8f016b8472e2cc2fb0",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2014-10-13 03:42:03",
+        "time": "2015-02-20 01:28:51",
         "type": "library",
         "installation-source": "source",
         "autoload": {
