@@ -132,8 +132,13 @@ $(function() {
 <div class="alert alert-info">
 	<h3><i class="fa fa-tags"></i> Review duplicates</h3>
 	<p>The deduplicator has resolved as many possible duplicates as it can.</p>
-	<p>However, the below duplicates have different posibile fields to choose from. This can often occur where two papers are detected as duplicates but this software doesn't know which set of data to use.</p>
-	<p>You can highlight the data you want to use below and press save or just skip this process to use the most likely entry.</p>
+	<p>
+		You have the option of
+		<ol>
+			<li>Choosing which fields you wish to retain by individually selecting those fields or</li>
+			<li>Selecting "Skip review stage” to accept the deduplicators choice</li>
+		</ol>
+	</p>
 	<div class="pull-center">
 		<a href="/libraries/finish/<?=$library['libraryid']?>" class="btn" data-tip="End the de-duplicate review stage and accept all recommendations" data-tip-placement="bottom"><i class="fa fa-times-sign"></i> Skip review stage</a>
 		<a href="/libraries/view/<?=$library['libraryid']?>" class="btn" data-tip="Retain all the unmerged data below and continue this process at a later date" data-tip-placement="bottom"><i class="fa fa-mail-forward"></i> Come back to this later</a>

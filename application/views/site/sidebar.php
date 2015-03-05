@@ -86,6 +86,12 @@
 		</ul>
 	</li>
 	<? } ?>
+	<li>
+		<a href="/help/getting-started">
+			<i class="fa fa-question-circle"></i>
+			<span class="menu-text"> Getting Started</span>
+		</a>
+	</li>
 
 	<? if (isset($this->User) && !$this->User->GetActive()) { ?>
 	<li>
