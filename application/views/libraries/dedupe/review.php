@@ -131,7 +131,7 @@ $(function() {
 
 <div class="alert alert-info">
 	<h3><i class="fa fa-tags"></i> Review duplicates</h3>
-	<p>The deduplicator has resolved as many possible duplicates as it can.</p>
+	<p>The following records identified as possible duplicates are listed below</p>
 	<p>
 		You have the option of
 		<ol>
