@@ -31,10 +31,12 @@ class RefLib_endnotexml {
 	*/
 	var $refTypes = array(
 		'Book Section' => 5,
+		'Book' => 6,
 		'Electronic Article' => 43,
 		'Journal Article' => 17,
 		'Map' => 20,
 		'Report' => 27,
+		'Thesis' => 32,
 		'Unpublished Work' => 34,
 	);
 
@@ -213,7 +215,8 @@ class RefLib_endnotexml {
 				if (isset($typesFlipped[$this->_GetText($find)])) {
 					$ref['type'] = $typesFlipped[$this->_GetText($find)];
 				} else {
-					die('Unknown reference type: ' . $this->_GetText($find) . ". Please report this at https://github.com/hash-bang/RefLib/issues with a copy of your EndNote XML file if you believe this is in error");
+					$attrs = $find[0]->attributes();
+					die('Unknown reference type: ' . $this->_GetText($find) . "/" . ((string) $attrs->name) . ". Please report this at https://github.com/hash-bang/RefLib/issues with a copy of your EndNote XML file if you believe this is in error");
 				}
 			}
 

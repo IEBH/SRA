@@ -189,53 +189,6 @@
         "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
     },
     {
-        "name": "hashbang/reflib",
-        "version": "v1.1.7",
-        "version_normalized": "1.1.7.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hash-bang/RefLib.git",
-            "reference": "cf9949694207bd028206305cead6b9745f6e80c2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/cf9949694207bd028206305cead6b9745f6e80c2",
-            "reference": "cf9949694207bd028206305cead6b9745f6e80c2",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.0.0"
-        },
-        "time": "2015-03-05 04:26:42",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "reflib.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Matt Carter",
-                "email": "m@ttcarter.com",
-                "homepage": "https://github.com/hash-bang"
-            }
-        ],
-        "description": "PHP module for managing a variety of citation reference libraries",
-        "homepage": "https://github.com/hash-bang/RefLib",
-        "keywords": [
-            "RIS",
-            "citations",
-            "endnote",
-            "library",
-            "references"
-        ]
-    },
-    {
         "name": "hashbang/joyst",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -280,6 +233,53 @@
             "database",
             "model",
             "schema"
+        ]
+    },
+    {
+        "name": "hashbang/reflib",
+        "version": "v1.1.9",
+        "version_normalized": "1.1.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hash-bang/RefLib.git",
+            "reference": "ee7d5d251986f633f7e74994dc11cd15d4f8f753"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hash-bang/RefLib/zipball/ee7d5d251986f633f7e74994dc11cd15d4f8f753",
+            "reference": "ee7d5d251986f633f7e74994dc11cd15d4f8f753",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0.0"
+        },
+        "time": "2015-03-10 07:17:46",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "reflib.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Matt Carter",
+                "email": "m@ttcarter.com",
+                "homepage": "https://github.com/hash-bang"
+            }
+        ],
+        "description": "PHP module for managing a variety of citation reference libraries",
+        "homepage": "https://github.com/hash-bang/RefLib",
+        "keywords": [
+            "RIS",
+            "citations",
+            "endnote",
+            "library",
+            "references"
         ]
     }
 ]
