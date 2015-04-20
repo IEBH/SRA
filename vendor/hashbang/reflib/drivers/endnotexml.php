@@ -30,14 +30,53 @@ class RefLib_endnotexml {
 	* @var array
 	*/
 	var $refTypes = array(
-		'Book Section' => 5,
+		'Aggregated Database' => 55,
+		'Ancient Text' => 51,
+		'Artwork' => 2,
+		'Audiovisual Material' => 3,
+		'Bill' => 4,
+		'Blog' => 56,
 		'Book' => 6,
+		'Book Section' => 5,
+		'Case' => 7,
+		'Catalog' => 8,
+		'Chart or Table' => 38,
+		'Classical Work' => 49,
+		'Computer Program' => 9,
+		'Conference Paper' => 47,
+		'Conference Proceedings' => 10,
+		'Dataset.' => 59,
+		'Dictionary' => 52,
+		'Edited Book' => 28,
 		'Electronic Article' => 43,
+		'Electronic Book Section' => 60,
+		'Encyclopedia' => 53,
+		'Equation' => 39,
+		'Figure' => 37,
+		'Film or Broadcast' => 21,
+		'Generic' => 13,
+		'Government Document' => 46,
+		'Grant' => 54,
+		'Hearing' => 14,
 		'Journal Article' => 17,
+		'Legal Rule or Regulation' => 50,
+		'Magazine Article' => 19,
+		'Manuscript' => 36,
 		'Map' => 20,
+		'Music' => 61,
+		'Newspaper Article' => 23,
+		'Online Database' => 45,
+		'Online Multimedia' => 48,
+		'Pamphlet' => 24,
+		'Patent' => 25,
+		'Personal Communication' => 26,
 		'Report' => 27,
+		'Serial' => 57,
+		'Standard' => 58,
+		'Statute' => 31,
 		'Thesis' => 32,
 		'Unpublished Work' => 34,
+		'Web Page' => 12,
 	);
 
 	/**
@@ -216,7 +255,7 @@ class RefLib_endnotexml {
 					$ref['type'] = $typesFlipped[$this->_GetText($find)];
 				} else {
 					$attrs = $find[0]->attributes();
-					die('Unknown reference type: ' . $this->_GetText($find) . "/" . ((string) $attrs->name) . ". Please report this at https://github.com/hash-bang/RefLib/issues with a copy of your EndNote XML file if you believe this is in error");
+					die('Unknown reference type: [\'' .  ((string) $attrs->name) . '\' => ' . $this->_GetText($find) . "]. Please report this at https://github.com/hash-bang/RefLib/issues with a copy of your EndNote XML file if you believe this is in error");
 				}
 			}
 
