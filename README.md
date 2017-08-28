@@ -3,6 +3,8 @@ Systematic Review Assistant
 
 **NOTE: THIS PROJECT HAS NOW BEEN SUPERSEEDED BY [SRA2](https://github.com/CREBP/SRA2). PLEASE SEE ITS PROJECT PAGE FOR UPDATES**
 
+---
+
 The Systematic Review Assistant (SRA) project is based at the [Bond University Center for Research in Evidence-Based Practice](http://crebp.net.au) was originally conceived under the aim of drastically reducing the amount of time it takes to construct a Systematic Review using Information Technology.
 
 The assistance it gives researches when constructing reviews is split into a number of different modules:
